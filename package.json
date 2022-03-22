@@ -1,0 +1,14 @@
+{
+  "name": "basic_express",
+  "version": "1.0.0",
+  "description": "Simple chat application built using Express",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Ben Wirth",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}

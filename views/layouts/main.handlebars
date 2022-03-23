@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{{ page }}</title>
+
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&family=Lato&display=swap" rel="stylesheet">
+
+    <link href="style/reset.css" rel="stylesheet"/>
+    <link href="style/style.css" rel="stylesheet"/>
+
+    <script src="scripts/base.js"></script>
+    <script src="scripts/main.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            {{!-- load logo --}}
+        </div>
+        {{#if loggedIn }}
+        <div class="user-cont">
+            {{!-- MAYBE user icons? --}}
+            <div class="username">
+                {{ username }}
+            </div>
+            <div class="my-projects">My Projects</div>
+            {{!-- inbox?? --}}
+            <div class="logout">Logout</div>
+        </div>
+        {{else}}
+        <div class="login-box">
+            <div class="login">
+                <div class="showPopup">Login</div>
+            </div>
+            <div class="dropdown">
+                <label for="user">Login</label>
+                <input class="user" name="user" placeholder="Username or email"/>
+                <label for="pass">Password</label>
+                <input class="password" type="password" name="pass" placeholder="Password">
+                {{!-- Already have an account? Log in! --}}
+                <div class="toggle-create">Don't have an account? <br><a class="create">Create one!</a></div>
+            </div>
+        </div>
+        {{/if}}
+    </header>
+    {{{body}}}
+</body>
+</html>

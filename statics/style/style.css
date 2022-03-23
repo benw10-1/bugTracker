@@ -1,0 +1,74 @@
+:root {
+    font-family: "inter", "Lato", sans-serif;
+}
+html {
+    background-color: #98C1D9;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    position: sticky;
+}
+input {
+    background: white;
+    outline: none;
+    border: none;
+}
+label {
+    display: block;
+    width: fit-content;
+    padding: 0 3px 3px 0;
+    border-bottom: 1px solid #98C1D9;
+    margin-bottom: 5px;
+    font-size: 1em;
+    font-weight: bolder;
+    color: #EE6C4D;
+}
+.login-box {
+    position: relative;
+    margin-right: 5%;
+    width: 20%;
+}
+.login {
+    text-align: center;
+    display: flex;
+    height: 75%;
+    justify-content: right;
+    align-items: center;
+}
+.showPopup {
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+}
+.dropdown {
+    position: absolute;
+    background-color: #E0FBFC;
+    width: fit-content;
+    top : 50%;
+    right: -10%;
+    padding: 20px 20px;
+    display: none;
+}
+.dropdown input {
+    margin-bottom: 1em;
+}
+.toggle-create {
+    white-space: nowrap;
+}
+.dropdown.shown {
+    display: block;
+}
+.create {
+    color: #3D5A80;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.logo {
+    cursor: pointer;
+    padding: 25px 0 0 25px;
+}

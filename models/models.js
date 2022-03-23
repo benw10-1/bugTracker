@@ -5,6 +5,14 @@ async function loadMongoose() {
         
     })
 }
+const projectSchema = new mongoose.Schema({
+    name: String,
+    creator: Array ,
+    bugs: Array,
+    contributors: Array,
+})
+const Project = mongoose.model("Project", projectSchema)
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -27,19 +35,14 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
+        minLength: [60, "Min length of 60 enforced!"],
+        maxlength: [60, "Max length of 60 enforced!"],
         required: '{PATH} is required!'
     },
     about: String,
     projects: Array,
 })
-const User = mongoose.model("User", userSchema)
 
-const projectSchema = new mongoose.Schema({
-    name: String,
-    creator: String,
-    bugs: Array,
-    contributors: Array,
-})
-const Project = mongoose.model("Project", userSchema)
+const User = mongoose.model("User", userSchema)
 
 module.exports = { User, Project }

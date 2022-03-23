@@ -6,12 +6,31 @@ async function loadMongoose() {
     })
 }
 const userSchema = new mongoose.Schema({
-    name: String,
-    username: String,
-    password: String,
+    name: {
+        type: String,
+        lowercase: true,
+        minLength: [2, "Min length of 2 enforced!"],
+        maxlength: [24, "Max length of 24 enforced!"],
+    },
+    email: {
+        type: String,
+        lowercase: true,
+        minLength: [5, "Min length of 5 enforced!"],
+        maxlength: [64, "Max length of 64 enforced!"],
+        required: '{PATH} is required!'
+    },
+    username: {
+        type: String,
+        minLength: [4, "Min length of 4 enforced!"],
+        maxlength: [20, "Max length of 20 enforced!"],
+        required: '{PATH} is required!'
+    },
+    password: {
+        type: String,
+        required: '{PATH} is required!'
+    },
     about: String,
     projects: Array,
-    ID: Number
 })
 const User = mongoose.model("User", userSchema)
 
@@ -20,7 +39,6 @@ const projectSchema = new mongoose.Schema({
     creator: String,
     bugs: Array,
     contributors: Array,
-    ID: Number
 })
 const Project = mongoose.model("Project", userSchema)
 

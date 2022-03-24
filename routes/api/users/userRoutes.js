@@ -1,58 +1,51 @@
 const express = require('express')
 var router = express.Router()
-const bcrypt = require("bcrypt")
-const salt = 10
-const { User, Project } = require("C:/Users/benja/Desktop/bugTracker/models/models.js")
+const { Op } = require("sequelize")
+
+const { User, Project } = require("../../../models/models")
 
 router.post("/create", async (req, res) => {
     try {
-        if (!req.session.home) throw "Incorrect origin!"
+        // if (!req.session.home) throw "Incorrect origin!"
         // TODO: FILTER ALLOWED CHARACTERS
-        if (!req.body || !req.body.password) throw "Data not found!";
-
-        let hashed = bcrypt.hashSync(req.body.password, salt)
-        if (hashed) req.body.password = hashed
-        let newUser = User(req.body)
-
-        let val = newUser.validateSync()
-        if (val) {
-            let errors = []
-            for (const y in val.errors) {
-                errors.push(val.errors[y].properties.message)
-            }
-            throw errors
-        }
-        newUser.save()
+        if (!req.body || !req.body.password) throw "Data not found!"
+        let newUser = await User.create(req.body)
+        req.session.loggedIn = newUser.id
         res.status(200).json({
             "status": "ok",
-            "action": "created account"
+            "action": "created account",
+            "data": newUser
         })
     }
     catch (err) {
         console.log(err)
         res.status(400).json({
             "status": "error",
-            "error": err ?? "Not found"
+            "data": err
         })
     }
 })
+// TODO Update
 router.post("/login", async (req, res) => {
     try {
         if (!req.session.home) throw "Incorrect origin!"
         if (!req.body || !req.body.password || !req.body.user) throw "Data not found!"
-        const userQ = User.findOne({
-            $or: [
-                { email: req.body.user },
-                { username: req.body.user }
-            ]
+        
+        let foundUser = await User.findOne({
+            where: {
+                [Op.or]: {
+                    email: req.body.user,
+                    username: req.body.user
+                }
+            }
         })
-        let foundUser = await userQ.exec()
+
         if (!foundUser) throw "User not found!"
-        let correctPass = bcrypt.compareSync(req.body.password, foundUser.password)
+        let correctPass = await foundUser.checkPassword(req.body.password)
         
         if (!correctPass) throw "Incorrect password!"
 
-        req.session.loggedIn = foundUser._id
+        req.session.loggedIn
         res.status(200).json({
             "status": "ok",
             "action": "logged in"
@@ -62,16 +55,21 @@ router.post("/login", async (req, res) => {
         console.log(err)
         res.status(400).json({
             "status": "error",
-            "error": err ?? "Not found"
+            "data": err
         })
     }
 })
 router.post("/logout", (req, res) => {
-
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end()
+        })
+    } 
+    else res.status(404).end()
 })
 
 router.get("/:user", async (req, res) => {
-    res.redirect("/")
+    res.end()
 }) 
 
 module.exports = router

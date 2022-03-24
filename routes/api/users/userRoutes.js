@@ -45,11 +45,12 @@ router.post("/login", async (req, res) => {
         let correctPass = await foundUser.checkPassword(req.body.password)
         
         if (!correctPass) throw "Incorrect password!"
-
-        req.session.loggedIn
-        res.status(200).json({
-            "status": "ok",
-            "action": "logged in"
+        req.session.save(() => {
+            req.session.loggedIn = foundUser
+            res.status(200).json({
+                "status": "ok",
+                "action": "logged in"
+            })
         })
     }
     catch (err) {

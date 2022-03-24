@@ -1,8 +1,8 @@
-:root {
-    font-family: "inter", "Lato", sans-serif;
-}
 html {
-    background-color: #98C1D9;
+    background-color: #F1FAEE;
+    font-family: "inter", "Lato", sans-serif;
+    color: #A8DADC;
+    font-size: 24px;
 }
 
 header {
@@ -11,21 +11,25 @@ header {
     justify-content: space-between;
     flex-direction: row;
     position: sticky;
+    background-color: #1D3557;
 }
 input {
     background: white;
     outline: none;
-    border: none;
+    border: 1px solid #E63946;
+    border-radius: 5px;
+    padding: .5em;
 }
 label {
     display: block;
-    width: fit-content;
+    width: 100%;
     padding: 0 3px 3px 0;
-    border-bottom: 1px solid #98C1D9;
     margin-bottom: 5px;
     font-size: 1em;
+    text-align: center;
     font-weight: bolder;
-    color: #EE6C4D;
+    color: #E63946;
+    user-select: none;
 }
 .login-box {
     position: relative;
@@ -35,24 +39,62 @@ label {
 .login {
     text-align: center;
     display: flex;
-    height: 75%;
+    height: 100%;
     justify-content: right;
     align-items: center;
 }
 .showPopup {
     outline: none;
     cursor: pointer;
+    border: #98C1D9 solid 2px;
+    padding: 10px 25px;
+    border-radius: 10px;
     user-select: none;
     -moz-user-select: none;
+    transition: all .3s;
+    font-weight: bolder;
+}
+.showPopup:hover {
+    background-color: #98C1D9;
+    color: #1D3557; 
+}
+.showPopup.selected {
+    background-color: #98C1D9;
+    color: #1D3557; 
 }
 .dropdown {
     position: absolute;
-    background-color: #E0FBFC;
+    background-color: #F1FAEE;
     width: fit-content;
-    top : 50%;
+    top : 75%;
     right: -10%;
     padding: 20px 20px;
     display: none;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.sendLogin {
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #F1FAEE;
+    border: solid 2px green;
+    color: green;
+    padding: 5px 0;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    transition: all .3s;
+    font-weight: bolder;
+    border-radius: 5px;
+}
+.sendLogin.selected {
+    background-color: #F1FAEE;
+    color: green;
+}
+.sendLogin:hover {
+    background-color: green;
+    color: #A8DADC;
 }
 .dropdown input {
     margin-bottom: 1em;
@@ -61,14 +103,16 @@ label {
     white-space: nowrap;
 }
 .dropdown.shown {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .create {
-    color: #3D5A80;
+    color: #457B9D;
     font-weight: bolder;
     cursor: pointer;
 }
 .logo {
     cursor: pointer;
-    padding: 25px 0 0 25px;
+    padding: 25px;
 }

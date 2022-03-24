@@ -7,7 +7,7 @@ async function loadMongoose() {
 }
 const projectSchema = new mongoose.Schema({
     name: String,
-    creator: Array ,
+    creator: Array,
     bugs: Array,
     contributors: Array,
 })

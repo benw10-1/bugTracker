@@ -11,6 +11,7 @@ router.post("/create", async (req, res) => {
         if (!req.body || !req.body.password) throw "Data not found!"
         let newUser = await User.create(req.body)
         req.session.loggedIn = newUser.id
+        delete newUser.password
         res.status(200).json({
             "status": "ok",
             "action": "created account",
@@ -21,14 +22,14 @@ router.post("/create", async (req, res) => {
         console.log(err)
         res.status(400).json({
             "status": "error",
-            "data": err
+            "data": err.fields ?? err
         })
     }
 })
 // TODO Update
 router.post("/login", async (req, res) => {
     try {
-        if (!req.session.home) throw "Incorrect origin!"
+        // if (!req.session.home) throw "Incorrect origin!"
         if (!req.body || !req.body.password || !req.body.user) throw "Data not found!"
         
         let foundUser = await User.findOne({

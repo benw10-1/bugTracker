@@ -130,9 +130,23 @@ Bug.init({
     modelName: 'bug',
 })
 
-Project.hasMany(Contributor)
-Project.hasMany(Bug)
-Bug.belongsTo(Project)
-Contributor.belongsTo(Project)
+User.hasMany(Project, {
+    foreignKey: "creator"
+})
+Project.hasMany(Contributor, {
+    foreignKey: "projectid",
+})
+Project.hasMany(Bug, {
+    foreignKey: "projectid",
+})
+Project.belongsTo(User, {
+    foreignKey: "creator"
+})
+Bug.belongsTo(Project, {
+    foreignKey: "projectid",
+})
+Contributor.belongsTo(Project, {
+    foreignKey: "projectid",
+})
 
 module.exports = { User, Project, Contributor, Bug }

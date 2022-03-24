@@ -6,7 +6,7 @@ const { User, Project } = require("C:/Users/benja/Desktop/bugTracker/models/mode
 
 router.post("/create", async (req, res) => {
     try {
-        // TODO: REQUIRE SESSION
+        if (!req.session.home) throw "Incorrect origin!"
         // TODO: FILTER ALLOWED CHARACTERS
         if (!req.body || !req.body.password) throw "Data not found!";
 
@@ -38,7 +38,7 @@ router.post("/create", async (req, res) => {
 })
 router.post("/login", async (req, res) => {
     try {
-        // TODO: REQUIRE SESSION
+        if (!req.session.home) throw "Incorrect origin!"
         if (!req.body || !req.body.password || !req.body.user) throw "Data not found!"
         const userQ = User.findOne({
             $or: [
@@ -46,14 +46,13 @@ router.post("/login", async (req, res) => {
                 { username: req.body.user }
             ]
         })
-        foundUser = await userQ.exec()
+        let foundUser = await userQ.exec()
         if (!foundUser) throw "User not found!"
         let correctPass = bcrypt.compareSync(req.body.password, foundUser.password)
         
         if (!correctPass) throw "Incorrect password!"
 
-        // TODO: start session and send cookie
-
+        req.session.loggedIn = foundUser._id
         res.status(200).json({
             "status": "ok",
             "action": "logged in"
@@ -67,6 +66,10 @@ router.post("/login", async (req, res) => {
         })
     }
 })
+router.post("/logout", (req, res) => {
+
+})
+
 router.get("/:user", async (req, res) => {
     res.redirect("/")
 }) 

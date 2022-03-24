@@ -3,18 +3,20 @@ const api = require("./api/apiRoutes")
 var router = express.Router()
 
 router.get("", async (req, res) => {
-    // if logged in redirect to projects
-    console.log(req.session)
+    req.session.home = true
+    console.log(req.session.loggedIn)
     let context = { page: "Home", loggedIn: req.session.loggedIn}
-    if (context.loggedIn)
-    res.render("home", context)
+    if (context.loggedIn) res.redirect("/projects")
+    else res.render("home", context)
 })
 
 router.use("/api", api)
 
 router.get("/projects", async (req, res) => {
     // TODO: IF NOT LOGGED IN REDIRECT
-    let context = { page: "Projects" }
+    console.log(req.session.home)
+    req.session.home = false
+    let context = { page: "Projects", loggedIn: req.session.loggedIn }
     res.render("projects", context)
 })
 

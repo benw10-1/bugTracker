@@ -17,7 +17,7 @@ app.use(session({
     cookie: {
         maxAge: 60000,
     },
-    resave: false,
+    resave: true,
     saveUninitialized: true
 }))
 app.use(express.json())

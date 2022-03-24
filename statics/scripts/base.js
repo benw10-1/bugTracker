@@ -19,6 +19,15 @@ function loadEls() {
     window.addEventListener("click", (event) => {
         if (event.target !== login && event.path.indexOf(dropdown) < 0) toggleDropdown(false)
     })
+    logo.appendChild(loaded.logo.cloneNode())
+    if (login) loggedOut()
+    else loggedIn()
+}
+
+function loggedOut() {
+    login.addEventListener("mousedown", () => {
+        toggleDropdown()
+    })
     sendLogin.addEventListener("click", (event) => {
         sendLogin.innerHTML = "Loading..."
         sendLogin.classList.add("selected")
@@ -28,15 +37,6 @@ function loadEls() {
             sendLogin.innerHTML = "Login ->"
             sendLogin.classList.remove("selected")
         })
-    })
-    logo.appendChild(loaded.logo.cloneNode())
-    if (login) loggedIn()
-    else loggedOut()
-}
-
-function loggedIn() {
-    login.addEventListener("mousedown", () => {
-        toggleDropdown()
     })
 }
 
@@ -65,8 +65,8 @@ function postLogin(user, pass) {
     })
 }
 
-function loggedOut() {
-
+function loggedIn() {
+    
 }
 
 function toggleDropdown(cond) {

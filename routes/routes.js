@@ -1,5 +1,4 @@
 const express = require('express')
-<<<<<<< HEAD
 const api = require("./api/apiRoutes")
 var router = express.Router()
 
@@ -22,8 +21,3 @@ router.get("/projects", async (req, res) => {
 })
 
 module.exports = router
-=======
-var router = express.Router()
-
-module.exports(router)
->>>>>>> c7b882fb1f1cbced50f803bbb3c294582548b685

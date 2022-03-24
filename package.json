@@ -1,18 +1,11 @@
 {
-<<<<<<< HEAD
   "name": "bug_tracker",
   "version": "1.0.1",
   "description": "Bugtrackick application",
-=======
-  "name": "basic_express",
-  "version": "1.0.0",
-  "description": "Simple chat application built using Express",
->>>>>>> c7b882fb1f1cbced50f803bbb3c294582548b685
   "main": "server.js",
   "scripts": {
     "test": "test"
   },
-<<<<<<< HEAD
   "contributors": [
     "Ben Wirth",
     "Calvin Kim",
@@ -28,11 +21,5 @@
     "express-session": "^1.17.2",
     "mysql2": "^2.3.3",
     "sequelize": "^6.17.0"
-=======
-  "author": "Ben Wirth",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.3"
->>>>>>> c7b882fb1f1cbced50f803bbb3c294582548b685
   }
 }

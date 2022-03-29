@@ -12,6 +12,7 @@ router.get("/projects", async (req, res) => {
     }
     res.json({"HI": "asd"})
 })
+router.get("/newRoute")
 router.use("/user", users)
 
 module.exports = router

@@ -31,9 +31,5 @@ app.use(express.urlencoded({ extended: false }))
 app.use("/", mainRoute)
 
 sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () =>
-        console.log(
-            `Server running on port ${PORT}.`
-        )
-    )
-  })
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}.`))
+})

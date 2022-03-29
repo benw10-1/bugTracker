@@ -1,5 +1,6 @@
-const { Model, DataTypes } = require("sequelize")
+const { Model, DataTypes, UUIDV4 } = require("sequelize")
 const sequelize = require("../config/connection")
+const mailer = require("../email/mailer")
 const bcrypt = require("bcrypt")
 const salt = 10
 
@@ -49,6 +50,11 @@ User.init({
         validate: {
             len: [0, 60]
         }
+    },
+    emailCode: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: true
     }
 }, { 
     sequelize, 
@@ -56,6 +62,11 @@ User.init({
     hooks: {
         async beforeCreate(newUserData) {
             newUserData.password = await bcrypt.hash(newUserData.password, salt)
+            return newUserData
+        },
+        async afterCreate(newUserData) {
+            const id = newUserData.emailCode
+            mailer.verificationEmail(id, newUserData.email)
             return newUserData
         }
     }
@@ -76,6 +87,10 @@ Project.init({
     },
     description: {
         type: DataTypes.STRING(5000)
+    },
+    endpoint: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, { 
     sequelize, 

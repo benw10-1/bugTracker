@@ -1,6 +1,7 @@
 const express = require('express')
 var router = express.Router()
 const users = require("./users/userRoutes")
+const verify = require("./verifyEmail/verify.js")
 
 router.get("/", async (req, res) => {
     res.redirect("/")
@@ -12,7 +13,7 @@ router.get("/projects", async (req, res) => {
     }
     res.json({"HI": "asd"})
 })
-router.get("/newRoute")
+router.use("/verify", verify)
 router.use("/user", users)
 
 module.exports = router

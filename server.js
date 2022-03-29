@@ -5,8 +5,8 @@ const app = express();
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
-const hdbx = handlebars.create({ helpers });
 const helpers = require('./utils/helpers');
+const hdbx = handlebars.create({ helpers });
 const mainRoute = require('./routes/routes');
 
 app.use(express.static('statics'));

@@ -1,6 +1,7 @@
 const express = require('express')
 var router = express.Router()
 const { Op } = require("sequelize")
+const mailer = require('../../../email/mailer')
 
 const { User, Project } = require("../../../models/models")
 
@@ -50,7 +51,7 @@ router.post("/login", async (req, res) => {
         
         if (!correctPass) throw "Incorrect password!"
         req.session.save(() => {
-            req.session.loggedIn = foundUser
+            req.session.loggedIn = foundUser.id
             res.status(200).json({
                 "status": "ok",
                 "action": "logged in"
@@ -78,17 +79,12 @@ router.get("/resendVerification", async (req, res) => {
     try {
         if (!req.session.loggedIn) throw "Not logged in!"
         let foundUser = await User.findByPk(req.session.loggedIn)
-
         if (!foundUser) throw "User not found!"
-        let correctPass = foundUser.checkPassword(req.body.password)
-        
-        if (!correctPass) throw "Incorrect password!"
-        req.session.save(() => {
-            req.session.loggedIn = foundUser
-            res.status(200).json({
-                "status": "ok",
-                "action": "logged in"
-            })
+        if (!foundUser.emailCode) throw "User verified!"
+        mailer.verificationEmail(foundUser.emailCode, foundUser.email)
+        res.status(200).json({
+            "status": "ok",
+            "action": "email verification sent"
         })
     }
     catch (err) {

@@ -1,6 +1,7 @@
 const express = require('express')
 var router = express.Router()
 const { Op } = require("sequelize")
+const mailer = require('../../../email/mailer')
 
 const { User, Project } = require("../../../models/models")
 
@@ -30,7 +31,11 @@ router.post("/create", async (req, res) => {
 router.post("/login", async (req, res) => {
     try {
         // if (!req.session.home) throw "Incorrect origin!"
-        if (!req.body || !req.body.password || !req.body.user) throw "Data not found!"
+        if (!req.body || !req.body.password || !req.body.user) throw {
+            error: "Not present",
+            user: (req.body && req.body.user),
+            password: (req.body && req.body.password)
+        }
         
         let foundUser = await User.findOne({
             where: {
@@ -42,11 +47,11 @@ router.post("/login", async (req, res) => {
         })
 
         if (!foundUser) throw "User not found!"
-        let correctPass = await foundUser.checkPassword(req.body.password)
+        let correctPass = foundUser.checkPassword(req.body.password)
         
         if (!correctPass) throw "Incorrect password!"
         req.session.save(() => {
-            req.session.loggedIn = foundUser
+            req.session.loggedIn = foundUser.id
             res.status(200).json({
                 "status": "ok",
                 "action": "logged in"
@@ -70,8 +75,25 @@ router.post("/logout", (req, res) => {
     else res.status(404).end()
 })
 
-router.get("/:user", async (req, res) => {
-    res.end()
+router.get("/resendVerification", async (req, res) => {
+    try {
+        if (!req.session.loggedIn) throw "Not logged in!"
+        let foundUser = await User.findByPk(req.session.loggedIn)
+        if (!foundUser) throw "User not found!"
+        if (!foundUser.emailCode) throw "User verified!"
+        mailer.verificationEmail(foundUser.emailCode, foundUser.email)
+        res.status(200).json({
+            "status": "ok",
+            "action": "email verification sent"
+        })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(400).json({
+            "status": "error",
+            "data": err
+        })
+    }
 }) 
 
 module.exports = router

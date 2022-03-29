@@ -4,8 +4,7 @@ var router = express.Router()
 
 router.get("", async (req, res) => {
     req.session.home = true
-    console.log(req.session.loggedIn)
-    let context = { page: "Home", loggedIn: req.session.loggedIn }
+    let context = { page: "Home", loggedIn: req.session.loggedIn}
     if (req.session.loggedIn) res.redirect("/projects")
     else res.render("home", context)
 })

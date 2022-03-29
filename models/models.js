@@ -1,7 +1,8 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
-const bcrypt = require('bcrypt');
-const salt = 10;
+const { Model, DataTypes, UUIDV4 } = require("sequelize")
+const sequelize = require("../config/connection")
+const mailer = require("../email/mailer")
+const bcrypt = require("bcrypt")
+const salt = 10
 
 class User extends Model {
   checkPassword(pw) {
@@ -49,27 +50,33 @@ User.init(
       },
     },
     password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [0, 60],
-        is: validate.password,
-      },
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            len: [0, 60]
+        }
     },
-  },
-  {
-    sequelize,
-    modelName: 'user',
+    emailCode: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: true
+    }
+}, { 
+    sequelize, 
+    modelName: 'user', 
     hooks: {
-      async beforeCreate(newUserData) {
-        newUserData.password = await bcrypt.hash(newUserData.password, salt);
-        return newUserData;
-      },
-    },
-  }
-);
-Project.init(
-  {
+        async beforeCreate(newUserData) {
+            newUserData.password = await bcrypt.hash(newUserData.password, salt)
+            return newUserData
+        },
+        async afterCreate(newUserData) {
+            const id = newUserData.emailCode
+            mailer.verificationEmail(id, newUserData.email)
+            return newUserData
+        }
+    }
+})
+Project.init({
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -84,11 +91,14 @@ Project.init(
       allowNull: false,
     },
     description: {
-      type: DataTypes.STRING(5000),
+        type: DataTypes.STRING(5000)
     },
-  },
-  {
-    sequelize,
+    endpoint: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    }
+}, { 
+    sequelize, 
     modelName: 'project',
   }
 );

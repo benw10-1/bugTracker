@@ -1,47 +1,53 @@
-const { Model, DataTypes } = require("sequelize")
+const { Model, DataTypes, UUIDV4 } = require("sequelize")
 const sequelize = require("../config/connection")
+const mailer = require("../email/mailer")
 const bcrypt = require("bcrypt")
 const salt = 10
 
 class User extends Model {
-    checkPassword(pw) {
-        return bcrypt.compareSync(pw, this.password);
-    }
+  checkPassword(pw) {
+    return bcrypt.compareSync(pw, this.password);
+  }
 }
 class Contributor extends Model {}
 class Project extends Model {}
 class Bug extends Model {}
 
 const validate = {
-    username: /regex/,
-    name: /regex/,
-    password: /regex/
-}
+  username: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
+  name: /[a-z]/gi,
+  password: /^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$/,
+};
 
-User.init({
+User.init(
+  {
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     name: {
-        type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        len: [2, 100],
+        is: validate.name,
+      },
     },
     username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        // validate: {
-        //     is: validate.username
-        // }
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        is: validate.username,
+      },
     },
     email: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: false,
-        validate: {
-            isEmail: true,
-        }
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
         type: DataTypes.STRING,
@@ -49,6 +55,11 @@ User.init({
         validate: {
             len: [0, 60]
         }
+    },
+    emailCode: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: true
     }
 }, { 
     sequelize, 
@@ -57,96 +68,113 @@ User.init({
         async beforeCreate(newUserData) {
             newUserData.password = await bcrypt.hash(newUserData.password, salt)
             return newUserData
+        },
+        async afterCreate(newUserData) {
+            const id = newUserData.emailCode
+            mailer.verificationEmail(id, newUserData.email)
+            return newUserData
         }
     }
 })
 Project.init({
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     name: {
-        type: DataTypes.STRING,
-        allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     creator: {
-        type: DataTypes.UUID,
-        allowNull: false,
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     description: {
         type: DataTypes.STRING(5000)
+    },
+    endpoint: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, { 
     sequelize, 
     modelName: 'project',
-})
-Contributor.init({
+  }
+);
+Contributor.init(
+  {
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     userid: {
-        type: DataTypes.UUID,
-        allowNull: false,
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     projectid: {
-        type: DataTypes.UUID,
-        allowNull: false,
-    }
-}, {
-    sequelize, 
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
     modelName: 'contributor',
-})
-Bug.init({
+  }
+);
+
+Bug.init(
+  {
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
     },
     title: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     contributorid: {
-        type: DataTypes.UUID,
+      type: DataTypes.UUID,
     },
     email: {
-        type: DataTypes.STRING,
-        validate: {
-            isEmail: true
-        }
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+      },
     },
     projectid: {
-        type: DataTypes.UUID,
-        allowNull: false,
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     description: {
-        type: DataTypes.STRING(5000)
-    }
-}, {
-    sequelize, 
+      type: DataTypes.STRING(5000),
+    },
+  },
+  {
+    sequelize,
     modelName: 'bug',
-})
+  }
+);
 
 User.hasMany(Project, {
-    foreignKey: "creator"
-})
+  foreignKey: 'creator',
+});
 Project.hasMany(Contributor, {
-    foreignKey: "projectid",
-})
+  foreignKey: 'projectid',
+});
 Project.hasMany(Bug, {
-    foreignKey: "projectid",
-})
+  foreignKey: 'projectid',
+});
 Project.belongsTo(User, {
-    foreignKey: "creator"
-})
+  foreignKey: 'creator',
+});
 Bug.belongsTo(Project, {
-    foreignKey: "projectid",
-})
+  foreignKey: 'projectid',
+});
 Contributor.belongsTo(Project, {
-    foreignKey: "projectid",
-})
+  foreignKey: 'projectid',
+});
 
-module.exports = { User, Project, Contributor, Bug }
+module.exports = { User, Project, Contributor, Bug };

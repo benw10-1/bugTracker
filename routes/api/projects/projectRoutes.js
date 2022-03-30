@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Project } = require('../../../models/models');
+const { Project, Contributor } = require('../../../models/models');
 const withAuth = require('../../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
@@ -8,6 +8,24 @@ router.post('/', withAuth, async (req, res) => {
       ...req.body,
       creator: req.session.user_id,
     });
+
+    res.status(200).json(newProject);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.get('/:id', withAuth, async (req, res) => {
+  try {
+    const contributor = await Contributor.findOne({
+      where: {
+        projectid: req.params.id,
+        userid: req.session.loggedIn
+      }
+    });
+    if (!contributor) throw "Not a contributor of this project!"
+    const project = await Project.findByPk(req.params.id)
+    if (!project) throw "Not a valid project!"
 
     res.status(200).json(newProject);
   } catch (err) {

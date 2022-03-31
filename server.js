@@ -32,5 +32,5 @@ app.use("/", mainRoute);
 app.use(express.static('statics'));
 
 sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}.`))
-})
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}.`));
+});

@@ -27,7 +27,7 @@ router.get('/:id', withAuth, async (req, res) => {
     const project = await Project.findByPk(req.params.id)
     if (!project) throw "Not a valid project!"
 
-    res.status(200).json(newProject);
+    res.status(200).json(project);
   } catch (err) {
     res.status(400).json(err);
   }

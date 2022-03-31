@@ -53,7 +53,8 @@ User.init(
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [0, 60]
+            len: [0, 60],
+            is: validate.password
         }
     },
     emailCode: {
@@ -61,7 +62,7 @@ User.init(
         defaultValue: DataTypes.UUIDV4,
         allowNull: true
     }
-}, { 
+}, {
     sequelize, 
     modelName: 'user', 
     hooks: {
@@ -85,6 +86,9 @@ Project.init({
     name: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: validate.name,
+        },
     },
     creator: {
         type: DataTypes.UUID,
@@ -134,6 +138,9 @@ Bug.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: validate.username,
+      },
     },
     contributorid: {
       type: DataTypes.UUID,

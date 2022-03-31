@@ -1,12 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@500&family=Play:wght@400;700&display=swap');
+
+* {
+  font-family: 'Play', sans-serif;
+}
+
 body {
   background-image: url('../images/blue.png');
   background-position: center;
   color: #f4f4f4;
-  font-family: 'Cairo', sans-serif;
 }
 
 .navbar {
   padding: 1rem;
+}
+
+#main-logo {
+  color: rgb(105, 104, 104);
+}
+
+.nav-item button {
+  padding: 0.1rem 1rem;
+  background-color: dodgerblue;
+  color: white;
+  font-size: 0.7rem;
+}
+
+.nav-item button:hover {
+  transition: 0.4s;
+  background-color: #135ca3;
+  color: white;
+}
+
+.nav-item button:active {
+  background-color: #0f4a82;
 }
 
 .main-text-container {
@@ -33,12 +59,22 @@ body {
 }
 
 .join-btn {
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   padding: 0.3rem 1rem;
   border-style: none;
   background-color: dodgerblue;
   color: white;
   border-radius: 7px;
+  width: 7rem;
+}
+
+.join-btn:hover {
+  background-color: #135ca3;
+  transition: 0.3s;
+}
+
+.join-btn:active {
+  background-color: #0f4a82;
 }
 
 .main-signup {
@@ -51,9 +87,10 @@ body {
 .main-signup form {
   background: rgba(219, 213, 213, 0.4);
   width: 17rem;
-  height: 25rem;
+  height: 24rem;
   text-align: center;
   margin-top: 4rem;
+  border-radius: 7px;
 }
 
 .form-header {
@@ -65,6 +102,7 @@ body {
   font-size: 2rem;
   color: #fff;
   font-weight: bold;
+  margin-top: 1rem;
 }
 
 .form-header p {
@@ -87,12 +125,13 @@ body {
   padding: 1rem 0 0.4rem 0;
   border-style: none;
   border-bottom: 1px solid white;
-  width: 80%;
-  margin-bottom: 1rem;
+  width: 70%;
+  margin-bottom: 0.5rem;
+  font-size: 0.7rem;
 }
 
 .form-input:focus {
-  outline: none;
+  border-bottom: 2px solid white;
 }
 
 ::placeholder {
@@ -123,6 +162,16 @@ body {
   background-color: dodgerblue;
   color: white;
   border-radius: 7px;
+  width: 10rem;
+}
+
+.form-btn:hover {
+  background-color: #135ca3;
+  transition: 0.3s;
+}
+
+.form-btn:active {
+  background-color: #0f4a82;
 }
 
 .form-header h2 {
@@ -137,6 +186,7 @@ body {
 }
 .input i {
   color: white;
+  font-size: 0.6rem;
 }
 .form-input::placeholder {
   font-size: 0.7rem;
@@ -163,7 +213,7 @@ body {
   .main-signup form {
     width: 19rem;
     height: 24rem;
-    margin-top: 3rem;
+    margin-top: 4rem;
   }
   .join-btn {
     display: none;

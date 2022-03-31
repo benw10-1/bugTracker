@@ -17,6 +17,24 @@
     <title>main page</title>
   </head>
   <body>
+    <!-- HEADER -->
+    <nav class='navbar navbar-expand-lg navbar-light bg-light'>
+      <div class='container-fluid'>
+        <span id='main-logo'><i class='fa-solid fa-bug-slash'></i>
+          Bug Tracker</span>
+        <div id='navbarNav'>
+          <ul class='navbar-nav'>
+            <li class='nav-item'>
+              <a
+                class='nav-link active'
+                aria-current='page'
+                href='./login'
+              ><button class='btn btn-sm'>Login</button></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
     <!-- SIGN UP PAGE APP INFO -->
     <div class='main-container'>
@@ -70,11 +88,11 @@
           </div>
           <div class='signup-btn'>
             <button type='submit' class='form-btn'>
-              REGISTER NOW
+              Sign up
             </button>
             <p>
               Already have an account?
-              <a href='#'>Login here</a>
+              <a href='./login'>Login here</a>
             </p>
           </div>
         </form>

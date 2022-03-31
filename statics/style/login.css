@@ -1,0 +1,60 @@
+#login-nav {
+  padding: 1rem;
+  margin-left: 1rem;
+}
+
+#login-backarrow {
+  color: white;
+  /* padding: 1rem; */
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+#login-backarrow:hover {
+  color: rgba(219, 213, 213, 0.6);
+  transition: 0.4s;
+}
+
+#login-logo {
+  color: white;
+  font-size: 1.5rem;
+}
+
+#login-header {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+#form-top {
+  margin-top: 2.5rem;
+}
+
+.login-form {
+  height: 24rem;
+}
+
+.login-button {
+  font-size: 0.6rem;
+  padding: 0.3rem 1rem;
+  border-style: none;
+  background-color: dodgerblue;
+  color: white;
+  border-radius: 7px;
+  width: 10rem;
+  margin-top: 0.6rem;
+}
+
+.login-button:hover {
+  background-color: #135ca3;
+  transition: 0.3s;
+}
+
+.login-button:active {
+  background-color: #0f4a82;
+}
+
+@media screen and (min-width: 1200px) {
+  * {
+    overflow: hidden;
+  }
+}

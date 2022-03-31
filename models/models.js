@@ -38,7 +38,7 @@ User.init(
         allowNull: false,
         unique: true,
         validate: {
-            is: validate.username,
+            // is: validate.username,
         },
     },
     email: {
@@ -54,7 +54,7 @@ User.init(
         allowNull: false,
         validate: {
             len: [0, 60],
-            is: validate.password
+            // is: validate.password
         }
     },
     emailCode: {

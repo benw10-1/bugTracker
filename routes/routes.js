@@ -3,8 +3,11 @@ const api = require("./api/apiRoutes")
 var router = express.Router()
 
 router.get("", async (req, res) => {
-    req.session.home = true
-    let context = { page: "Home", loggedIn: req.session.loggedIn}
+    if (!req.session) {
+        res.render("home", context)
+        return
+    }
+    let context = { page: "Home", loggedIn: req.session?.loggedIn}
     if (req.session.loggedIn) res.redirect("/projects")
     else res.render("home", context)
 })

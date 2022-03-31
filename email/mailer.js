@@ -1,9 +1,9 @@
 const nodemailer = require("nodemailer")
 require("dotenv").config()
 const env = process.env
-const HOST = "http://localhost:3001"
 
 function genVerificationEmail(id) {
+    const HOST = "http://localhost:3001"
     const link = HOST + "/api/verify/" + id
     let text = "Verify email at this link!\n" + link 
     let html = text

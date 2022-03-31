@@ -22,38 +22,39 @@ const validate = {
 User.init(
   {
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
     },
     name: {
-      type: DataTypes.STRING,
-      validate: {
-        len: [2, 100],
-        is: validate.name,
-      },
+        type: DataTypes.STRING,
+        validate: {
+            len: [2, 100],
+            is: validate.name,
+        },
     },
     username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        is: validate.username,
-      },
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+            is: validate.username,
+        },
     },
     email: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: false,
-      validate: {
-        isEmail: true,
-      },
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+        validate: {
+            isEmail: true,
+        },
     },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: [0, 60]
+            len: [0, 60],
+            is: validate.password
         }
     },
     emailCode: {
@@ -61,7 +62,7 @@ User.init(
         defaultValue: DataTypes.UUIDV4,
         allowNull: true
     }
-}, { 
+}, {
     sequelize, 
     modelName: 'user', 
     hooks: {
@@ -78,24 +79,27 @@ User.init(
 })
 Project.init({
     id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
     },
     name: {
-      type: DataTypes.STRING,
-      allowNull: false,
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          is: validate.name,
+        },
     },
     creator: {
-      type: DataTypes.UUID,
-      allowNull: false,
+        type: DataTypes.UUID,
+        allowNull: false,
     },
     description: {
         type: DataTypes.STRING(5000)
     },
     endpoint: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
     }
 }, { 
     sequelize, 
@@ -134,6 +138,9 @@ Bug.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: validate.username,
+      },
     },
     contributorid: {
       type: DataTypes.UUID,

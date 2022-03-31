@@ -127,7 +127,6 @@ Contributor.init(
     modelName: 'contributor',
   }
 );
-
 Bug.init(
   {
     id: {

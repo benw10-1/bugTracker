@@ -65,10 +65,6 @@ function postLogin(user, pass) {
     })
 }
 
-function loggedIn() {
-    
-}
-
 function toggleDropdown(cond) {
     if (!dropdown) return
     if (typeof cond === "undefined") {

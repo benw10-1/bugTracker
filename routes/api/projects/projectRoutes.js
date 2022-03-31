@@ -1,7 +1,26 @@
 const router = require('express').Router();
-const { Project, Contributor } = require('../../../models/models');
+const { Project, Contributor, Bug } = require('../../../models/models');
 const withAuth = require('../../../utils/auth');
 
+router.get('/', withAuth, async (req, res) => {
+  try {
+    const contributors = await Contributor.findAll({
+      where: {
+        userid: req.session.loggedIn
+      }
+    });
+    if (!contributors) throw "No projects!"
+    let projects = []
+    for (const x of contributors) {
+      projects.push(await Project.getByPk(x.projectid))
+    }
+    if (projects.length === 0) throw "Not a valid project!"
+
+    res.status(200).json(projects);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 router.post('/', withAuth, async (req, res) => {
   try {
     const newProject = await Project.create({
@@ -10,6 +29,37 @@ router.post('/', withAuth, async (req, res) => {
     });
 
     res.status(200).json(newProject);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.get('/:id/contributors', withAuth, async (req, res) => {
+  try {
+    const project = await Project.findByPk(req.params.id)
+    if (!project) throw "Not a valid project!"
+    const contributors = Contributor.findAll({
+        where: {
+          projectid: project.id
+        }
+    })
+
+    res.status(200).json(contributors);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+router.get('/:id/bugs', withAuth, async (req, res) => {
+  try {
+    const project = await Project.findByPk(req.params.id)
+    if (!project) throw "Not a valid project!"
+    const bugs = Bug.findAll({
+        where: {
+          projectid: project.id
+        }
+    })
+
+    res.status(200).json(bugs);
   } catch (err) {
     res.status(400).json(err);
   }

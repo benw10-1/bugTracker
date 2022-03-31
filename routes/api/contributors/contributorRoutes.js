@@ -2,13 +2,14 @@ const router = require('express').Router();
 const { Contributor } = require('../../../models/models');
 const withAuth = require('../../../utils/auth');
 
-router.post('/', withAuth, async (req, res) => {
+router.post('/create', withAuth, async (req, res) => {
   try {
-    const newContributor = await Contributor.create({
-      //Body should contain projectid
-      ...req.body,
-      userid: req.session.loggedIn,
-    });
+    if (!req.body) throw {
+      error: "Not present",
+      user: (req.body && req.body.user),
+      password: (req.body && req.body.password)
+    }
+    const newContributor = await Contributor.create(req.body);
     res.status(200).json(newContributor);
   } catch (err) {
     res.status(400).json(err);

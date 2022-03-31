@@ -4,6 +4,7 @@
   "description": "Simple chat application built using Express",
   "main": "server.js",
   "scripts": {
+    "seed": "node seeds/seed.js",
     "test": "test"
   },
   "author": "Ben Wirth",

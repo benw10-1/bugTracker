@@ -1,118 +1,118 @@
 html {
-    background-color: #F1FAEE;
-    font-family: "inter", "Lato", sans-serif;
-    color: #A8DADC;
-    font-size: 24px;
+  background-color: #f1faee;
+  font-family: 'inter', 'Lato', sans-serif;
+  color: #a8dadc;
+  font-size: 24px;
 }
 
 header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    position: sticky;
-    background-color: #1D3557;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  position: sticky;
+  background-color: #1d3557;
 }
 input {
-    background: white;
-    outline: none;
-    border: 1px solid #E63946;
-    border-radius: 5px;
-    padding: .5em;
+  background: white;
+  outline: none;
+  border: 1px solid #e63946;
+  border-radius: 5px;
+  padding: 0.5em;
 }
 label {
-    display: block;
-    width: 100%;
-    padding: 0 3px 3px 0;
-    margin-bottom: 5px;
-    font-size: 1em;
-    text-align: center;
-    font-weight: bolder;
-    color: #E63946;
-    user-select: none;
+  display: block;
+  width: 100%;
+  padding: 0 3px 3px 0;
+  margin-bottom: 5px;
+  font-size: 1em;
+  text-align: center;
+  font-weight: bolder;
+  color: #e63946;
+  user-select: none;
 }
 .login-box {
-    position: relative;
-    margin-right: 5%;
-    width: 20%;
+  position: relative;
+  margin-right: 5%;
+  width: 20%;
 }
 .login {
-    text-align: center;
-    display: flex;
-    height: 100%;
-    justify-content: right;
-    align-items: center;
+  text-align: center;
+  display: flex;
+  height: 100%;
+  justify-content: right;
+  align-items: center;
 }
 .showPopup {
-    outline: none;
-    cursor: pointer;
-    border: #98C1D9 solid 2px;
-    padding: 10px 25px;
-    border-radius: 10px;
-    user-select: none;
-    -moz-user-select: none;
-    transition: all .3s;
-    font-weight: bolder;
+  outline: none;
+  cursor: pointer;
+  border: #98c1d9 solid 2px;
+  padding: 10px 25px;
+  border-radius: 10px;
+  user-select: none;
+  -moz-user-select: none;
+  transition: all 0.3s;
+  font-weight: bolder;
 }
 .showPopup:hover {
-    background-color: #98C1D9;
-    color: #1D3557; 
+  background-color: #98c1d9;
+  color: #1d3557;
 }
 .showPopup.selected {
-    background-color: #98C1D9;
-    color: #1D3557; 
+  background-color: #98c1d9;
+  color: #1d3557;
 }
 .dropdown {
-    position: absolute;
-    background-color: #F1FAEE;
-    width: fit-content;
-    top : 75%;
-    right: -10%;
-    padding: 20px 20px;
-    display: none;
-    border-radius: 5px;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  position: absolute;
+  background-color: #f1faee;
+  width: fit-content;
+  top: 75%;
+  right: -10%;
+  padding: 20px 20px;
+  display: none;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 .sendLogin {
-    margin-bottom: 10px;
-    width: 100%;
-    background-color: #F1FAEE;
-    border: solid 2px green;
-    color: green;
-    padding: 5px 0;
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
-    -moz-user-select: none;
-    transition: all .3s;
-    font-weight: bolder;
-    border-radius: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #f1faee;
+  border: solid 2px green;
+  color: green;
+  padding: 5px 0;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
+  transition: all 0.3s;
+  font-weight: bolder;
+  border-radius: 5px;
 }
 .sendLogin.selected {
-    background-color: #F1FAEE;
-    color: green;
+  background-color: #f1faee;
+  color: green;
 }
 .sendLogin:hover {
-    background-color: green;
-    color: #A8DADC;
+  background-color: green;
+  color: #a8dadc;
 }
 .dropdown input {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 .toggle-create {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 .dropdown.shown {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .create {
-    color: #457B9D;
-    font-weight: bolder;
-    cursor: pointer;
+  color: #457b9d;
+  font-weight: bolder;
+  cursor: pointer;
 }
 .logo {
-    cursor: pointer;
-    padding: 25px;
+  cursor: pointer;
+  padding: 25px;
 }

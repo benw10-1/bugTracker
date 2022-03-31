@@ -10,16 +10,16 @@
     <title>login page</title>
   </head>
   <body>
-    <nav>
+    <nav id="login-nav">
       <h1>
-        <a href="./main.html"><i class="fa-solid fa-angle-left"></i> Back</a>
+        <a href="./" id="login-back"><i class="fa-solid fa-angle-left" id="login-backarrow"></i> </a>
       </h1>
     </nav>
-    <div class="main-signup" id="signup-form">
+    <div class="main-signup login-form" id="signup-form">
         <form>
-          <div class="form-header">
-              <a href="#"><i class="fa-solid fa-bug-slash"></i> Bug Tracker</a>
-            <h2>Login</h2>
+          <div class="form-header" id="form-top">
+            <span id="login-logo"><i class="fa-solid fa-bug-slash"></i> Bug Tracker</span>
+            <h2 id="login-header">Login</h2>
           </div>
           <!-- <div class="input">
             <input
@@ -50,7 +50,7 @@
             />
           </div>
         <div class="signup-btn">
-            <button type="submit" class="form-btn btn btn-primary">
+            <button type="submit" class="login-button">
               Login
             </button>
         </div>

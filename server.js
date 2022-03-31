@@ -5,10 +5,11 @@ const app = express();
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
-const hdbx = handlebars.engine();
+const helpers = require('./utils/helpers');
+const hdbx = handlebars.create({ helpers });
 const mainRoute = require('./routes/routes');
 
-app.engine('handlebars', hdbx);
+app.engine('handlebars', hdbx.engine);
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
@@ -28,7 +29,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/", mainRoute);
+app.use('/', mainRoute);
 app.use(express.static('statics'));
 
 sequelize.sync({ force: false }).then(() => {

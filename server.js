@@ -9,11 +9,9 @@ const helpers = require('./utils/helpers');
 const hdbx = handlebars.engine();
 const mainRoute = require('./routes/routes');
 
-app.use("/", mainRoute);
-app.use(express.static('statics'));
 app.engine('handlebars', hdbx);
 app.set('view engine', 'handlebars');
-app.set('views', '/views');
+app.set('views', './views');
 
 app.use(
   session({
@@ -31,7 +29,9 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use('/', mainRoute);
+app.use(express.static('statics'));
 
 sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}.`))
-})
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}.`));
+});

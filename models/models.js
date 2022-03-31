@@ -34,12 +34,12 @@ User.init(
       },
     },
     username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        // is: validate.username,
-      },
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+            is: validate.username,
+        },
     },
     email: {
       type: DataTypes.STRING,
@@ -54,7 +54,7 @@ User.init(
       allowNull: false,
       validate: {
         len: [0, 60],
-        // is: validate.password,
+        is: validate.password,
       },
     },
     emailCode: {

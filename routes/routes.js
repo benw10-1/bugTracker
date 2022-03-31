@@ -14,6 +14,18 @@ router.get("", async (req, res) => {
 
 router.use("/api", api)
 
+router.get("/login", async (req, res) => {
+    try {
+        res.render("login")
+    }
+    catch (err) {
+        console.log(err)
+        res.status(400).json({
+            "status": "error",
+            "data": err
+        })
+    }
+})
 router.get("/projects", async (req, res) => {
     // TODO: IF NOT LOGGED IN REDIRECT)
     if (!req.session.loggedIn) res.redirect("/")

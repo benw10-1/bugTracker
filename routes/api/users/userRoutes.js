@@ -3,7 +3,7 @@ var router = express.Router()
 const { Op } = require("sequelize")
 const mailer = require('../../../email/mailer')
 
-const { User, Project } = require("../../../models/models")
+const { User } = require("../../../models/models")
 
 router.post("/create", async (req, res) => {
     try {
@@ -27,7 +27,6 @@ router.post("/create", async (req, res) => {
         })
     }
 })
-// TODO Update
 router.post("/login", async (req, res) => {
     try {
         // if (!req.session.home) throw "Incorrect origin!"
@@ -74,7 +73,6 @@ router.post("/logout", (req, res) => {
     } 
     else res.status(404).end()
 })
-
 router.get("/resendVerification", async (req, res) => {
     try {
         if (!req.session.loggedIn) throw "Not logged in!"

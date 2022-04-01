@@ -16,6 +16,7 @@ class Bug extends Model {}
 const validate = {
   username: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
   name: /[a-z]/gi,
+  //requires at least one uppercase letter, one number, one special character, one lowercase letter, and a length of at least 8.
   password:
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/,
 };

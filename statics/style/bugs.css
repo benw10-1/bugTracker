@@ -1,0 +1,38 @@
+.bug-body {
+  overflow: visible;
+}
+
+.bug-nav {
+  padding: 1rem;
+  margin-left: 1rem;
+}
+
+.bug-page-header {
+  color: white;
+}
+
+.bug-add {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+
+.bug-add-btn {
+  width: 6rem;
+  height: 2rem;
+  /* margin-left: 2rem; */
+  /* text-align: center; */
+}
+
+.bug-table {
+  max-width: 80%;
+  text-align: center;
+  margin: 3rem auto;
+}
+
+@media screen and (min-width: 1024px) {
+  .bug-add-btn {
+    margin-right: 3rem;
+  }
+}

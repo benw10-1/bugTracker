@@ -1,1 +1,72 @@
-PROJECTS PAGE
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>login page</title>
+    <link
+      rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"/> 
+    <link rel="stylesheet" href="../statics/style/dashboard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  </head>
+  
+  <body>
+    <nav class="nav bg-light">
+        <span id='main-logo' class="mx-4 my-2 h4"><i class='fa-solid fa-bug-slash'></i>
+            Bug Tracker</span>
+      <ul class="mx-4 my-2">
+        <button id="dashboard-btn" class="btn-sm mx-2">Dashboard</button>
+        <button id="logout-btn" class="btn-sm">Logout</button>
+      </ul>
+    </nav>
+    <main class="main-content">
+      <div class="table-header">
+        <h6>Projects</h6>
+        <button class="btn btn-success mx-2">New project</button>
+      </div>
+      <table class="table table-hover thead-light table-stripped 5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Project Name</th>
+            <th scope="col">Contributors</th>
+            <th scope="col">Bugs</th> 
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Larry</td>
+            <td>Larry</td>
+            <td>@twitter</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Aldreane</td>
+            <td>Aldreane</td>
+            <td>@facebook</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

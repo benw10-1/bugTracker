@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    background-image: url('../images/blue.png');
+    background-position: center;
+  }
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  .nav ul {
+    display: flex;
+    align-items: center;
+  }
+  #main-logo {
+    color: rgb(105, 104, 104);
+  }
+  .nav ul a {
+    margin-right: 1.3rem;
+    text-decoration: none;
+    list-style: none;
+    color: black;
+  }
+  .nav ul a:hover {
+    text-decoration: underline;
+  }
+  #logout-btn{
+    height: 1.8rem;
+    border-style: none;
+    border: 1px solid red;
+    padding: 0 0.7rem;
+    background-color: transparent;
+    color: red;
+    border-radius: 5px;
+    font-size: 0.8rem;
+  }
+  #logout-btn:hover {
+    background-color: red;
+    color: white;
+    transition: 0.4s;
+  }
+  #dashboard-btn {
+    height: 1.8rem;
+    border-style: none;
+    border: 1px solid dodgerblue;
+    padding: 0 0.7rem;
+    background-color: transparent;
+    color: dodgerblue;
+    border-radius: 5px;
+    font-size: 0.8rem;
+  }
+  #dashboard-btn:hover {
+    background-color: dodgerblue;
+    color: white;
+    transition: 0.4s;
+  }
+  .main-content {
+    max-width: 70%;
+    margin: 6rem auto;
+    background-color: rgba(219, 213, 213, 0.4);
+    color: white;
+    border-radius: 7px 7px 0 0;
+  }
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+  }
+  .table-header h6 {
+    margin-left: 0.4rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+  }
+  .table-header button {
+    font-size: 0.7rem;
+    border-radius: 5px;
+  }
+  table th {
+    font-weight: bold;
+    color: white;
+  }
+  td {
+    color: white;
+  }

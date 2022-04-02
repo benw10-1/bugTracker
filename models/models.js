@@ -16,7 +16,9 @@ class Bug extends Model {}
 const validate = {
   username: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
   name: /[a-z]/gi,
-  password: /^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$/,
+  //requires at least one uppercase letter, one number, one special character, one lowercase letter, and a length of at least 8.
+  password:
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/,
 };
 
 User.init(
@@ -34,12 +36,12 @@ User.init(
       },
     },
     username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            is: validate.username,
-        },
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        is: validate.username,
+      },
     },
     email: {
       type: DataTypes.STRING,
@@ -53,7 +55,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [0, 60],
         is: validate.password,
       },
     },

@@ -6,15 +6,15 @@ router.get('/', withAuth, async (req, res) => {
   try {
     const contributors = await Contributor.findAll({
       where: {
-        userid: req.session.loggedIn
-      }
+        userid: req.session.loggedIn,
+      },
     });
-    if (!contributors) throw "No projects!"
-    let projects = []
+    if (!contributors) throw 'No projects!';
+    let projects = [];
     for (const x of contributors) {
-      projects.push(await Project.getByPk(x.projectid))
+      projects.push(await Project.getByPk(x.projectid));
     }
-    if (projects.length === 0) throw "Not a valid project!"
+    if (projects.length === 0) throw 'Not a valid project!';
 
     res.status(200).json(projects);
   } catch (err) {
@@ -25,7 +25,7 @@ router.post('/', withAuth, async (req, res) => {
   try {
     const newProject = await Project.create({
       ...req.body,
-      creator: req.session.user_id,
+      creator: req.session.loggedIn,
     });
 
     res.status(200).json(newProject);
@@ -36,13 +36,13 @@ router.post('/', withAuth, async (req, res) => {
 
 router.get('/:id/contributors', withAuth, async (req, res) => {
   try {
-    const project = await Project.findByPk(req.params.id)
-    if (!project) throw "Not a valid project!"
+    const project = await Project.findByPk(req.params.id);
+    if (!project) throw 'Not a valid project!';
     const contributors = Contributor.findAll({
-        where: {
-          projectid: project.id
-        }
-    })
+      where: {
+        projectid: project.id,
+      },
+    });
 
     res.status(200).json(contributors);
   } catch (err) {
@@ -51,13 +51,13 @@ router.get('/:id/contributors', withAuth, async (req, res) => {
 });
 router.get('/:id/bugs', withAuth, async (req, res) => {
   try {
-    const project = await Project.findByPk(req.params.id)
-    if (!project) throw "Not a valid project!"
+    const project = await Project.findByPk(req.params.id);
+    if (!project) throw 'Not a valid project!';
     const bugs = Bug.findAll({
-        where: {
-          projectid: project.id
-        }
-    })
+      where: {
+        projectid: project.id,
+      },
+    });
 
     res.status(200).json(bugs);
   } catch (err) {
@@ -70,12 +70,12 @@ router.get('/:id', withAuth, async (req, res) => {
     const contributor = await Contributor.findOne({
       where: {
         projectid: req.params.id,
-        userid: req.session.loggedIn
-      }
+        userid: req.session.loggedIn,
+      },
     });
-    if (!contributor) throw "Not a contributor of this project!"
-    const project = await Project.findByPk(req.params.id)
-    if (!project) throw "Not a valid project!"
+    if (!contributor) throw 'Not a contributor of this project!';
+    const project = await Project.findByPk(req.params.id);
+    if (!project) throw 'Not a valid project!';
 
     res.status(200).json(project);
   } catch (err) {

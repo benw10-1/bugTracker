@@ -16,8 +16,8 @@ function loadImages() {
 
 const newProjectHandler = async (event) => {
   event.preventDefault();
-
-  const response = await fetch('/api/projects');
+  const link = "window.origin + '/api/projects'"
+  return fetch(link).then(data => data.json())
 };
 
 const signupFormHandler = async (event) => {
@@ -48,6 +48,8 @@ function loadEls() {
   login = document.querySelector('.showPopup');
   dropdown = document.querySelector('.dropdown');
   sendLogin = document.querySelector('.sendLogin');
+
+  document.getElementById('signup-form').addEventListener('click', signupFormHandler);
 
   window.addEventListener('click', (event) => {
     if (event.target !== login && event.path.indexOf(dropdown) < 0)
@@ -121,7 +123,3 @@ function toggleDropdown(cond) {
 const goToProjectHandler = async (event) => {
   event.preventDefault();
 };
-
-document
-  .getElementById('signup-form')
-  .addEventListener('click', signupFormHandler);

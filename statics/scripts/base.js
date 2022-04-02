@@ -14,6 +14,12 @@ function loadImages() {
   }
 }
 
+const newProjectHandler = async (event) => {
+  event.preventDefault();
+
+  const response = await fetch('/api/projects');
+};
+
 const signupFormHandler = async (event) => {
   event.preventDefault();
 
@@ -111,6 +117,10 @@ function toggleDropdown(cond) {
     dropdown.classList.remove('shown');
   }
 }
+
+const goToProjectHandler = async (event) => {
+  event.preventDefault();
+};
 
 document
   .getElementById('signup-form')

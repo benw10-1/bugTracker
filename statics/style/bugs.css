@@ -25,10 +25,23 @@
   /* text-align: center; */
 }
 
-.bug-table {
-  max-width: 80%;
-  text-align: center;
+.bug-row-table {
+  display: flex;
   margin: 3rem auto;
+  max-width: 90%;
+}
+
+.bug-contributors {
+  background-color: rgba(219, 213, 213, 0.4);
+  color: white;
+  padding: 1rem;
+  margin-right: 1rem;
+  height: 10rem;
+}
+
+.bug-table {
+  text-align: center;
+  background-color: rgba(219, 213, 213, 0.4);
 }
 
 @media screen and (min-width: 1024px) {

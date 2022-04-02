@@ -19,7 +19,7 @@
   <body class='bug-body'>
     <nav class='bug-nav'>
       <h1>
-        <a href='./projects' id='login-back'><i
+        <a href='./dashboard' id='login-back'><i
             class='fa-solid fa-angle-left'
             id='login-backarrow'
           ></i>
@@ -31,53 +31,63 @@
       <h1 class='bug-page-header'>Project Name</h1>
       <button class='btn btn-success btn-sm bug-add-btn'>Add Issue</button>
     </div>
-    <table class='table bug-table'>
-      <thead>
-        <tr>
-          <th scope='col'>Issue Title</th>
-          <th scope='col'>Description</th>
-          <th scope='col'>Update / Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>navbar</td>
-          <td>fix color of nav</td>
-          <td>
-            <button class='btn btn-primary btn-sm'><i
-                class='fa-solid fa-pen-to-square'
-              ></i></button>
-            <button class='btn btn-danger btn-sm'><i
-                class='fa-solid fa-trash-can'
-              ></i></button>
-          </td>
-        </tr>
-        <tr>
-          <td>body</td>
-          <td>fix the font of the body</td>
-          <td>
-            <button class='btn btn-primary btn-sm'><i
-                class='fa-solid fa-pen-to-square'
-              ></i></button>
-            <button class='btn btn-danger btn-sm'><i
-                class='fa-solid fa-trash-can'
-              ></i></button>
-          </td>
-        </tr>
-        <tr>
-          <td>footer</td>
-          <td>fix size of the footer</td>
-          <td>
-            <button class='btn btn-primary btn-sm'><i
-                class='fa-solid fa-pen-to-square'
-              ></i></button>
-            <button class='btn btn-danger btn-sm'><i
-                class='fa-solid fa-trash-can'
-              ></i></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+    <div class='bug-row-table'>
+      <div class='bug-contributors'>
+        <h5>Contributors</h5>
+        <ul>
+          <li>calvin</li>
+          <li>Ben</li>
+          <li>Marcus</li>
+          <li>Kyle</li>
+        </ul>
+      </div>
+      <table class='table bug-table'>
+        <thead>
+          <tr>
+            <th scope='col'>Issue Title</th>
+            <th scope='col'>Description</th>
+            <th scope='col'>Update / Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>navbar</td>
+            <td>fix color of nav</td>
+            <td>
+              <button class='btn btn-primary btn-sm'><i
+                  class='fa-solid fa-pen-to-square'
+                ></i></button>
+              <button class='btn btn-danger btn-sm'><i
+                  class='fa-solid fa-trash-can'
+                ></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>body</td>
+            <td>fix the font of the body</td>
+            <td>
+              <button class='btn btn-primary btn-sm'><i
+                  class='fa-solid fa-pen-to-square'
+                ></i></button>
+              <button class='btn btn-danger btn-sm'><i
+                  class='fa-solid fa-trash-can'
+                ></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>footer</td>
+            <td>fix size of the footer</td>
+            <td>
+              <button class='btn btn-primary btn-sm'><i
+                  class='fa-solid fa-pen-to-square'
+                ></i></button>
+              <button class='btn btn-danger btn-sm'><i
+                  class='fa-solid fa-trash-can'
+                ></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

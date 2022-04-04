@@ -1,51 +1,180 @@
-.bug-body {
-  overflow: visible;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;800&display=swap');
+
+:root {
+  --main-font: 'Montserrat', sans-serif;
+  --form-color: rgba(219, 213, 213, 0.4);
+  --dark-font-color: #1b1a1a;
+  --white-font-color: #f4f4f4;
+  --button-color: #3369ff;
+  --button-hover-color: #0037d0;
+  --button-active-color: #002da9;
+  --create-contributor-btn-color: #03c03c;
+  --create-contributor-hover: #17b169;
+  --create-contributor-active: #006241;
 }
 
-.bug-nav {
+/* Back button */
+.back-container {
   padding: 1rem;
-  margin-left: 1rem;
 }
 
-.bug-page-header {
-  color: white;
+.back-container h1 a {
+  color: var(--dark-font-color);
+  text-decoration: none;
+  font-size: 0.9rem;
 }
 
-.bug-add {
+.back-container h1 a:hover {
+  color: var(--button-hover-color);
+  transition: 0.3s;
+}
+
+/* main container */
+.main-bug-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project-name-container {
+  margin-bottom: 1rem;
+}
+
+.project-name-container h6 {
+  font-weight: 800;
+}
+
+/* contributors container */
+.contributors-container {
+  width: 18rem;
+  margin-bottom: 2rem;
+  background-color: var(--form-color);
+}
+
+.contributors-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
+  padding: 0.5rem 1rem;
 }
 
-.bug-add-btn {
-  width: 6rem;
-  height: 2rem;
-  /* margin-left: 2rem; */
-  /* text-align: center; */
+.contributors-header h6 {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
 }
 
-.bug-row-table {
+.add-contributor-btn {
+  color: var(--white-font-color);
+  height: 1.5rem;
+  width: 5rem;
+  font-size: 0.5rem;
+  border-style: none;
+  padding: 0.7em 1.7em;
+  border-radius: 0.2em;
+  font-weight: 400;
+  background-color: var(--create-contributor-btn-color);
+  box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
+    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+}
+
+.add-contributor-btn:hover {
+  background-color: var(--create-contributor-hover);
+  transition: 0.3s;
+}
+
+.add-contributor-btn:active {
+  background-color: var(--create-contributor-active);
+}
+
+.table-contributors thead {
+  background-image: url('../images/blue.png');
+  color: var(--white-font-color);
+  font-size: 0.5rem;
+  font-weight: 800;
+}
+
+.table-contributors tbody {
+  font-size: 0.6rem;
+}
+
+/* bug container */
+.bugs-container {
+  width: 18rem;
+  background-color: var(--form-color);
+}
+
+.bugs-header {
   display: flex;
-  margin: 3rem auto;
-  max-width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
 }
 
-.bug-contributors {
-  background-color: rgba(219, 213, 213, 0.4);
-  color: white;
-  padding: 1rem;
-  margin-right: 1rem;
-  height: 10rem;
+.add-bug-btn {
+  color: var(--white-font-color);
+  height: 1.5rem;
+  width: 5rem;
+  font-size: 0.5rem;
+  border-style: none;
+  padding: 0.7em 1.7em;
+  border-radius: 0.2em;
+  font-weight: 400;
+  background-color: var(--create-contributor-btn-color);
+  box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
+    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
 }
 
-.bug-table {
-  text-align: center;
-  background-color: rgba(219, 213, 213, 0.4);
+.add-bug-btn:hover {
+  background-color: var(--create-contributor-hover);
+  transition: 0.3s;
+}
+
+.add-bug-btn:active {
+  background-color: var(--create-contributor-active);
+}
+
+.bugs-header h6 {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.table-bug thead {
+  background-image: url('../images/blue.png');
+  color: var(--white-font-color);
+  font-size: 0.5rem;
+  font-weight: 800;
+}
+
+.table-bug tbody {
+  font-size: 0.6rem;
+}
+
+@media screen and (min-width: 768px) {
+  .contributors-container {
+    width: 25rem;
+  }
+  .bugs-container {
+    width: 25rem;
+  }
 }
 
 @media screen and (min-width: 1024px) {
-  .bug-add-btn {
-    margin-right: 3rem;
+  .contributors-container {
+    width: 30rem;
+  }
+  .bugs-container {
+    width: 30rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .contributors-container {
+    width: 40rem;
+  }
+  .bugs-container {
+    width: 40rem;
   }
 }

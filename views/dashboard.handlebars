@@ -5,64 +5,68 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <title>login page</title>
-    <link
-      rel='stylesheet'
-      href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
-    />
-    <link rel='stylesheet' href='../statics/style/dashboard.css' />
+    <link rel='stylesheet' href='/style/dashboard.css' />
     <link
       rel='stylesheet'
       href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'
     />
+    <link
+      rel='stylesheet'
+      href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'
+      integrity='sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3'
+      crossorigin='anonymous'
+    />
+    <link href='../statics/style/dashboard.css' rel='stylesheet' />
+
   </head>
 
   <body>
-    <nav class='nav bg-light'>
-      <span id='main-logo' class='mx-4 my-2 h4'><i
-          class='fa-solid fa-bug-slash'
-        ></i>
-        Bug Tracker</span>
-      <ul class='mx-4 my-2'>
-        <button id='logout-btn' class='btn-sm'>Logout</button>
-      </ul>
+    <nav class='dashboard-nav'>
+      <div id='main-logo'><i class='fa-solid fa-bug-slash'></i>Bug Tracker</div>
+      <div id='nav-login-btn-container'>
+        {{! <a class='nav-login' href='./login'><button
+            class='btn btn-sm'
+          >Login</button></a> }}
+        <button class='logout-btn'><a href='#'></a>Logout</button>
+      </div>
     </nav>
     <main class='main-content'>
-
       <div class='table-header'>
         <h6>Projects</h6>
-        <button id='new-project' class='btn btn-success mx-2'><a
+        <button id='new-project' class='add-bug-btn'><a
             href='/projects/create'
-          >New project</a></button>
+          ></a>New project</button>
       </div>
-      <table class='table thead-light table-stripped 5'>
-        <thead>
-          <tr>
-            <th scope='col'>#</th>
-            <th scope='col'>Project Name</th>
-            <th scope='col'>Contributors</th>
-            <th scope='col'>Description</th>
-          </tr>
-        </thead>
-        {{#if projects.length}}
+      <div class='projects-table-container'>
+        <table class='table'>
+          <thead class='thead-dark'>
+            <tr>
+              <th scope='col'>#</th>
+              <th scope='col'>PROJECT</th>
+              <th scope='col'>DESCRIPTION</th>
+              <th scope='col'>CONTRIBUTORS</th>
+            </tr>
+          </thead>
           <tbody>
-            {{#each projects as |project|}}
-              {{#each contributorList as |contributors|}}
-                <tr>
-                  <td>{{project.id}}</td>
-                  <td><a
-                      href='/projects/{{project.id}}'
-                    >{{project.name}}</a></td>
-                  <td>{{project.description}}</td>
-                  {{#each contributors as |contributor|}}
-                    <td>{{contributor.name}}</td>
-                  {{/each}}
-                </tr>
+            {{#if projects.length}}
+              {{#each projects as |project|}}
+                {{#each contributorList as |contributors|}}
+                  <tr>
+                    <td>{{project.id}}</td>
+                    <td><a
+                        href='/projects/{{project.id}}'
+                      >{{project.name}}</a></td>
+                    <td>{{project.description}}</td>
+                    {{#each contributors as |contributor|}}
+                      <td>{{contributor.name}}</td>
+                    {{/each}}
+                  </tr>
+                {{/each}}
               {{/each}}
-            {{/each}}
+            {{/if}}
           </tbody>
-        {{/if}}
-      </table>
-
+        </table>
+      </div>
     </main>
     <script
       src='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js'

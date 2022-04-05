@@ -10,7 +10,7 @@ router.post('/create', async (req, res) => {
     // if (!req.session.home) throw "Incorrect origin!"
     // TODO: FILTER ALLOWED CHARACTERS
     if (!req.body || !req.body.password) throw 'Data not found!';
-    req.body.id = undefined
+    req.body.id = undefined;
     let newUser = await User.create(req.body);
     req.session.loggedIn = newUser.id;
     delete newUser.password;
@@ -29,6 +29,7 @@ router.post('/create', async (req, res) => {
 });
 router.post('/login', async (req, res) => {
   try {
+    console.log(req.body);
     // if (!req.session.home) throw "Incorrect origin!"
     if (!req.body || !req.body.password || !req.body.user)
       throw {
@@ -49,7 +50,7 @@ router.post('/login', async (req, res) => {
     if (!foundUser) throw 'User not found!';
     let correctPass = foundUser.checkPassword(req.body.password);
     if (!correctPass) throw 'Incorrect password!';
-
+    if (foundUser.emailCode != null) throw 'User not verified!';
     req.session.save(() => {
       req.session.loggedIn = foundUser.id;
       res.status(200).json({

@@ -82,4 +82,8 @@ router.get('/dashboard', async (req, res) => {
   }
 });
 
+router.get('/bugs', (req, res) => {
+  res.render('bugs');
+});
+
 module.exports = router;

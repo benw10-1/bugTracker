@@ -8,70 +8,109 @@
   --button-color: #3369ff;
   --button-hover-color: #0037d0;
   --button-active-color: #002da9;
-  --logout-btn-color: #c6011f;
-  --logout-btn-hover: #f40009;
-  --logout-btn-active: #fd5c63;
-  --create-bug-btn-color: #03c03c;
-  --create-bug-hover: #17b169;
-  --create-bug-active: #006241;
+  --create-contributor-btn-color: #03c03c;
+  --create-contributor-hover: #17b169;
+  --create-contributor-active: #006241;
 }
 
-/* Navbar */
-.dashboard-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* Back button */
+.back-container {
   padding: 1rem;
-  background-image: url('../images/blue.png');
 }
 
-.logout-btn {
-  background-color: var(--logout-btn-color);
+.back-container h1 a {
+  color: var(--dark-font-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.back-container h1 a:hover {
+  color: var(--button-hover-color);
+  transition: 0.3s;
+}
+
+/* main container */
+.main-bug-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project-name-container {
+  margin-bottom: 1rem;
+}
+
+.project-name-container h6 {
+  font-weight: 800;
+}
+
+/* contributors container */
+.contributors-container {
+  width: 18rem;
+  background-color: var(--form-color);
+}
+
+.contributors-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.contributors-header h6 {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.add-contributor-btn {
   color: var(--white-font-color);
   height: 1.5rem;
-  width: 4rem;
+  width: 5rem;
   font-size: 0.5rem;
   border-style: none;
   padding: 0.7em 1.7em;
   border-radius: 0.2em;
   font-weight: 400;
+  background-color: var(--create-contributor-btn-color);
   box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
     inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
     inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
 }
 
-.logout-btn:hover {
-  background-color: var(--logout-btn-hover);
+.add-contributor-btn:hover {
+  background-color: var(--create-contributor-hover);
   transition: 0.3s;
 }
 
-.logout-btn:active {
-  background-color: var(--logout-btn-active);
+.add-contributor-btn:active {
+  background-color: var(--create-contributor-active);
 }
 
-/* Main dashboard */
-.main-content {
-  height: 100vh;
+.table-contributors thead {
+  background-image: url('../images/blue.png');
+  color: var(--white-font-color);
+  font-size: 0.5rem;
+  font-weight: 800;
 }
 
-.projects-table-container {
+.table-contributors tbody {
+  font-size: 0.6rem;
+}
+
+/* bug container */
+.bugs-container {
   width: 18rem;
-  margin: 0 auto;
+  margin-bottom: 2rem;
+
   background-color: var(--form-color);
 }
 
-.table-header {
+.bugs-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 1rem;
-  width: 18rem;
-  margin: 2rem auto 0;
-  background-color: var(--form-color);
-}
-
-.table-header h6 {
-  font-size: 0.8rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
 }
 
 .add-bug-btn {
@@ -83,29 +122,35 @@
   padding: 0.7em 1.7em;
   border-radius: 0.2em;
   font-weight: 400;
-  background-color: var(--create-bug-btn-color);
+  background-color: var(--create-contributor-btn-color);
   box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
     inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
     inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
 }
 
 .add-bug-btn:hover {
-  background-color: var(--create-bug-hover);
+  background-color: var(--create-contributor-hover);
   transition: 0.3s;
 }
 
 .add-bug-btn:active {
-  background-color: var(--create-bug-active);
+  background-color: var(--create-contributor-active);
 }
 
-.table thead {
+.bugs-header h6 {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.table-bug thead {
   background-image: url('../images/blue.png');
   color: var(--white-font-color);
+  font-size: 0.5rem;
   font-weight: 800;
 }
 
-.table thead tr th {
-  font-size: 0.5rem;
+.table-bug tbody {
+  font-size: 0.6rem;
 }
 
 .modal-questions {
@@ -135,31 +180,25 @@
 }
 
 @media screen and (min-width: 768px) {
-  .projects-table-container {
-    width: 25rem;
-  }
-
-  .table-header {
+  .bugs-container {
     width: 25rem;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  .projects-table-container {
-    width: 30rem;
+  .contributors-container {
+    width: 20rem;
   }
-
-  .table-header {
+  .bugs-container {
     width: 30rem;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .projects-table-container {
-    width: 45rem;
+  .contributors-container {
+    width: 25rem;
   }
-
-  .table-header {
-    width: 45rem;
+  .bugs-container {
+    width: 40rem;
   }
 }

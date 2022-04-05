@@ -69,6 +69,11 @@ router.get('/dashboard', async (req, res) => {
     // });
 
     // const user = userData.get({ plain: true });
+
+    // if (user.emailCode != null) {
+    //   res.render('home');
+    //   return;
+    // }
     let context = {
       page: 'Dashboard',
       loggedIn: req.session.loggedIn,

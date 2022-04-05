@@ -1,4 +1,4 @@
-const { User } = require('../../../models/models');
+const { User } = require('../models/models');
 
 const withAuth = async (req, res, next) => {
   // If the user is not logged in, redirect the request to the login route

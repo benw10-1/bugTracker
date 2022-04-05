@@ -48,8 +48,8 @@ router.post('/login', async (req, res) => {
 
     if (!foundUser) throw 'User not found!';
     let correctPass = foundUser.checkPassword(req.body.password);
-
     if (!correctPass) throw 'Incorrect password!';
+
     req.session.save(() => {
       req.session.loggedIn = foundUser.id;
       res.status(200).json({

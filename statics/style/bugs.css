@@ -48,7 +48,6 @@
 /* contributors container */
 .contributors-container {
   width: 18rem;
-  margin-bottom: 2rem;
   background-color: var(--form-color);
 }
 
@@ -102,6 +101,8 @@
 /* bug container */
 .bugs-container {
   width: 18rem;
+  margin-bottom: 2rem;
+
   background-color: var(--form-color);
 }
 
@@ -152,10 +153,33 @@
   font-size: 0.6rem;
 }
 
+.modal-questions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-questions label {
+  color: var(--dark-font-color);
+  text-align: left;
+  font-size: 0.7rem;
+}
+
+.modal-questions input {
+  border: 1px solid var(--button-hover-color);
+  width: 100%;
+  height: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.5rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.modal-questions input:focus {
+  border: 2px solid var(--button-hover-color);
+}
+
 @media screen and (min-width: 768px) {
-  .contributors-container {
-    width: 25rem;
-  }
   .bugs-container {
     width: 25rem;
   }
@@ -163,7 +187,7 @@
 
 @media screen and (min-width: 1024px) {
   .contributors-container {
-    width: 30rem;
+    width: 20rem;
   }
   .bugs-container {
     width: 30rem;
@@ -172,7 +196,7 @@
 
 @media screen and (min-width: 1200px) {
   .contributors-container {
-    width: 40rem;
+    width: 25rem;
   }
   .bugs-container {
     width: 40rem;

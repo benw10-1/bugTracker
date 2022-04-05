@@ -19,8 +19,7 @@ router.get("/:id", async (req, res) => {
             "status": "ok",
             "action": "verified"
         }
-        // res.render("login", context)
-        res.status(200).json(context)
+        res.redirect("/login")
     }
     catch (err) {
         console.log(err)

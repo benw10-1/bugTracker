@@ -26,14 +26,14 @@ router.get('/login', async (req, res) => {
     });
   }
 });
-router.get("/verifyEmail", async (req, res) => {
-    if (!req.session || !req.session.loggedIn) res.redirect("/")
-    let user = await User.findByPk(req.session.loggedIn).get({ plain:true })
-    let context = {
-        mail: user.email
-    }
-    res.render("verify", context)
-})
+router.get('/verifyEmail', async (req, res) => {
+  // if (!req.session || !req.session.loggedIn) res.redirect("/")
+  // let user = await User.findByPk(req.session.loggedIn).get({ plain:true })
+  // let context = {
+  //     mail: user.email
+  // }
+  res.render('verify');
+});
 router.get('/dashboard', async (req, res) => {
   // TODO: IF NOT LOGGED IN REDIRECT)
   try {

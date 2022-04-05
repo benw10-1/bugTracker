@@ -10,14 +10,25 @@ class User extends Model {
   }
 }
 class Contributor extends Model {}
-class Project extends Model {}
+class Project extends Model {
+  async hasAccess(user_id) {
+    if (this.owner === user_id) return true
+    const contributors = await Contributor.findAll({
+      where: {
+        projectid: this.id,
+        userid: user_id
+      },
+    });
+    return (contributors && contributors.length >= 1)
+  }
+}
 class Bug extends Model {}
-//requires at least one uppercase letter, one number, one special character, one lowercase letter, and a length of at least 8.
+// requires at least one uppercase letter, one number, one special character, one lowercase letter, and a length of at least 8.
 const validate = {
   username: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
   name: /[a-z]/gi,
   password:
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/,
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
 };
 
 User.init(

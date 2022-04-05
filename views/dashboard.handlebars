@@ -34,7 +34,6 @@
       <div class='table-header'>
         <h6>Projects</h6>
         <button
-          id='new-project'
           class='add-bug-btn'
           data-bs-toggle='modal'
           data-bs-target='#staticBackdrop'
@@ -61,14 +60,23 @@
               </div>
               <div class='modal-body modal-questions'>
                 <label>Project Name</label>
-                <input type='text' placeholder='Bug Tracker' />
+                <input
+                  id='new-proj-name'
+                  type='text'
+                  placeholder='Bug Tracker'
+                />
                 <label>Description</label>
                 <input
+                  id='new-proj-desc'
                   type='text'
                   placeholder='Application that helps track bugs...'
                 />
                 <label>Add contributors</label>
-                <input type='text' placeholder='Add username of contributor' />
+                <input
+                  id='new-proj-contr'
+                  type='text'
+                  placeholder='Add username of contributor'
+                />
               </div>
               <div class='modal-footer'>
                 <button
@@ -76,7 +84,11 @@
                   class='btn btn-secondary'
                   data-bs-dismiss='modal'
                 >Close</button>
-                <button type='button' class='btn btn-primary'>Add Project</button>
+                <button
+                  type='button'
+                  class='btn btn-primary'
+                  id='new-project'
+                >Add Project</button>
               </div>
             </div>
           </div>
@@ -89,7 +101,6 @@
               <th scope='col'>#</th>
               <th scope='col'>PROJECT</th>
               <th scope='col'>DESCRIPTION</th>
-              <th scope='col'>CONTRIBUTORS</th>
             </tr>
           </thead>
           <tbody>
@@ -99,7 +110,7 @@
                   <tr>
                     <td>{{project.id}}</td>
                     <td><a
-                        href='/projects/{{project.id}}'
+                        href='/projects/{{project.id}}/bugs'
                       >{{project.name}}</a></td>
                     <td>{{project.description}}</td>
                     {{#each contributors as |contributor|}}

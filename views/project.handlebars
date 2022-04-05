@@ -28,7 +28,7 @@
     </div>
     <main class='main-bug-container'>
       <div class='project-name-container'>
-        <h6>{project's name}</h6>
+        <h6>{{project.name}}</h6>
       </div>
       {{! <div class='contributors-container'>
         <div class='contributors-header'>
@@ -143,14 +143,20 @@
               <tr>
                 <th scope='col'>BUG TITLE</th>
                 <th scope='col'>DESCRIPTION</th>
+                <th scope='col'>USER</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>hello</td>
-                <td>hello</td>
-              </tr>
-            </tbody>
+            {{#if bugs.length}}
+              {{#each bugs as |bug|}}
+                <tbody>
+                  <tr>
+                    <td>{{bug.title}}</td>
+                    <td>{{bug.description}}</td>
+                    <td>{{bug.user.username}}</td>
+                  </tr>
+                </tbody>
+              {{/each}}
+            {{/if}}
           </table>
         </div>
       </div>

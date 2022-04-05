@@ -2,6 +2,7 @@ const express = require('express');
 const api = require('./api/apiRoutes');
 var router = express.Router();
 const { Project, User, Contributor, Bug } = require('../models/models');
+let contributorList;
 
 router.get('', async (req, res) => {
   if (!req.session) {
@@ -87,8 +88,36 @@ router.get('/dashboard', async (req, res) => {
   }
 });
 
-router.get('/bugs', (req, res) => {
-  res.render('bugs');
+router.get('projects/:id/bugs', async (req, res) => {
+  try {
+    const projectData = await Project.findByPk(req.params.id);
+
+    const project = projectData.get({ plain: true });
+
+    const bugData = await Bug.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+      where: {
+        projectid: req.params.id,
+      },
+    });
+
+    const bugs = bugData.map((bug) => {
+      bug.get({ plain: true });
+    });
+
+    const context = {
+      bugs,
+      project,
+    };
+    res.render('project', context);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 module.exports = router;

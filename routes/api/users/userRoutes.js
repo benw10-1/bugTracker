@@ -10,7 +10,7 @@ router.post('/create', async (req, res) => {
     // if (!req.session.home) throw "Incorrect origin!"
     // TODO: FILTER ALLOWED CHARACTERS
     if (!req.body || !req.body.password) throw 'Data not found!';
-    console.log(req.body);
+    req.body.id = undefined
     let newUser = await User.create(req.body);
     req.session.loggedIn = newUser.id;
     delete newUser.password;
@@ -65,7 +65,7 @@ router.post('/login', async (req, res) => {
     });
   }
 });
-router.post('/logout', (req, res) => {
+router.post('/logout', async (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
       res.status(204).end();

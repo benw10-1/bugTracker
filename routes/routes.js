@@ -2,7 +2,7 @@ const express = require('express');
 const api = require('./api/apiRoutes');
 var router = express.Router();
 const { Project, User, Contributor, Bug } = require('../models/models');
-const contributorList = [];
+
 router.get('', async (req, res) => {
   if (!req.session) {
     res.render('home', { page: 'Home' });

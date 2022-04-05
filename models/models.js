@@ -12,14 +12,14 @@ class User extends Model {
 class Contributor extends Model {}
 class Project extends Model {
   async hasAccess(user_id) {
-    if (this.owner === user_id) return true
+    if (this.owner === user_id) return true;
     const contributors = await Contributor.findAll({
       where: {
         projectid: this.id,
-        userid: user_id
+        userid: user_id,
       },
     });
-    return (contributors && contributors.length >= 1)
+    return contributors && contributors.length >= 1;
   }
 }
 class Bug extends Model {}
@@ -193,6 +193,9 @@ Project.belongsTo(User, {
 });
 Bug.belongsTo(Project, {
   foreignKey: 'projectid',
+});
+Bug.belongsTo(User, {
+  foreignKey: 'contributorid',
 });
 Contributor.belongsTo(Project, {
   foreignKey: 'projectid',

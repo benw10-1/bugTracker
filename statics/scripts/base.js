@@ -42,6 +42,27 @@ const signupFormHandler = async (event) => {
   }
 };
 
+const loginFormHandler = async (event) => {
+  event.preventDefault();
+
+  const username = document.querySelector('#login-email').value.trim();
+  const password = document.querySelector('#login-password').value.trim();
+
+  if (username && password) {
+    response = await fetch('/api/user/login', {
+      method: 'POST',
+      body: JSON.stringify({ user: username, password }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      document.location.replace('/dashboard');
+    } else {
+      alert(response.statusText);
+    }
+  }
+};
+
 function loadEls() {
   logo = document.querySelector('.logo');
   userCont = document.querySelector('.user-cont');
@@ -52,6 +73,10 @@ function loadEls() {
   document
     .getElementById('signup-form')
     .addEventListener('click', signupFormHandler);
+
+  document
+    .getElementById('login-button')
+    .addEventListener('click', loginFormHandler);
 
   window.addEventListener('click', (event) => {
     if (event.target !== login && event.path.indexOf(dropdown) < 0)

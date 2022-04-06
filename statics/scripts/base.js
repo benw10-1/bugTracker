@@ -17,8 +17,8 @@ function loadImages() {
 const newProjectHandler = async (event) => {
   event.preventDefault();
 
-  const projectName = document.getElementById('new-proj-name');
-  const projectDesc = document.getElementById('new-proj-desc');
+  const projectName = document.getElementById('new-proj-name').value;
+  const projectDesc = document.getElementById('new-proj-desc').value;
 
   if (projectName && projectDesc) {
     const response = await fetch('/api/projects', {

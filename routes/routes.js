@@ -2,7 +2,6 @@ const express = require('express');
 const api = require('./api/apiRoutes');
 var router = express.Router();
 const { Project, User, Contributor, Bug } = require('../models/models');
-let contributorList;
 
 router.get('', async (req, res) => {
   if (!req.session) {
@@ -36,51 +35,55 @@ router.get('/verifyEmail', async (req, res) => {
   res.render('verify');
 });
 router.get('/dashboard', async (req, res) => {
-  // TODO: IF NOT LOGGED IN REDIRECT)
   try {
-    // if (!req.session.loggedIn) {
-    //   res.redirect('/');
-    //   return;
-    // }
+    let projectCount = 1;
+    const countList = [];
+    const contributorList = [];
+    if (!req.session.loggedIn) {
+      res.redirect('/');
+      return;
+    }
     req.session.home = false;
-    // const projectData = await Project.findAll({
-    //   include: [
-    //     {
-    //       model: User,
-    //       attributes: ['username'],
-    //       where: { id: req.sessions.loggedIn },
-    //     },
-    //   ],
-    // });
+    const projectData = await Project.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['username'],
+        },
+      ],
+      where: { creator: req.session.loggedIn },
+    });
 
-    // const projects = projectData.map((project) => project.get({ plain: true }));
+    const projects = projectData.map((project) => project.get({ plain: true }));
 
-    // for (let each of projects) {
-    //   const contributorData = await Contributor.findAll({
-    //     where: { projectid: each.id },
-    //   });
-    //   const contributors = contributorData.map((contributor) => {
-    //     contributor.get({ plain: true });
-    //   });
-    //   contributorList.push(contributors);
-    // }
+    for (let eachProject of projects) {
+      const contributorData = await Contributor.findAll({
+        where: { projectid: eachProject.id },
+      });
+      const contributors = contributorData.map((contributor) => {
+        contributor.get({ plain: true });
+      });
+      if (contributors != []) contributorList.push(contributors);
+      countList.push(projectCount);
+      projectCount++;
+    }
+    const userData = await User.findOne({
+      where: { id: req.session.loggedIn },
+    });
+    const user = userData.get({ plain: true });
 
-    // const userData = await User.findOne({
-    //   where: { id: req.session.loggedIn },
-    // });
-
-    // const user = userData.get({ plain: true });
-
-    // if (user.emailCode != null) {
-    //   res.render('home');
-    //   return;
-    // }
+    if (user.emailCode != null) {
+      res.render('home');
+      return;
+    }
+    console.log(countList);
     let context = {
       page: 'Dashboard',
       loggedIn: req.session.loggedIn,
-      // projects,
-      // user,
-      // contributorList,
+      projects,
+      user,
+      contributorList,
+      countList,
     };
     res.render('dashboard', context);
   } catch (err) {
@@ -88,7 +91,7 @@ router.get('/dashboard', async (req, res) => {
   }
 });
 
-router.get('projects/:id/bugs', async (req, res) => {
+router.get('/projects/:id/bugs', async (req, res) => {
   try {
     const projectData = await Project.findByPk(req.params.id);
 
@@ -111,6 +114,7 @@ router.get('projects/:id/bugs', async (req, res) => {
     });
 
     const context = {
+      page: `${project.name} Bugs`,
       bugs,
       project,
     };

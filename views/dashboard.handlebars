@@ -101,18 +101,23 @@
           <tbody>
             {{#if projects.length}}
               {{#each projects as |project|}}
-                {{#each contributorList as |contributors|}}
-                  <tr>
-                    <td>{{project.id}}</td>
-                    <td><a
-                        href='/projects/{{project.id}}/bugs'
-                      >{{project.name}}</a></td>
-                    <td>{{project.description}}</td>
-                    {{#each contributors as |contributor|}}
-                      <td>{{contributor.name}}</td>
-                    {{/each}}
-                  </tr>
-                {{/each}}
+                <tr>
+                  {{#each ../countList as |projectCount|}}
+                    {{log projectCount}}
+                    <td>{{projectCount}}</td>
+                  {{/each}}
+                  <td><a
+                      href='/projects/{{project.id}}/bugs'
+                    >{{project.name}}</a></td>
+                  <td>{{project.description}}</td>
+                  {{#each ../contributorList as |contributors|}}
+                    {{#if contributors.length}}
+                      {{#each contributors as |contributor|}}
+                        <td>{{contributor.name}}</td>
+                      {{/each}}
+                    {{/if}}
+                  {{/each}}
+                </tr>
               {{/each}}
             {{/if}}
           </tbody>

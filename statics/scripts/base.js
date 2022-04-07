@@ -14,6 +14,27 @@ function loadImages() {
   }
 }
 
+const newBugHandler = async (event) => {
+  event.preventDefault();
+
+  const bugTitle = document.getElementById('new-bug-name').value;
+  const bugDesc = document.getElementById('new-bug-desc').value;
+
+  if (bugTitle && bugDesc) {
+    const response = await fetch('/api/bugs', {
+      method: 'POST',
+      body: JSON.stringify({ title: bugTitle, description: bugDesc }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      document.location.reload();
+    } else {
+      alert(response.statusText);
+    }
+  }
+};
+
 const newProjectHandler = async (event) => {
   event.preventDefault();
 
@@ -36,26 +57,30 @@ const newProjectHandler = async (event) => {
 };
 
 function formError(err) {
-  console.log(err)
+  console.log(err);
 }
 
 const signupFormHandler = async (event) => {
   event.preventDefault();
-  const username = document.querySelector('#name-signup')
-  const email = document.querySelector('#email-signup')
-  const password = document.querySelector('#password-signup')
+  const username = document.querySelector('#name-signup');
+  const email = document.querySelector('#email-signup');
+  const password = document.querySelector('#password-signup');
 
   if (username && email && password) {
     const response = await fetch('/api/user/create', {
       method: 'POST',
-      body: JSON.stringify({ username: username.value.trim(), email: email.value.trim(), password: password.value.trim() }),
+      body: JSON.stringify({
+        username: username.value.trim(),
+        email: email.value.trim(),
+        password: password.value.trim(),
+      }),
       headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
       document.location.replace('/verifyEmail');
     } else {
-      formError(response.json())
+      formError(response.json());
     }
   }
 };

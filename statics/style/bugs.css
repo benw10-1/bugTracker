@@ -17,6 +17,8 @@
   background-image: url('../images/blue.png');
   color: var(--white-font-color);
   padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: 800;
 }
 
 /* Back button */
@@ -27,7 +29,7 @@
 .back-container h1 a {
   color: var(--dark-font-color);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .back-container h1 a:hover {
@@ -50,6 +52,7 @@
 
 .project-name-container h6 {
   font-weight: 800;
+  font-size: 2rem;
 }
 
 /* contributors container */
@@ -187,15 +190,29 @@
 }
 
 @media screen and (min-width: 768px) {
+  .contributors-container {
+    padding: 1rem;
+  }
   .bugs-container {
     width: 25rem;
+    padding: 1rem;
   }
   .main-bug-container {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: -15rem;
+    margin-top: -20rem;
+  }
+  .add-contributor-btn {
+    height: 2rem;
+    width: 7rem;
+    font-size: 0.7rem;
+  }
+  .add-bug-btn {
+    height: 2rem;
+    width: 6rem;
+    font-size: 0.7rem;
   }
 }
 
@@ -211,7 +228,27 @@
     flex-direction: row-reverse;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: -15rem;
+    margin-top: -20rem;
+  }
+  .bugs-header h6 {
+    font-size: 1.5rem;
+  }
+
+  .table-bug thead {
+    font-size: 0.7rem;
+  }
+
+  .table-bug tbody {
+    font-size: 0.6rem;
+  }
+  .contributors-header h6 {
+    font-size: 1.5rem;
+  }
+  .member-header {
+    font-size: 0.7rem;
+  }
+  .member-data {
+    font-size: 0.7rem;
   }
 }
 

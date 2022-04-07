@@ -31,7 +31,7 @@ router.get("/:id", async (req, res) => {
         // login redirects to projects if logged in with no message
         // if not verified on projects page can't create projects and theres a banner telling you so
         // res.render("login", context)
-        res.status(400).json(context)
+        res.redirect("/")
     }
 })
 

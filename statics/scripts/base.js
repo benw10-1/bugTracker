@@ -35,24 +35,27 @@ const newProjectHandler = async (event) => {
   }
 };
 
+function formError(err) {
+  console.log(err)
+}
+
 const signupFormHandler = async (event) => {
   event.preventDefault();
-
-  const username = document.querySelector('#name-signup').value.trim();
-  const email = document.querySelector('#email-signup').value.trim();
-  const password = document.querySelector('#password-signup').value.trim();
+  const username = document.querySelector('#name-signup')
+  const email = document.querySelector('#email-signup')
+  const password = document.querySelector('#password-signup')
 
   if (username && email && password) {
     const response = await fetch('/api/user/create', {
       method: 'POST',
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ username: username.value.trim(), email: email.value.trim(), password: password.value.trim() }),
       headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
-      document.location.replace('/dashboard');
+      document.location.replace('/verifyEmail');
     } else {
-      alert(response.statusText);
+      formError(response.json())
     }
   }
 };
@@ -72,7 +75,7 @@ const loginFormHandler = async (event) => {
     if (response.ok) {
       document.location.replace('/dashboard');
     } else {
-      alert(response.statusText);
+      formError(response.statusText);
     }
   }
 };
@@ -103,9 +106,8 @@ function loadEls() {
     if (event.target !== login && event.path.indexOf(dropdown) < 0)
       toggleDropdown(false);
   });
-  logo.appendChild(loaded.logo.cloneNode());
   if (login) loggedOut();
-  else loggedIn();
+  if (logo) logo.appendChild(loaded.logo.cloneNode());
 }
 
 function loggedOut() {
@@ -124,7 +126,7 @@ function loggedOut() {
   });
 }
 
-function postLogin(user, pass) {
+async function postLogin(user, pass) {
   if (!user || !pass) return new Promise((res) => res({}));
   const link = window.location.origin + '/api/user/login';
 

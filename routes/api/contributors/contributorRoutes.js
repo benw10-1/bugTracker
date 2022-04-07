@@ -1,15 +1,26 @@
 const router = require('express').Router();
-const { Contributor } = require('../../../models/models');
+const { Contributor, User } = require('../../../models/models');
 const withAuth = require('../../../utils/auth');
 
 router.post('/create', withAuth, async (req, res) => {
   try {
-    if (!req.body) throw {
-      error: "Not present",
-      user: (req.body && req.body.user),
-      password: (req.body && req.body.password)
-    }
-    const newContributor = await Contributor.create(req.body);
+    console.log('>>>>>>>>>', req.body);
+    const foundUser = await User.findOne({
+      where: { username: req.body.name, email: req.body.email },
+    });
+    console.log(foundUser);
+    if (foundUser == undefined)
+      throw {
+        error: 'Not present',
+      };
+
+    const user = foundUser.get({ plain: true });
+    const newContributor = await Contributor.create({
+      userid: user.id,
+      projectid: req.body.projectid,
+      name: req.body.name,
+      email: req.body.email,
+    });
     res.status(200).json(newContributor);
   } catch (err) {
     res.status(400).json(err);

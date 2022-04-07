@@ -100,9 +100,9 @@ router.get('/projects/:id', withAuth, async (req, res) => {
     const contributorData = await Contributor.findAll({
       where: { projectid: project.id },
     });
-    const contributors = contributorData.map((contributor) => {
-      contributor.get({ plain: true });
-    });
+    const contributors = contributorData.map((contributor) =>
+      contributor.get({ plain: true })
+    );
 
     const bugData = await Bug.findAll({
       include: [
@@ -116,7 +116,7 @@ router.get('/projects/:id', withAuth, async (req, res) => {
       },
     });
     const bugs = bugData.map((bug) => bug.get({ plain: true }));
-    console.log('>>>>>>>BUGS', bugs);
+    console.log(contributors);
     const context = {
       page: `${project.name} Bugs`,
       bugs,

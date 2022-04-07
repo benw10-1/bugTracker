@@ -177,6 +177,11 @@ Bug.init(
     description: {
       type: DataTypes.STRING(5000),
     },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     sequelize,

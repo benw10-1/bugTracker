@@ -145,6 +145,7 @@
                 <th scope='col'>BUG TITLE</th>
                 <th scope='col'>DESCRIPTION</th>
                 <th scope='col'>USER</th>
+                <th scope='col'>DATE SUBMITTED</th>
               </tr>
             </thead>
             {{#if bugs.length}}
@@ -154,6 +155,7 @@
                     <td>{{bug.title}}</td>
                     <td>{{bug.description}}</td>
                     <td>{{bug.user.username}}</td>
+                    <td>{{bug.date_created}}</td>
                   </tr>
                 </tbody>
               {{/each}}

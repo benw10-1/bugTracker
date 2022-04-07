@@ -99,13 +99,10 @@
             </tr>
           </thead>
           <tbody>
-            {{#if projects.length}}
-              {{#each projects as |project|}}
+            {{#if finalProjects.length}}
+              {{#each finalProjects as |project|}}
                 <tr>
-                  {{#each ../countList as |projectCount|}}
-                    {{log projectCount}}
-                    <td>{{projectCount}}</td>
-                  {{/each}}
+                  <td>{{project.number}}</td>
                   <td><a
                       href='/projects/{{project.id}}/bugs'
                     >{{project.name}}</a></td>

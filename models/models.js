@@ -38,6 +38,11 @@ User.init(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+    number: {
+      type: DataTypes.INTEGER,
+      defaultValue: null,
+      allowNull: true,
+    },
     name: {
       type: DataTypes.STRING,
       validate: {

@@ -9,13 +9,6 @@ router;
 router.get('/', async (req, res) => {
   res.redirect('/');
 });
-router.get('/dashboard', async (req, res) => {
-  if (!req.session.loggedIn) {
-    res.redirect('/');
-    return;
-  }
-  res.json({ HI: 'asd' });
-});
 router.use('/verify', verify);
 router.use('/user', users);
 router.use('/projects', projects);

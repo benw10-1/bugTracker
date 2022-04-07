@@ -12,18 +12,21 @@ router.post('/create', async (req, res) => {
     if (!req.body || !req.body.password) throw 'Data not found!';
     req.body.id = undefined;
     let newUser = await User.create(req.body);
-    req.session.loggedIn = newUser.id;
-    delete newUser.password;
-    res.status(200).json({
-      status: 'ok',
-      action: 'created account',
-      data: newUser,
-    });
+    req.session.save(() => {
+      req.session.loggedIn = newUser.id;
+      newUser.password = undefined
+      res.status(200).json({
+        status: 'ok',
+        action: 'created account',
+        data: newUser,
+      });
+    })
+    
   } catch (err) {
-    console.log(err);
+    console.log(err)
     res.status(400).json({
       status: 'error',
-      data: err.fields ?? err,
+      data: "Error",
     });
   }
 });
@@ -50,16 +53,19 @@ router.post('/login', async (req, res) => {
     if (!foundUser) throw 'User not found!';
     let correctPass = foundUser.checkPassword(req.body.password);
     if (!correctPass) throw 'Incorrect password!';
-    if (foundUser.emailCode != null) throw 'User not verified!';
     req.session.save(() => {
       req.session.loggedIn = foundUser.id;
+      if (foundUser.emailCode != null) {
+        res.redirect("/verifyEmail")
+        return
+      }
       res.status(200).json({
         status: 'ok',
         action: 'logged in',
       });
     });
   } catch (err) {
-    console.log(err);
+    console.log(err)
     res.status(400).json({
       status: 'error',
       data: err,
@@ -85,10 +91,9 @@ router.get('/resendVerification', async (req, res) => {
       action: 'email verification sent',
     });
   } catch (err) {
-    console.log(err);
     res.status(400).json({
       status: 'error',
-      data: err,
+      data: "err",
     });
   }
 });

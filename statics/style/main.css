@@ -72,14 +72,14 @@ html {
 .main-welcome {
   font-size: 2rem;
   text-align: center;
-  width: 19rem;
+  width: 17rem;
 }
 
 .main-facts {
   font-size: 0.7rem;
   text-align: justify;
   padding: 0 2rem;
-  width: 15rem;
+  width: 14rem;
 }
 
 .main-facts li {

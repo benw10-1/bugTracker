@@ -183,7 +183,7 @@ Bug.init(
       type: DataTypes.STRING(5000),
     },
     date_created: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },

@@ -104,11 +104,57 @@
                 <tr>
                   <td>{{project.number}}</td>
                   <td><a
+                      class='project-name-dashboard'
                       href='/projects/{{project.id}}'
                     >{{project.name}}</a></td>
                   <td>{{project.description}}</td>
                   <td>
-                    <i class='fa-solid fa-xmark delete-btn'></i>
+                    <button
+                      data-bs-toggle='modal'
+                      data-bs-target='#deleteProject'
+                      class='delete-project-btn'
+                    >
+                      <i class='fa-solid fa-xmark delete-project'></i>
+
+                    </button>
+                    <div
+                      class='modal fade'
+                      id='deleteProject'
+                      tabindex='-1'
+                      aria-labelledby='updateModal'
+                      aria-hidden='true'
+                    >
+                      <div class='modal-dialog'>
+                        <div class='modal-content'>
+                          <div class='modal-header'>
+                            <h5 class='modal-title' id='updateModal'>Delete
+                              Project</h5>
+                            <button
+                              type='button'
+                              class='btn-close'
+                              data-bs-dismiss='modal'
+                              aria-label='Close'
+                            ></button>
+                          </div>
+                          <div class='modal-body'>
+                            <p>WARNING! Are you sure you want to delete this
+                              project?</p>
+                          </div>
+                          <div class='modal-footer'>
+                            <button
+                              type='button'
+                              class='btn btn-secondary'
+                              data-bs-dismiss='modal'
+                            >Close</button>
+                            <button
+                              id='add-new-bug'
+                              type='button'
+                              class='btn btn-danger'
+                            >Delete Project</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </td>
                 </tr>
               {{/each}}

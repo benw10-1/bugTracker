@@ -95,7 +95,7 @@
               <th scope='col'>#</th>
               <th scope='col'>PROJECT</th>
               <th scope='col'>DESCRIPTION</th>
-              <th scope='col'>CONTRIBUTORS</th>
+              <th scope='col'>DELETE</th>
             </tr>
           </thead>
           <tbody>
@@ -107,13 +107,10 @@
                       href='/projects/{{project.id}}'
                     >{{project.name}}</a></td>
                   <td>{{project.description}}</td>
-                  {{#each ../contributorList as |contributors|}}
-                    {{#if contributors.length}}
-                      {{#each contributors as |contributor|}}
-                        <td>{{contributor.name}}</td>
-                      {{/each}}
-                    {{/if}}
-                  {{/each}}
+
+                  <td>
+                    <i class='fa-solid fa-xmark delete-btn'></i>
+                  </td>
                 </tr>
               {{/each}}
             {{/if}}

@@ -20,13 +20,40 @@ const newBugHandler = async (event) => {
   const bugTitle = document.getElementById('new-bug-title').value;
   const bugDesc = document.getElementById('new-bug-desc').value;
   const pathname = window.location.pathname;
-  projectid = pathname.split('/')[2];
+  const projectid = pathname.split('/')[2];
   if (bugTitle && bugDesc) {
     const response = await fetch('/api/bugs', {
       method: 'POST',
       body: JSON.stringify({
         title: bugTitle,
         description: bugDesc,
+        projectid: projectid,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      document.location.reload();
+    } else {
+      alert(response.statusText);
+    }
+  }
+};
+
+const newContributorHandler = async (event) => {
+  event.preventDefault();
+
+  const contributorName = document.getElementById('new-contr-name').value;
+  const contributorEmail = document.getElementById('new-contr-email').value;
+  const pathname = window.location.pathname;
+  const projectid = pathname.split('/')[2];
+
+  if (contributorName && contributorEmail) {
+    const response = await fetch('/api/contributors/create', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: contributorName,
+        email: contributorEmail,
         projectid: projectid,
       }),
       headers: { 'Content-Type': 'application/json' },
@@ -116,6 +143,11 @@ function loadEls() {
   login = document.querySelector('.showPopup');
   dropdown = document.querySelector('.dropdown');
   sendLogin = document.querySelector('.sendLogin');
+
+  if (document.getElementById('new-contributor'))
+    document
+      .getElementById('new-contributor')
+      .addEventListener('click', newContributorHandler);
 
   if (document.getElementById('add-new-bug'))
     document

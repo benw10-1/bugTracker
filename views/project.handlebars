@@ -213,9 +213,13 @@
                 </div>
                 <div class='modal-body modal-questions'>
                   <label>Member's Name</label>
-                  <input type='text' placeholder='Name' />
+                  <input id='new-contr-name' type='text' placeholder='Name' />
                   <label>Member's Email</label>
-                  <input type='email' placeholder='Email' />
+                  <input
+                    id='new-contr-email'
+                    type='email'
+                    placeholder='Email'
+                  />
                 </div>
                 <div class='modal-footer'>
                   <button
@@ -223,7 +227,11 @@
                     class='btn btn-secondary'
                     data-bs-dismiss='modal'
                   >Close</button>
-                  <button type='button' class='btn btn-primary'>Add Member</button>
+                  <button
+                    id='new-contributor'
+                    type='button'
+                    class='btn btn-primary'
+                  >Add Member</button>
                 </div>
               </div>
             </div>
@@ -238,10 +246,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr class='member-data'>
-                <td>hello</td>
-                <td>hello</td>
-              </tr>
+              {{#if contributors.length}}
+                {{#each contributors as |contributor|}}
+                  <tr class='member-data'>
+                    <td>{{contributor.name}}</td>
+                    <td>{{contributor.email}}</td>
+                  </tr>
+                {{/each}}
+              {{/if}}
             </tbody>
           </table>
         </div>

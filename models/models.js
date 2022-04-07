@@ -141,6 +141,14 @@ Contributor.init(
       type: DataTypes.UUID,
       allowNull: false,
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize,

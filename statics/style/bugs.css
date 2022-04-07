@@ -13,6 +13,12 @@
   --create-contributor-active: #006241;
 }
 
+.navbar {
+  background-image: url('../images/blue.png');
+  color: var(--white-font-color);
+  padding: 1rem;
+}
+
 /* Back button */
 .back-container {
   padding: 1rem;
@@ -39,6 +45,7 @@
 
 .project-name-container {
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .project-name-container h6 {
@@ -59,7 +66,7 @@
 }
 
 .contributors-header h6 {
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-top: 0.5rem;
 }
 
@@ -90,12 +97,12 @@
 .table-contributors thead {
   background-image: url('../images/blue.png');
   color: var(--white-font-color);
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   font-weight: 800;
 }
 
 .table-contributors tbody {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 /* bug container */
@@ -138,40 +145,40 @@
 }
 
 .bugs-header h6 {
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin-top: 0.5rem;
 }
 
 .table-bug thead {
   background-image: url('../images/blue.png');
   color: var(--white-font-color);
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   font-weight: 800;
 }
 
 .table-bug tbody {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 .modal-questions {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .modal-questions label {
   color: var(--dark-font-color);
   text-align: left;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 
 .modal-questions input {
   border: 1px solid var(--button-hover-color);
-  width: 100%;
+  width: 25rem;
   height: 1.5rem;
   margin-bottom: 0.5rem;
-  font-size: 0.5rem;
+  font-size: 0.7rem;
   padding: 0.2rem 0.4rem;
 }
 
@@ -183,6 +190,13 @@
   .bugs-container {
     width: 25rem;
   }
+  .main-bug-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: -15rem;
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -191,6 +205,13 @@
   }
   .bugs-container {
     width: 30rem;
+  }
+  .main-bug-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: -15rem;
   }
 }
 

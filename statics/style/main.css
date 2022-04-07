@@ -232,9 +232,6 @@ form {
 }
 
 @media screen and (min-width: 1200px) {
-  body {
-    overflow: hidden;
-  }
   .main-container {
     flex-direction: row;
     justify-content: space-evenly;

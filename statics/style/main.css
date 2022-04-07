@@ -207,6 +207,24 @@ form {
   transition: 0.3s;
 }
 
+@media screen and (max-width: 425px) {
+  .main-welcome {
+    font-size: 1.2rem;
+    width: 10rem;
+  }
+
+  .main-facts {
+    font-size: 0.5rem;
+    text-align: justify;
+    padding: 0 2rem;
+    width: 9rem;
+  }
+  .main-facts li {
+    margin-top: 0.5rem;
+    line-height: 0.9rem;
+  }
+}
+
 @media screen and (min-width: 768px) {
   form {
     width: 17rem;

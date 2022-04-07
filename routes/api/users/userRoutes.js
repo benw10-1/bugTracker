@@ -14,25 +14,23 @@ router.post('/create', async (req, res) => {
     let newUser = await User.create(req.body);
     req.session.save(() => {
       req.session.loggedIn = newUser.id;
-      newUser.password = undefined
+      newUser.password = undefined;
       res.status(200).json({
         status: 'ok',
         action: 'created account',
         data: newUser,
       });
-    })
-    
+    });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(400).json({
       status: 'error',
-      data: "Error",
+      data: 'Error',
     });
   }
 });
 router.post('/login', async (req, res) => {
   try {
-    console.log(req.body);
     // if (!req.session.home) throw "Incorrect origin!"
     if (!req.body || !req.body.password || !req.body.user)
       throw {
@@ -56,8 +54,8 @@ router.post('/login', async (req, res) => {
     req.session.save(() => {
       req.session.loggedIn = foundUser.id;
       if (foundUser.emailCode != null) {
-        res.redirect("/verifyEmail")
-        return
+        res.redirect('/verifyEmail');
+        return;
       }
       res.status(200).json({
         status: 'ok',
@@ -65,7 +63,7 @@ router.post('/login', async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(400).json({
       status: 'error',
       data: err,
@@ -93,7 +91,7 @@ router.get('/resendVerification', async (req, res) => {
   } catch (err) {
     res.status(400).json({
       status: 'error',
-      data: "err",
+      data: 'err',
     });
   }
 });

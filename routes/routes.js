@@ -47,7 +47,6 @@ router.get('/verifyEmail', async (req, res) => {
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     let projectCount = 1;
-    const contributorList = [];
     const finalProjects = [];
     if (!req.session.loggedIn) {
       res.redirect('/');
@@ -68,16 +67,8 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     for (let eachProject of projects) {
       eachProject.number = projectCount;
-      const contributorData = await Contributor.findAll({
-        where: { projectid: eachProject.id },
-      });
-      const contributors = contributorData.map((contributor) => {
-        contributor.get({ plain: true });
-      });
-      if (contributors != []) contributorList.push(contributors);
       projectCount++;
       finalProjects.push(eachProject);
-      console.log(finalProjects);
     }
     const userData = await User.findOne({
       where: { id: req.session.loggedIn },
@@ -92,7 +83,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
       page: 'Dashboard',
       loggedIn: req.session.loggedIn,
       user,
-      contributorList,
       finalProjects,
     };
     res.render('dashboard', context);
@@ -107,6 +97,13 @@ router.get('/projects/:id', withAuth, async (req, res) => {
 
     const project = projectData.get({ plain: true });
 
+    const contributorData = await Contributor.findAll({
+      where: { projectid: project.id },
+    });
+    const contributors = contributorData.map((contributor) => {
+      contributor.get({ plain: true });
+    });
+
     const bugData = await Bug.findAll({
       include: [
         {
@@ -118,15 +115,13 @@ router.get('/projects/:id', withAuth, async (req, res) => {
         projectid: req.params.id,
       },
     });
-
-    const bugs = bugData.map((bug) => {
-      bug.get({ plain: true });
-    });
-
+    const bugs = bugData.map((bug) => bug.get({ plain: true }));
+    console.log('>>>>>>>BUGS', bugs);
     const context = {
       page: `${project.name} Bugs`,
       bugs,
       project,
+      contributors,
     };
     res.render('project', context);
   } catch (err) {

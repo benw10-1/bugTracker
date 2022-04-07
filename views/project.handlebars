@@ -122,9 +122,17 @@
                 </div>
                 <div class='modal-body modal-questions'>
                   <label>Bug Title</label>
-                  <input type='text' placeholder='Title of bug' />
+                  <input
+                    id='new-bug-title'
+                    type='text'
+                    placeholder='Title of bug'
+                  />
                   <label>Bug Description</label>
-                  <input type='text' placeholder='Description of bug' />
+                  <input
+                    id='new-bug-desc'
+                    type='text'
+                    placeholder='Description of bug'
+                  />
                 </div>
                 <div class='modal-footer'>
                   <button
@@ -132,7 +140,11 @@
                     class='btn btn-secondary'
                     data-bs-dismiss='modal'
                   >Close</button>
-                  <button type='button' class='btn btn-primary'>Add Bug</button>
+                  <button
+                    id='add-new-bug'
+                    type='button'
+                    class='btn btn-primary'
+                  >Add Bug</button>
                 </div>
               </div>
             </div>
@@ -145,6 +157,7 @@
                 <th scope='col'>TITLE</th>
                 <th scope='col'>DESCRIPTION</th>
                 <th scope='col'>USER</th>
+                <th scope='col'>DATE SUBMITTED</th>
                 <th scope='col'>UPDATE</th>
                 <th scope='col'>DELETE</th>
               </tr>
@@ -156,6 +169,7 @@
                     <td>{{bug.title}}</td>
                     <td>{{bug.description}}</td>
                     <td>{{bug.user.username}}</td>
+                    <td>{{bug.date_created}}</td>
                     <td>
                       <i class='fa-solid fa-pen-to-square'></i>
                     </td>
@@ -241,3 +255,6 @@
     ></script>
   </body>
 </html>
+
+<script src='../scripts/base.js'></script>
+<script src='../scripts/main.js'></script>

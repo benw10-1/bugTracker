@@ -17,13 +17,18 @@ function loadImages() {
 const newBugHandler = async (event) => {
   event.preventDefault();
 
-  const bugTitle = document.getElementById('new-bug-name').value;
+  const bugTitle = document.getElementById('new-bug-title').value;
   const bugDesc = document.getElementById('new-bug-desc').value;
-
+  const pathname = window.location.pathname;
+  projectid = pathname.split('/')[2];
   if (bugTitle && bugDesc) {
     const response = await fetch('/api/bugs', {
       method: 'POST',
-      body: JSON.stringify({ title: bugTitle, description: bugDesc }),
+      body: JSON.stringify({
+        title: bugTitle,
+        description: bugDesc,
+        projectid: projectid,
+      }),
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -112,6 +117,10 @@ function loadEls() {
   dropdown = document.querySelector('.dropdown');
   sendLogin = document.querySelector('.sendLogin');
 
+  if (document.getElementById('add-new-bug'))
+    document
+      .getElementById('add-new-bug')
+      .addEventListener('click', newBugHandler);
   if (document.getElementById('new-project') != null)
     document
       .getElementById('new-project')

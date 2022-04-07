@@ -115,11 +115,8 @@ router.get('/projects/:id', withAuth, async (req, res) => {
         projectid: req.params.id,
       },
     });
-
-    const bugs = bugData.map((bug) => {
-      bug.get({ plain: true });
-    });
-
+    const bugs = bugData.map((bug) => bug.get({ plain: true }));
+    console.log('>>>>>>>BUGS', bugs);
     const context = {
       page: `${project.name} Bugs`,
       bugs,
@@ -135,12 +132,11 @@ router.get('/projects/:id/submitBug', withAuth, async (req, res) => {
   try {
     const projectData = await Project.findByPk(req.params.id);
     if (projectData.endpoint) {
-      res.render("bugform")
-    }
-    else throw "Error"
+      res.render('bugform');
+    } else throw 'Error';
   } catch (err) {
-    res.redirect("/")
+    res.redirect('/');
   }
-})
+});
 
 module.exports = router;

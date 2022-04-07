@@ -157,9 +157,6 @@ Bug.init(
     title: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        is: validate.username,
-      },
     },
     contributorid: {
       type: DataTypes.UUID,

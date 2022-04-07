@@ -108,6 +108,14 @@
   font-size: 0.5rem;
 }
 
+.project-name-dashboard {
+  color: var(--dark-font-color);
+}
+
+.project-name-dashboard:hover {
+  color: var(--button-active-color);
+}
+
 .delete-btn {
   color: var(--logout-btn-hover);
 }
@@ -140,6 +148,19 @@
 
 .modal-questions input:focus {
   border: 2px solid var(--button-hover-color);
+}
+
+.modal-body p {
+  font-size: 0.7rem;
+}
+
+.delete-project-btn {
+  border-style: none;
+  color: var(--logout-btn-hover);
+}
+
+.delete-project:hover {
+  color: var(--logout-btn-active);
 }
 
 @media screen and (min-width: 768px) {

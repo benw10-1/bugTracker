@@ -11,6 +11,9 @@
   --create-contributor-btn-color: #03c03c;
   --create-contributor-hover: #17b169;
   --create-contributor-active: #006241;
+  --logout-btn-color: #c6011f;
+  --logout-btn-hover: #f40009;
+  --logout-btn-active: #fd5c63;
 }
 
 .navbar {
@@ -39,10 +42,11 @@
 
 /* main container */
 .main-bug-container {
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5rem;
 }
 
 .project-name-container {
@@ -57,7 +61,7 @@
 
 /* contributors container */
 .contributors-container {
-  width: 18rem;
+  width: 25rem;
   background-color: var(--form-color);
 }
 
@@ -110,9 +114,8 @@
 
 /* bug container */
 .bugs-container {
-  width: 18rem;
+  width: 25rem;
   margin-bottom: 2rem;
-
   background-color: var(--form-color);
 }
 
@@ -163,6 +166,32 @@
   font-size: 0.7rem;
 }
 
+.update-bug-btn-container {
+  border-style: none;
+}
+
+.update-bug-btn {
+  color: var(--button-hover-color);
+  font-size: 1rem;
+}
+
+.update-bug-btn:hover {
+  color: var(--button-color);
+}
+
+.delete-bug-btn {
+  border-style: none;
+}
+
+.delete-btn {
+  color: var(--logout-btn-hover);
+  font-size: 1rem;
+}
+
+.delete-btn:hover {
+  color: var(--logout-btn-active);
+}
+
 .modal-questions {
   display: flex;
   flex-direction: column;
@@ -174,6 +203,8 @@
   color: var(--dark-font-color);
   text-align: left;
   font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
 }
 
 .modal-questions input {
@@ -192,17 +223,11 @@
 @media screen and (min-width: 768px) {
   .contributors-container {
     padding: 1rem;
+    width: 35rem;
   }
   .bugs-container {
-    width: 25rem;
+    width: 35rem;
     padding: 1rem;
-  }
-  .main-bug-container {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-evenly;
-    align-items: center;
-    margin-top: -20rem;
   }
   .add-contributor-btn {
     height: 2rem;
@@ -228,7 +253,7 @@
     flex-direction: row-reverse;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: -20rem;
+    /* margin-top: -20rem; */
   }
   .bugs-header h6 {
     font-size: 1.5rem;
@@ -239,7 +264,7 @@
   }
 
   .table-bug tbody {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
   }
   .contributors-header h6 {
     font-size: 1.5rem;
@@ -254,9 +279,18 @@
 
 @media screen and (min-width: 1200px) {
   .contributors-container {
-    width: 25rem;
+    width: 30rem;
   }
   .bugs-container {
-    width: 40rem;
+    width: 45rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .contributors-container {
+    width: 35rem;
+  }
+  .bugs-container {
+    width: 50rem;
   }
 }

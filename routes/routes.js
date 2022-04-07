@@ -1,7 +1,7 @@
 const express = require('express');
 const api = require('./api/apiRoutes');
 var router = express.Router();
-const withAuth = require("../utils/auth")
+const withAuth = require('../utils/auth');
 const { Project, User, Contributor, Bug } = require('../models/models');
 
 router.get('', async (req, res) => {
@@ -19,8 +19,8 @@ router.use('/api', api);
 router.get('/login', async (req, res) => {
   try {
     if (req.session.loggedIn) {
-      res.redirect("/")
-      return
+      res.redirect('/');
+      return;
     }
     res.render('login');
   } catch (err) {
@@ -33,22 +33,22 @@ router.get('/login', async (req, res) => {
 });
 router.get('/verifyEmail', async (req, res) => {
   if (!req.session.loggedIn) {
-    console.log("no login")
-    res.redirect("/")
-    return
+    console.log('no login');
+    res.redirect('/');
+    return;
   }
-  let user = await User.findByPk(req.session.loggedIn)
+  let user = await User.findByPk(req.session.loggedIn);
   if (!user.emailCode) {
-    res.redirect("/dashboard")
-    return
+    res.redirect('/dashboard');
+    return;
   }
   res.render('verify');
 });
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     let projectCount = 1;
-    const countList = [];
     const contributorList = [];
+    const finalProjects = [];
     if (!req.session.loggedIn) {
       res.redirect('/');
       return;
@@ -67,6 +67,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
     const projects = projectData.map((project) => project.get({ plain: true }));
 
     for (let eachProject of projects) {
+      eachProject.number = projectCount;
       const contributorData = await Contributor.findAll({
         where: { projectid: eachProject.id },
       });
@@ -74,8 +75,9 @@ router.get('/dashboard', withAuth, async (req, res) => {
         contributor.get({ plain: true });
       });
       if (contributors != []) contributorList.push(contributors);
-      countList.push(projectCount);
       projectCount++;
+      finalProjects.push(eachProject);
+      console.log(finalProjects);
     }
     const userData = await User.findOne({
       where: { id: req.session.loggedIn },
@@ -86,14 +88,12 @@ router.get('/dashboard', withAuth, async (req, res) => {
       res.render('home');
       return;
     }
-    console.log(countList);
     let context = {
       page: 'Dashboard',
       loggedIn: req.session.loggedIn,
-      projects,
       user,
       contributorList,
-      countList,
+      finalProjects,
     };
     res.render('dashboard', context);
   } catch (err) {
@@ -101,7 +101,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
-router.get('/projects/:id/bugs', withAuth, async (req, res) => {
+router.get('/projects/:id', withAuth, async (req, res) => {
   try {
     const projectData = await Project.findByPk(req.params.id);
 

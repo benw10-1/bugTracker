@@ -108,6 +108,14 @@
   font-size: 0.5rem;
 }
 
+.delete-btn {
+  color: var(--logout-btn-hover);
+}
+
+.delete-btn:hover {
+  color: var(--logout-btn-active);
+}
+
 .modal-questions {
   display: flex;
   flex-direction: column;

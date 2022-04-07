@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;800&display=swap');
+
+:root {
+  --main-font: 'Montserrat', sans-serif;
+  --form-color: rgba(219, 213, 213, 0.4);
+  --dark-font-color: #1b1a1a;
+  --white-font-color: #f4f4f4;
+  --button-color: #3369ff;
+  --button-hover-color: #0037d0;
+  --button-active-color: #002da9;
+  --create-bug-btn-color: #03c03c;
+  --create-bug-hover: #17b169;
+  --create-bug-active: #006241;
+  --grey-color: grey;
+}
+
+.verify-container {
+  background-color: var(--white-font-color);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.verify-icon {
+  font-size: 3rem;
+  color: var(--create-bug-hover);
+  margin: 8rem auto 1rem;
+  text-align: center;
+}
+
+.verified-header {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 800;
+}
+
+.verify-container p {
+  font-size: 0.7rem;
+  margin-top: 1rem;
+  text-align: center;
+  width: 15rem;
+  line-height: 0.9rem;
+  margin-bottom: 1.6rem;
+  color: var(--grey-color);
+}
+
+.verify-btn {
+  color: var(--white-font-color);
+  height: 1.5rem;
+  width: 5rem;
+  font-size: 0.5rem;
+  border-style: none;
+  padding: 0.7em 1.7em;
+  border-radius: 0.2em;
+  font-weight: 400;
+  background-color: var(--create-bug-hover);
+  box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
+    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+}
+
+.verify-btn:hover {
+  background-color: var(--create-bug-btn-color);
+  transition: 0.3s;
+}
+
+.verify-btn:active {
+  background-color: var(--create-bug-active);
+}

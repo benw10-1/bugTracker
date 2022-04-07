@@ -1,7 +1,7 @@
 const express = require('express');
 const api = require('./api/apiRoutes');
 var router = express.Router();
-const withAuth = require("../utils/auth")
+const withAuth = require('../utils/auth');
 const { Project, User, Contributor, Bug } = require('../models/models');
 
 router.get('', async (req, res) => {
@@ -19,8 +19,8 @@ router.use('/api', api);
 router.get('/login', async (req, res) => {
   try {
     if (req.session.loggedIn) {
-      res.redirect("/")
-      return
+      res.redirect('/');
+      return;
     }
     res.render('login');
   } catch (err) {
@@ -33,14 +33,14 @@ router.get('/login', async (req, res) => {
 });
 router.get('/verifyEmail', async (req, res) => {
   if (!req.session.loggedIn) {
-    console.log("no login")
-    res.redirect("/")
-    return
+    console.log('no login');
+    res.redirect('/');
+    return;
   }
-  let user = await User.findByPk(req.session.loggedIn)
+  let user = await User.findByPk(req.session.loggedIn);
   if (!user.emailCode) {
-    res.redirect("/dashboard")
-    return
+    res.redirect('/dashboard');
+    return;
   }
   res.render('verify');
 });

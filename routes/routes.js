@@ -137,12 +137,11 @@ router.get('/projects/:id/submitBug', withAuth, async (req, res) => {
   try {
     const projectData = await Project.findByPk(req.params.id);
     if (projectData.endpoint) {
-      res.render("bugform")
-    }
-    else throw "Error"
+      res.render('bugform');
+    } else throw 'Error';
   } catch (err) {
-    res.redirect("/")
+    res.redirect('/');
   }
-})
+});
 
 module.exports = router;

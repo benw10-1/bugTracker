@@ -133,5 +133,16 @@ router.get('/projects/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.get('/projects/:id/submitBug', withAuth, async (req, res) => {
+  try {
+    const projectData = await Project.findByPk(req.params.id);
+    if (projectData.endpoint) {
+      res.render("bugform")
+    }
+    else throw "Error"
+  } catch (err) {
+    res.redirect("/")
+  }
+})
 
 module.exports = router;

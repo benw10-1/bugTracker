@@ -4,17 +4,19 @@ const withAuth = require('../../../utils/auth');
 
 router.post('/create', withAuth, async (req, res) => {
   try {
-    console.log('>>>>>>>>>', req.body);
     const foundUser = await User.findOne({
       where: { username: req.body.name, email: req.body.email },
     });
-    console.log(foundUser);
+
     if (foundUser == undefined)
       throw {
         error: 'Not present',
       };
-
     const user = foundUser.get({ plain: true });
+    if (user.id == req.session.loggedIn)
+      throw {
+        error: 'Cannot add self',
+      };
     const newContributor = await Contributor.create({
       userid: user.id,
       projectid: req.body.projectid,
@@ -22,8 +24,8 @@ router.post('/create', withAuth, async (req, res) => {
       email: req.body.email,
     });
     res.status(200).json(newContributor);
-  } catch (err) {
-    res.status(400).json(err);
+  } catch (error) {
+    res.status(400).json(error);
   }
 });
 
@@ -32,7 +34,7 @@ router.delete('/:id', withAuth, async (req, res) => {
     const contributorData = await Contributor.destroy({
       where: {
         id: req.params.id,
-        projectid: req.params.projectid,
+        projectid: req.body.projectid,
       },
     });
     if (!contributorData) {

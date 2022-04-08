@@ -14,20 +14,84 @@ function loadImages() {
   }
 }
 
+const logoutButtonHandler = async (event) => {
+  event.preventDefault();
+
+  const response = await fetch(`/api/user/logout`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  if (response.ok) {
+    document.location.replace(`/`);
+  }
+};
+
+const deleteBugHandler = async (event) => {
+  event.preventDefault();
+  const pathname = window.location.pathname;
+  const projectId = pathname.split('/')[2];
+  if (event.target.hasAttribute('bug-id')) {
+    const bugId = event.target.getAttribute('bug-id');
+    const response = await fetch(`/api/bugs/${bugId}`, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        projectid: projectId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      document.location.replace(`/projects/${projectId}`);
+    } else {
+      document.getElementById(
+        'warning-bug'
+      ).textContent = `ERROR: Unable to delete bug`;
+      setTimeout(() => document.location.reload(), 1000);
+    }
+  }
+};
+const deleteContributorHandler = async (event) => {
+  event.preventDefault();
+  const pathname = window.location.pathname;
+  const projectId = pathname.split('/')[2];
+  if (event.target.hasAttribute('contributor-id')) {
+    const contributorId = event.target.getAttribute('contributor-id');
+    const response = await fetch(`/api/contributors/${contributorId}`, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        projectid: projectId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      document.location.replace(`/projects/${projectId}`);
+    } else {
+      document.getElementById(
+        'warning-contributor'
+      ).textContent = `ERROR: Unable to delete contributor`;
+      setTimeout(() => document.location.reload(), 1000);
+    }
+  }
+};
+
 const newBugHandler = async (event) => {
   event.preventDefault();
 
   const bugTitle = document.getElementById('new-bug-title').value;
   const bugDesc = document.getElementById('new-bug-desc').value;
   const pathname = window.location.pathname;
-  const projectid = pathname.split('/')[2];
+  const projectId = pathname.split('/')[2];
   if (bugTitle && bugDesc) {
     const response = await fetch('/api/bugs', {
       method: 'POST',
       body: JSON.stringify({
         title: bugTitle,
         description: bugDesc,
-        projectid: projectid,
+        projectid: projectId,
       }),
       headers: { 'Content-Type': 'application/json' },
     });
@@ -40,13 +104,39 @@ const newBugHandler = async (event) => {
   }
 };
 
+const updateBugHandler = async (event) => {
+  event.preventDefault();
+  const bugId = event.target.getAttribute('update-bug-id');
+  const bugTitle = document.getElementById('update-bug-title').value.trim();
+  const bugDesc = document.getElementById('update-bug-desc').value.trim();
+  const pathname = window.location.pathname;
+  const projectId = pathname.split('/')[2];
+  if (bugTitle && bugDesc) {
+    console.log('>>>>>>HELLO');
+    const response = await fetch(`/api/bugs/${bugId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        title: bugTitle,
+        description: bugDesc,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+      document.location.replace(`/projects/${projectId}`);
+    } else {
+      alert(response.statusText);
+    }
+  }
+};
+
 const newContributorHandler = async (event) => {
   event.preventDefault();
 
   const contributorName = document.getElementById('new-contr-name').value;
   const contributorEmail = document.getElementById('new-contr-email').value;
   const pathname = window.location.pathname;
-  const projectid = pathname.split('/')[2];
+  const projectId = pathname.split('/')[2];
 
   if (contributorName && contributorEmail) {
     const response = await fetch('/api/contributors/create', {
@@ -54,7 +144,7 @@ const newContributorHandler = async (event) => {
       body: JSON.stringify({
         name: contributorName,
         email: contributorEmail,
-        projectid: projectid,
+        projectid: projectId,
       }),
       headers: { 'Content-Type': 'application/json' },
     });
@@ -143,6 +233,26 @@ function loadEls() {
   login = document.querySelector('.showPopup');
   dropdown = document.querySelector('.dropdown');
   sendLogin = document.querySelector('.sendLogin');
+
+  if (document.getElementById('update-bug'))
+    document
+      .getElementById('update-bug')
+      .addEventListener('click', updateBugHandler);
+
+  if (document.getElementById('logout'))
+    document
+      .getElementById('logout')
+      .addEventListener('click', logoutButtonHandler);
+
+  if (document.getElementById('bug-id'))
+    document
+      .getElementById('bug-id')
+      .addEventListener('click', deleteBugHandler);
+
+  if (document.getElementById('contributor-id'))
+    document
+      .getElementById('contributor-id')
+      .addEventListener('click', deleteContributorHandler);
 
   if (document.getElementById('new-contributor'))
     document
@@ -235,7 +345,3 @@ function toggleDropdown(cond) {
     dropdown.classList.remove('shown');
   }
 }
-
-const goToProjectHandler = async (event) => {
-  event.preventDefault();
-};

@@ -20,7 +20,7 @@ router.delete('/:id', withAuth, async (req, res) => {
     const bugData = await Bug.destroy({
       where: {
         id: req.params.id,
-        contributorid: req.session.loggedIn,
+        projectid: req.body.projectid,
       },
     });
     if (!bugData) {
@@ -36,12 +36,13 @@ router.put('/:id', withAuth, async (req, res) => {
   try {
     const bugData = await Bug.update(
       {
+        title: req.body.title,
         description: req.body.description,
       },
       {
         where: {
           id: req.params.id,
-          user_id: req.session.loggedIn,
+          contributorid: req.session.loggedIn,
         },
       }
     );

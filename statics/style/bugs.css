@@ -115,7 +115,7 @@
 /* bug container */
 .bugs-container {
   width: 25rem;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
   background-color: var(--form-color);
 }
 

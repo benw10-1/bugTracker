@@ -14,6 +14,37 @@ function loadImages() {
   }
 }
 
+const dropDownToggle = async (event) => {
+  event.preventDefault();
+
+  if (
+    event.target.hasAttribute('set-priority') ||
+    event.target.hasAttribute('update-priority')
+  ) {
+    const dropdownDiv = event.target.parentNode;
+    const dropdownMenu = dropdownDiv.children[1];
+
+    dropdownMenu.classList.toggle('show');
+  }
+};
+
+const setPriority = async (event) => {
+  event.preventDefault();
+
+  document.getElementById('setDropdown').textContent = event.target.textContent;
+
+  document.getElementById('actual-drop').classList.toggle('show');
+};
+
+const updatePriority = async (event) => {
+  event.preventDefault();
+
+  document.getElementById('updateDropdown').textContent =
+    event.target.textContent;
+
+  document.getElementById('second-drop').classList.toggle('show');
+};
+
 const logoutButtonHandler = async (event) => {
   event.preventDefault();
 
@@ -100,15 +131,18 @@ const newBugHandler = async (event) => {
 
   const bugTitle = document.getElementById('new-bug-title').value;
   const bugDesc = document.getElementById('new-bug-desc').value;
+  const bugStatus = document.getElementById('setDropdown').textContent.trim();
   const pathname = window.location.pathname;
   const projectId = pathname.split('/')[2];
-  if (bugTitle && bugDesc) {
+  if (bugTitle && bugDesc && bugStatus != 'Choose a priority level...') {
+    console.log(typeof bugStatus);
     const response = await fetch('/api/bugs', {
       method: 'POST',
       body: JSON.stringify({
         title: bugTitle,
         description: bugDesc,
         projectid: projectId,
+        status: bugStatus,
       }),
       headers: { 'Content-Type': 'application/json' },
     });
@@ -126,15 +160,19 @@ const updateBugHandler = async (event) => {
   const bugId = event.target.getAttribute('update-bug-id');
   const bugTitle = document.getElementById('update-bug-title').value.trim();
   const bugDesc = document.getElementById('update-bug-desc').value.trim();
+  const bugStatus = document
+    .getElementById('updateDropdown')
+    .textContent.trim();
+
   const pathname = window.location.pathname;
   const projectId = pathname.split('/')[2];
-  if (bugTitle && bugDesc) {
-    console.log('>>>>>>HELLO');
+  if (bugTitle && bugDesc && bugStatus != 'Choose a priority level...') {
     const response = await fetch(`/api/bugs/${bugId}`, {
       method: 'PUT',
       body: JSON.stringify({
         title: bugTitle,
         description: bugDesc,
+        status: bugStatus,
       }),
       headers: { 'Content-Type': 'application/json' },
     });
@@ -250,6 +288,42 @@ function loadEls() {
   login = document.querySelector('.showPopup');
   dropdown = document.querySelector('.dropdown');
   sendLogin = document.querySelector('.sendLogin');
+
+  if (document.getElementById('set-low'))
+    document.getElementById('set-low').addEventListener('click', setPriority);
+
+  if (document.getElementById('set-medium'))
+    document
+      .getElementById('set-medium')
+      .addEventListener('click', setPriority);
+
+  if (document.getElementById('set-high'))
+    document.getElementById('set-high').addEventListener('click', setPriority);
+
+  if (document.getElementById('update-low'))
+    document
+      .getElementById('update-low')
+      .addEventListener('click', updatePriority);
+
+  if (document.getElementById('update-medium'))
+    document
+      .getElementById('update-medium')
+      .addEventListener('click', updatePriority);
+
+  if (document.getElementById('update-high'))
+    document
+      .getElementById('update-high')
+      .addEventListener('click', updatePriority);
+
+  if (document.getElementById('setDropdown'))
+    document
+      .getElementById('setDropdown')
+      .addEventListener('click', dropDownToggle);
+
+  if (document.getElementById('updateDropdown'))
+    document
+      .getElementById('updateDropdown')
+      .addEventListener('click', dropDownToggle);
 
   if (document.getElementById('delete-project'))
     document

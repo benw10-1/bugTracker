@@ -63,9 +63,27 @@ router.get('/dashboard', withAuth, async (req, res) => {
       where: { creator: req.session.loggedIn },
     });
 
-    const projects = projectData.map((project) => project.get({ plain: true }));
+    const contributorProjectData = await Project.findAll({
+      include: [
+        {
+          model: Contributor,
+          attributes: ['name'],
+          where: { userid: req.session.loggedIn },
+        },
+      ],
+    });
 
+    const projects = projectData.map((project) => project.get({ plain: true }));
+    const contributorProjects = contributorProjectData.map((project) =>
+      project.get({ plain: true })
+    );
     for (let eachProject of projects) {
+      eachProject.number = projectCount;
+      projectCount++;
+      finalProjects.push(eachProject);
+    }
+
+    for (let eachProject of contributorProjects) {
       eachProject.number = projectCount;
       projectCount++;
       finalProjects.push(eachProject);

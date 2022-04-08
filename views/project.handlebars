@@ -200,13 +200,13 @@
                             <div class='modal-body modal-questions'>
                               <label>Bug Title</label>
                               <input
-                                id='new-bug-title'
+                                id='update-bug-title'
                                 type='text'
                                 placeholder='Update title of bug'
                               />
                               <label>Bug Description</label>
                               <input
-                                id='new-bug-desc'
+                                id='update-bug-desc'
                                 type='text'
                                 placeholder='Update description of bug'
                               />
@@ -218,7 +218,8 @@
                                 data-bs-dismiss='modal'
                               >Close</button>
                               <button
-                                id='add-new-bug'
+                                update-bug-id='{{bug.id}}'
+                                id='update-bug'
                                 type='button'
                                 class='btn btn-primary'
                               >Update Bug</button>
@@ -255,8 +256,8 @@
                               ></button>
                             </div>
                             <div class='modal-body'>
-                              <p>WARNING! Are you sure you want to delete this
-                                bug?</p>
+                              <p id='warning-bug'>WARNING! Are you sure you want
+                                to delete this bug?</p>
                             </div>
                             <div class='modal-footer'>
                               <button
@@ -265,9 +266,10 @@
                                 data-bs-dismiss='modal'
                               >Close</button>
                               <button
-                                id='add-new-bug'
+                                id='bug-id'
                                 type='button'
                                 class='btn btn-danger'
+                                bug-id='{{bug.id}}'
                               >Delete Bug</button>
                             </div>
                           </div>
@@ -378,8 +380,8 @@
                               ></button>
                             </div>
                             <div class='modal-body'>
-                              <p>WARNING! Are you sure you want to delete this
-                                contributor?</p>
+                              <p id='warning-contributor'>WARNING! Are you sure
+                                you want to delete this contributor?</p>
                             </div>
                             <div class='modal-footer'>
                               <button
@@ -388,7 +390,8 @@
                                 data-bs-dismiss='modal'
                               >Close</button>
                               <button
-                                id='add-new-bug'
+                                contributor-id='{{contributor.id}}'
+                                id='contributor-id'
                                 type='button'
                                 class='btn btn-danger'
                               >Delete Contributor</button>

@@ -1,5 +1,6 @@
 const express = require('express');
 const api = require('./api/apiRoutes');
+const moment = require("moment")
 var router = express.Router();
 const withAuth = require('../utils/auth');
 const {
@@ -25,7 +26,7 @@ router.use('/api', api);
 router.get('/login', async (req, res) => {
   try {
     if (req.session.loggedIn) {
-      res.redirect('/');
+      res.redirect('/dashboard');
       return;
     }
     res.render('login');
@@ -53,7 +54,7 @@ router.get('/verifyEmail', async (req, res) => {
 
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    let projectCount = 1;
+    // let projectCount = 1;
     const finalProjects = [];
     if (!req.session.loggedIn) {
       res.redirect('/');
@@ -84,17 +85,20 @@ router.get('/dashboard', withAuth, async (req, res) => {
     const contributorProjects = contributorProjectData.map((project) =>
       project.get({ plain: true })
     );
-    for (let eachProject of projects) {
-      eachProject.number = projectCount;
-      projectCount++;
-      finalProjects.push(eachProject);
-    }
+    let result = projects.concat(contributorProjects)
+    result.sort((e, e1) => moment(e.createdAt).valueOf() > moment(e1.createdAt).valueOf())
+    for (let i=0; i < result.length; i++) result[i].number = i + 1
+    // for (let eachProject of projects) {
+    //   eachProject.number = projectCount;
+    //   projectCount++;
+    //   finalProjects.push(eachProject);
+    // }
 
-    for (let eachProject of contributorProjects) {
-      eachProject.number = projectCount;
-      projectCount++;
-      finalProjects.push(eachProject);
-    }
+    // for (let eachProject of contributorProjects) {
+    //   eachProject.number = projectCount;
+    //   projectCount++;
+    //   finalProjects.push(eachProject);
+    // }
     const userData = await User.findOne({
       where: { id: req.session.loggedIn },
     });
@@ -108,10 +112,11 @@ router.get('/dashboard', withAuth, async (req, res) => {
       page: 'Dashboard',
       loggedIn: req.session.loggedIn,
       user,
-      finalProjects,
+      finalProjects: result,
     };
     res.render('dashboard', context);
   } catch (err) {
+    console.log(err)
     res.status(500).json(err);
   }
 });
@@ -120,9 +125,11 @@ router.get('/projects/:id', withAuth, async (req, res) => {
   try {
     let isContributor = false;
     const projectData = await Project.findByPk(req.params.id);
-
+    if (!projectData) {
+      res.redirect("/dashboard")
+      return
+    }
     const project = projectData.get({ plain: true });
-
     const contributorData = await Contributor.findAll({
       where: { projectid: project.id },
     });

@@ -145,6 +145,10 @@ router.get('/projects/:id', withAuth, async (req, res) => {
       if (eachContributor.userid == user.id) isContributor = true;
     }
 
+    if (user.id == project.creator) {
+      isContributor = true;
+    }
+
     if (user.emailCode != null) {
       res.render('home');
       return;

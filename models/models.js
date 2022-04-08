@@ -166,6 +166,10 @@ Bug.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     contributorid: {
       type: DataTypes.UUID,
     },

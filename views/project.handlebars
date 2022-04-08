@@ -3,6 +3,7 @@
     <meta charset='UTF-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+
     <link
       rel='stylesheet'
       href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css'
@@ -27,6 +28,7 @@
         <a href='/dashboard' id='login-back'> <strong>&#60;</strong> Back</a>
       </h1>
     </div>
+
     {{#if isContributor}}
     <div class='project-name-container'>
       <h6>{{project.name}}</h6>
@@ -135,7 +137,21 @@
                     type='text'
                     placeholder='Description of bug'
                   />
+                  <label>Priority Level</label>
+                  <div>
+                    <button class="btn btn-secondary" type="button" id="setDropdown"
+                    set-priority=""  aria-expanded="false">
+                     Choose a priority level...
+                    </button>
+                    <ul id='actual-drop'class="dropdown-menu" aria-labelledby="setDropdown">
+                      <li><a id='set-low'
+                      class="dropdown-item" href="#">LOW</a></li>
+                      <li><a id='set-medium' class="dropdown-item" href="#">MEDIUM</a></li>
+                      <li><a id='set-high' class="dropdown-item" href="#">HIGH</a></li>
+                    </ul>
+                  </div>
                 </div>
+              
                 <div class='modal-footer'>
                   <button
                     type='button'
@@ -148,10 +164,11 @@
                     class='btn btn-primary'
                   >Add Bug</button>
                 </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        
         <div class='table-bug'>
           <table class='table'>
             <thead class='thead-dark'>
@@ -160,6 +177,7 @@
                 <th scope='col'>DESCRIPTION</th>
                 <th scope='col'>USER</th>
                 <th scope='col'>DATE SUBMITTED</th>
+                <th scope='col'>STATUS</th>
                 <th scope='col'>UPDATE</th>
                 <th scope='col'>DELETE</th>
               </tr>
@@ -172,6 +190,7 @@
                     <td>{{bug.description}}</td>
                     <td>{{bug.user.username}}</td>
                     <td>{{bug.date_created}}</td>
+                    <td>{{bug.status}}</td>
                     <td>
                       <button
                         data-bs-toggle='modal'
@@ -212,6 +231,19 @@
                                 type='text'
                                 placeholder='Update description of bug'
                               />
+                              <label>Priority Level</label>
+                                <div>
+                                  <button class="btn btn-secondary" type="button" id="updateDropdown"
+                                  update-priority=""  aria-expanded="false">
+                                    Choose a priority level...
+                                  </button>
+                                  <ul
+                                  id="second-drop" class="dropdown-menu" aria-labelledby="updateDropdown">
+                                    <li><a id="update-low" class="dropdown-item" href="#">LOW</a></li>
+                                    <li><a id="update-medium" class="dropdown-item" href="#">MEDIUM</a></li>
+                                    <li><a id="update-high" class="dropdown-item" href="#">HIGH</a></li>
+                                  </ul>
+                                </div>
                             </div>
                             <div class='modal-footer'>
                               <button
@@ -285,6 +317,7 @@
           </table>
         </div>
       </div>
+
       <div class='contributors-container'>
         <div class='contributors-header'>
           <h6>Contributors</h6>
@@ -421,13 +454,15 @@
       <h6>You don't have access to this project</h6>
     </div>
     {{/if}}
+
+  </body>
+</html>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script
       src='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js'
       integrity='sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13'
       crossorigin='anonymous'
     ></script>
-  </body>
-</html>
-
 <script src='../scripts/base.js'></script>
 <script src='../scripts/main.js'></script>

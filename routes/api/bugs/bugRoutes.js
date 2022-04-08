@@ -40,6 +40,7 @@ router.post('/', withAuth, async (req, res) => {
         description: req.body.description,
         contributorid: req.session.loggedIn,
         projectid: req.body.projectid,
+        status: req.body.status,
       });
       res.status(200).json(newBug);
     } else {
@@ -74,6 +75,7 @@ router.put('/:id', withAuth, async (req, res) => {
       {
         title: req.body.title,
         description: req.body.description,
+        status: req.body.status,
       },
       {
         where: {

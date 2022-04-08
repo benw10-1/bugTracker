@@ -4,8 +4,8 @@ module.exports = {
     return date.toLocaleDateString();
   },
 
-  ifUser: (userId, commentId) => {
-    return userId == commentId;
+  ifEqual: (valueOne, valueTwo) => {
+    return valueOne == valueTwo;
   },
 
   log: (item) => {

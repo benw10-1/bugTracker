@@ -286,11 +286,13 @@
       <div class='contributors-container'>
         <div class='contributors-header'>
           <h6>Contributors</h6>
-          <button
-            class='add-contributor-btn'
-            data-bs-toggle='modal'
-            data-bs-target='#staticBackdrop'
-          ><a href='/projects/create'></a>Add</button>
+          {{#if (ifEqual user.id project.creator)}}
+            <button
+              class='add-contributor-btn'
+              data-bs-toggle='modal'
+              data-bs-target='#staticBackdrop'
+            ><a href='/projects/create'></a>Add</button>
+          {{/if}}
           <div
             class='modal fade'
             id='staticBackdrop'
@@ -352,54 +354,56 @@
                   <tr class='member-data'>
                     <td>{{contributor.name}}</td>
                     <td>{{contributor.email}}</td>
-                    <td>
-                      <button
-                        data-bs-toggle='modal'
-                        data-bs-target='#deleteMember'
-                        class='delete-bug-btn'
-                      >
-                        <i class='fa-solid fa-xmark delete-btn'></i>
-                      </button>
-                      <div
-                        class='modal fade'
-                        id='deleteMember'
-                        tabindex='-1'
-                        aria-labelledby='updateModal'
-                        aria-hidden='true'
-                      >
-                        <div class='modal-dialog'>
-                          <div class='modal-content'>
-                            <div class='modal-header'>
-                              <h5 class='modal-title' id='updateModal'>Delete
-                                Contributor</h5>
-                              <button
-                                type='button'
-                                class='btn-close'
-                                data-bs-dismiss='modal'
-                                aria-label='Close'
-                              ></button>
-                            </div>
-                            <div class='modal-body'>
-                              <p id='warning-contributor'>WARNING! Are you sure
-                                you want to delete this contributor?</p>
-                            </div>
-                            <div class='modal-footer'>
-                              <button
-                                type='button'
-                                class='btn btn-secondary'
-                                data-bs-dismiss='modal'
-                              >Close</button>
-                              <button
-                                contributor-id='{{contributor.id}}'
-                                id='contributor-id'
-                                type='button'
-                                class='btn btn-danger'
-                              >Delete Contributor</button>
+                    {{#if (ifEqual ../user.id ../project.creator)}}
+                      <td>
+                        <button
+                          data-bs-toggle='modal'
+                          data-bs-target='#deleteMember'
+                          class='delete-bug-btn'
+                        >
+                          <i class='fa-solid fa-xmark delete-btn'></i>
+                        </button>
+                        <div
+                          class='modal fade'
+                          id='deleteMember'
+                          tabindex='-1'
+                          aria-labelledby='updateModal'
+                          aria-hidden='true'
+                        >
+                          <div class='modal-dialog'>
+                            <div class='modal-content'>
+                              <div class='modal-header'>
+                                <h5 class='modal-title' id='updateModal'>Delete
+                                  Contributor</h5>
+                                <button
+                                  type='button'
+                                  class='btn-close'
+                                  data-bs-dismiss='modal'
+                                  aria-label='Close'
+                                ></button>
+                              </div>
+                              <div class='modal-body'>
+                                <p id='warning-contributor'>WARNING! Are you
+                                  sure you want to delete this contributor?</p>
+                              </div>
+                              <div class='modal-footer'>
+                                <button
+                                  type='button'
+                                  class='btn btn-secondary'
+                                  data-bs-dismiss='modal'
+                                >Close</button>
+                                <button
+                                  contributor-id='{{contributor.id}}'
+                                  id='contributor-id'
+                                  type='button'
+                                  class='btn btn-danger'
+                                >Delete Contributor</button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
+                      </td>
+                    {{/if}}
                   </tr>
                 {{/each}}
               {{/if}}

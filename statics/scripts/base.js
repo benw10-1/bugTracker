@@ -78,6 +78,23 @@ const deleteContributorHandler = async (event) => {
   }
 };
 
+const deleteProjectHandler = async (event) => {
+  event.preventDefault();
+
+  if (event.target.hasAttribute('project-id')) {
+    const projectId = event.target.getAttribute('project-id');
+    const response = await fetch(`/api/projects/${projectId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.ok) {
+      document.location.replace(`/dashboard`);
+    }
+  }
+};
+
 const newBugHandler = async (event) => {
   event.preventDefault();
 
@@ -233,6 +250,11 @@ function loadEls() {
   login = document.querySelector('.showPopup');
   dropdown = document.querySelector('.dropdown');
   sendLogin = document.querySelector('.sendLogin');
+
+  if (document.getElementById('delete-project'))
+    document
+      .getElementById('delete-project')
+      .addEventListener('click', deleteProjectHandler);
 
   if (document.getElementById('update-bug'))
     document

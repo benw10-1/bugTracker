@@ -1,16 +1,52 @@
 const router = require('express').Router();
-const { Bug, Project } = require('../../../models/models');
+const { Bug, Project, User, Contributor } = require('../../../models/models');
 const withAuth = require('../../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
   try {
-    const newBug = await Bug.create({
-      title: req.body.title,
-      description: req.body.description,
-      contributorid: req.session.loggedIn,
-      projectid: req.body.projectid,
+    let isContributor = false;
+    const foundUser = await User.findOne({
+      where: { id: req.session.loggedIn },
     });
-    res.status(200).json(newBug);
+
+    if (foundUser == undefined)
+      throw {
+        error: 'Not present',
+      };
+    const user = foundUser.get({ plain: true });
+
+    const projectData = await Project.findByPk(req.body.projectid);
+
+    const project = projectData.get({ plain: true });
+
+    const contributorData = await Contributor.findAll({
+      where: { projectid: project.id },
+    });
+
+    const contributors = contributorData.map((contributor) =>
+      contributor.get({ plain: true })
+    );
+
+    if (user.id == project.creator) isContributor = true;
+
+    for (let eachContributor of contributors) {
+      if (eachContributor.userid == user.id) {
+        isContributor = true;
+      }
+    }
+    if (isContributor) {
+      const newBug = await Bug.create({
+        title: req.body.title,
+        description: req.body.description,
+        contributorid: req.session.loggedIn,
+        projectid: req.body.projectid,
+      });
+      res.status(200).json(newBug);
+    } else {
+      throw {
+        error: 'Not a contributor',
+      };
+    }
   } catch (err) {
     res.status(400).json(err);
   }

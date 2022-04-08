@@ -26,7 +26,7 @@
 
 /* Back button */
 .back-container {
-  padding: 1rem;
+  padding: 1rem 2rem;
 }
 
 .back-container h1 a {
@@ -70,11 +70,12 @@
 .project-name-container h6 {
   font-weight: 800;
   font-size: 2rem;
+  text-transform: uppercase;
 }
 
 /* contributors container */
 .contributors-container {
-  width: 25rem;
+  width: 30rem;
   background-color: var(--form-color);
 }
 
@@ -127,7 +128,7 @@
 
 /* bug container */
 .bugs-container {
-  width: 25rem;
+  width: 30rem;
   /* margin-bottom: 2rem; */
   background-color: var(--form-color);
 }
@@ -177,6 +178,11 @@
 
 .table-bug tbody {
   font-size: 0.7rem;
+}
+
+td {
+  max-width: 7rem;
+  overflow-wrap: break-word;
 }
 
 .update-bug-btn-container {
@@ -233,13 +239,54 @@
   border: 2px solid var(--button-hover-color);
 }
 
+@media screen and (min-width: 320px) {
+  .bugs-container {
+    width: 20rem;
+    /* margin-bottom: 2rem; */
+    background-color: var(--form-color);
+  }
+  .contributors-container {
+    width: 20rem;
+  }
+  td {
+    max-width: 1rem;
+  }
+  th {
+    max-width: 1rem;
+    overflow-wrap: break-word;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .bugs-container {
+    width: 26rem;
+    /* margin-bottom: 2rem; */
+    background-color: var(--form-color);
+  }
+  .contributors-container {
+    width: 26rem;
+  }
+  td {
+    max-width: 2.5rem;
+  }
+  th {
+    max-width: 4.5rem;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .contributors-container {
+    margin-top: 2rem;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .contributors-container {
     padding: 1rem;
-    width: 35rem;
+    width: 45rem;
   }
   .bugs-container {
-    width: 35rem;
+    width: 45rem;
     padding: 1rem;
   }
   .add-contributor-btn {
@@ -249,17 +296,17 @@
   }
   .add-bug-btn {
     height: 2rem;
-    width: 6rem;
+    width: 5rem;
     font-size: 0.7rem;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .contributors-container {
-    width: 20rem;
+    width: 25rem;
   }
   .bugs-container {
-    width: 30rem;
+    width: 35rem;
   }
   .main-bug-container {
     display: flex;
@@ -269,28 +316,28 @@
     /* margin-top: -20rem; */
   }
   .bugs-header h6 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 
   .table-bug thead {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 
   .table-bug tbody {
     font-size: 0.8rem;
   }
   .contributors-header h6 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   .member-header {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
   .member-data {
     font-size: 0.7rem;
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1300px) {
   .contributors-container {
     width: 30rem;
   }

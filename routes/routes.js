@@ -44,6 +44,7 @@ router.get('/verifyEmail', async (req, res) => {
   }
   res.render('verify');
 });
+
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     let projectCount = 1;
@@ -57,7 +58,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ['username'],
+          attributes: ['username', 'id'],
         },
       ],
       where: { creator: req.session.loggedIn },
@@ -67,7 +68,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
       include: [
         {
           model: Contributor,
-          attributes: ['name'],
+          attributes: ['name', 'userid'],
           where: { userid: req.session.loggedIn },
         },
       ],
@@ -134,12 +135,21 @@ router.get('/projects/:id', withAuth, async (req, res) => {
       },
     });
     const bugs = bugData.map((bug) => bug.get({ plain: true }));
-    console.log(contributors);
+    const userData = await User.findOne({
+      where: { id: req.session.loggedIn },
+    });
+    const user = userData.get({ plain: true });
+
+    if (user.emailCode != null) {
+      res.render('home');
+      return;
+    }
     const context = {
       page: `${project.name} Bugs`,
       bugs,
       project,
       contributors,
+      user,
     };
     res.render('project', context);
   } catch (err) {

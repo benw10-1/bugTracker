@@ -108,6 +108,11 @@
   font-size: 0.5rem;
 }
 
+.table tbody tr td {
+  font-size: 0.6rem;
+  overflow-wrap: break-word;
+}
+
 .project-name-dashboard {
   color: var(--dark-font-color);
 }
@@ -161,6 +166,44 @@
 
 .delete-project:hover {
   color: var(--logout-btn-active);
+}
+
+@media screen and (min-width: 320px) {
+  body {
+    max-width: 100vw;
+  }
+  .projects-table-container {
+    width: 13rem;
+  }
+  .table thead tr th {
+    max-width: 4rem;
+  }
+
+  .table tbody tr td {
+    max-width: 2rem;
+  }
+  .table-header {
+    width: 13rem;
+  }
+  .add-bug-btn {
+    width: 3rem;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .projects-table-container {
+    width: 18rem;
+  }
+  .table thead tr th {
+    max-width: 5rem;
+  }
+
+  .table tbody tr td {
+    max-width: 4rem;
+  }
+  .table-header {
+    width: 18rem;
+  }
 }
 
 @media screen and (min-width: 768px) {

@@ -149,7 +149,9 @@ const newBugHandler = async (event) => {
     });
 
     if (response.ok) {
-      document.location.reload();
+      document.location.replace(`/projects/${projectId}`);
+    } else {
+      alert(response.statusText);
     }
   }
 };
@@ -162,7 +164,6 @@ const updateBugHandler = async (event) => {
   const bugStatus = document
     .getElementById('updateDropdown')
     .textContent.trim();
-
   const pathname = window.location.pathname;
   const projectId = pathname.split('/')[2];
   if (bugTitle && bugDesc && bugStatus != 'Choose a priority level...') {
@@ -172,6 +173,7 @@ const updateBugHandler = async (event) => {
         title: bugTitle,
         description: bugDesc,
         status: bugStatus,
+        projectid: projectId,
       }),
       headers: { 'Content-Type': 'application/json' },
     });

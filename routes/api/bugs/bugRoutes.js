@@ -1,5 +1,11 @@
 const router = require('express').Router();
-const { Bug, Project, User, Contributor } = require('../../../models/models');
+const {
+  Bug,
+  Project,
+  User,
+  Contributor,
+  History,
+} = require('../../../models/models');
 const withAuth = require('../../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
@@ -41,6 +47,16 @@ router.post('/', withAuth, async (req, res) => {
         contributorid: req.session.loggedIn,
         projectid: req.body.projectid,
         status: req.body.status,
+        username: user.username,
+      });
+      await History.create({
+        title: req.body.title,
+        description: req.body.description,
+        contributorid: req.session.loggedIn,
+        projectid: req.body.projectid,
+        bugid: newBug.id,
+        status: req.body.status,
+        username: user.username,
       });
       res.status(200).json(newBug);
     } else {
@@ -71,24 +87,68 @@ router.delete('/:id', withAuth, async (req, res) => {
 });
 router.put('/:id', withAuth, async (req, res) => {
   try {
-    const bugData = await Bug.update(
-      {
+    let isContributor = false;
+    const foundUser = await User.findOne({
+      where: { id: req.session.loggedIn },
+    });
+
+    if (foundUser == undefined)
+      throw {
+        error: 'Not present',
+      };
+    const user = foundUser.get({ plain: true });
+    console.log('>>>>>>PROJECTID', req.body.projectid);
+    const projectData = await Project.findByPk(req.body.projectid);
+    console.log('>>>>>>PROJECT', projectData);
+    console.log('>>>>>>USER', user);
+    const project = projectData.get({ plain: true });
+
+    const contributorData = await Contributor.findAll({
+      where: { projectid: project.id },
+    });
+    console.log(contributorData);
+    const contributors = contributorData.map((contributor) =>
+      contributor.get({ plain: true })
+    );
+
+    if (user.id == project.creator) isContributor = true;
+
+    for (let eachContributor of contributors) {
+      if (eachContributor.userid == user.id) {
+        isContributor = true;
+      }
+    }
+    if (isContributor) {
+      console.log('>>>>>>>USERNAME', user.username);
+      const bugData = await Bug.update(
+        {
+          title: req.body.title,
+          description: req.body.description,
+          status: req.body.status,
+          contributorid: req.session.loggedIn,
+          username: user.username,
+        },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
+      await History.create({
         title: req.body.title,
         description: req.body.description,
+        contributorid: req.session.loggedIn,
+        projectid: req.body.projectid,
+        bugid: req.params.id,
         status: req.body.status,
-      },
-      {
-        where: {
-          id: req.params.id,
-          contributorid: req.session.loggedIn,
-        },
+        username: user.username,
+      });
+      if (!bugData) {
+        res.status(404).json({ message: 'No bug found with this id!' });
+        return;
       }
-    );
-    if (!bugData) {
-      res.status(404).json({ message: 'No bug found with this id!' });
-      return;
+      res.status(200).json(bugData);
     }
-    res.status(200).json(bugData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -104,6 +164,7 @@ router.get('/:id', withAuth, async (req, res) => {
     res.status(400).json(err);
   }
 });
+
 router.post('/:id', withAuth, async (req, res) => {
   try {
     const project = await Project.findByPk(req.params.id);

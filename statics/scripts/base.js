@@ -3,7 +3,8 @@ var loaded = {},
   login,
   dropdown,
   logo,
-  sendLogin;
+  sendLogin,
+  chart;
 const images = ['logo.png'];
 
 function loadImages() {
@@ -149,8 +150,6 @@ const newBugHandler = async (event) => {
 
     if (response.ok) {
       document.location.reload();
-    } else {
-      alert(response.statusText);
     }
   }
 };
@@ -179,8 +178,6 @@ const updateBugHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace(`/projects/${projectId}`);
-    } else {
-      alert(response.statusText);
     }
   }
 };
@@ -227,8 +224,6 @@ const newProjectHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace('/dashboard');
-    } else {
-      alert(response.statusText);
     }
   }
 };
@@ -373,13 +368,50 @@ function loadEls() {
     document
       .getElementById('login-button')
       .addEventListener('click', loginFormHandler);
-
+  if (document.getElementById("graph")) {
+    let data = {LOW: 0, MEDIUM: 0, HIGH: 0}
+    let bugs = document.querySelectorAll(".table-bug tbody")
+    if (bugs && bugs.length > 0) {
+      for (const x of bugs) {
+        data[x.children[0].children[4].innerHTML] += 1
+      }
+      loadChart([data.LOW, data.MEDIUM, data.HIGH])
+    }
+  }
+    
   window.addEventListener('click', (event) => {
     if (event.target !== login && event.path.indexOf(dropdown) < 0)
       toggleDropdown(false);
   });
   if (login) loggedOut();
   if (logo) logo.appendChild(loaded.logo.cloneNode());
+}
+
+function loadChart(data) {
+  const ctx = document.getElementById('graph')
+    chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+          labels: ["Low", "Medium", "High"],
+          datasets: [
+            {
+              label: '# of Bugs',
+              data: data ?? [0, 0, 0],
+              backgroundColor: [
+                  'rgba(54, 162, 235, 0.5)',
+                  'rgba(255, 215, 0, 0.5)',
+                  'rgba(212, 0, 0, 0.5)',
+              ],
+              borderColor: [
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 215, 0, 1)',
+                  'rgba(212, 0, 0, 1)',
+              ],
+              borderWidth: 2
+          },
+        ]
+      },
+  })
 }
 
 function loggedOut() {

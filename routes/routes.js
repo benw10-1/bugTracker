@@ -2,7 +2,13 @@ const express = require('express');
 const api = require('./api/apiRoutes');
 var router = express.Router();
 const withAuth = require('../utils/auth');
-const { Project, User, Contributor, Bug } = require('../models/models');
+const {
+  Project,
+  User,
+  Contributor,
+  Bug,
+  History,
+} = require('../models/models');
 
 router.get('', async (req, res) => {
   if (!req.session) {
@@ -133,9 +139,11 @@ router.get('/projects/:id', withAuth, async (req, res) => {
       ],
       where: {
         projectid: req.params.id,
+        isHistory: false,
       },
     });
     const bugs = bugData.map((bug) => bug.get({ plain: true }));
+
     const userData = await User.findOne({
       where: { id: req.session.loggedIn },
     });
@@ -153,7 +161,7 @@ router.get('/projects/:id', withAuth, async (req, res) => {
       res.render('home');
       return;
     }
-    const context = {
+    let context = {
       page: `${project.name} Bugs`,
       bugs,
       project,
@@ -174,6 +182,59 @@ router.get('/projects/:id/submitBug', withAuth, async (req, res) => {
     } else throw 'Error';
   } catch (err) {
     res.redirect('/');
+  }
+});
+
+router.get('/bugs/history/:id', withAuth, async (req, res) => {
+  try {
+    const bugList = [];
+    const bugData = await Bug.findByPk(req.params.id);
+    if (!bugData) throw 'Not a valid bug!';
+    const bug = bugData.get({ plain: true });
+    let isContributor = false;
+    const projectData = await Project.findByPk(bug.projectid);
+
+    const project = projectData.get({ plain: true });
+
+    const contributorData = await Contributor.findAll({
+      where: { projectid: project.id },
+    });
+    const contributors = contributorData.map((contributor) =>
+      contributor.get({ plain: true })
+    );
+
+    const userData = await User.findOne({
+      where: { id: req.session.loggedIn },
+    });
+    const user = userData.get({ plain: true });
+
+    for (let eachContributor of contributors) {
+      if (eachContributor.userid == user.id) isContributor = true;
+    }
+
+    if (user.id == project.creator) {
+      isContributor = true;
+    }
+    const bugHistoryData = await History.findAll({
+      include: [{ model: Bug }],
+      where: { bugid: req.params.id },
+    });
+
+    const bugHistory = bugHistoryData.map((bug) => bug.get({ plain: true }));
+
+    for (let eachBug of bugHistory) {
+      bugList.push(eachBug);
+    }
+
+    let context = {
+      page: `${bug.title} History`,
+      bugList,
+      isContributor,
+      project,
+    };
+    return res.render('history', context);
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 

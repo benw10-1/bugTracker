@@ -17,7 +17,7 @@ app.use(
   session({
     secret: 'testtest123',
     cookie: {
-      maxAge: 60000,
+      maxAge: 600000,
       sameSite: 'strict',
     },
     resave: true,

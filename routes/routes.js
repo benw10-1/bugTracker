@@ -112,6 +112,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
 router.get('/projects/:id', withAuth, async (req, res) => {
   try {
+    let isContributor = false;
     const projectData = await Project.findByPk(req.params.id);
 
     const project = projectData.get({ plain: true });
@@ -140,6 +141,10 @@ router.get('/projects/:id', withAuth, async (req, res) => {
     });
     const user = userData.get({ plain: true });
 
+    for (let eachContributor of contributors) {
+      if (eachContributor.userid == user.id) isContributor = true;
+    }
+
     if (user.emailCode != null) {
       res.render('home');
       return;
@@ -150,6 +155,7 @@ router.get('/projects/:id', withAuth, async (req, res) => {
       project,
       contributors,
       user,
+      isContributor,
     };
     res.render('project', context);
   } catch (err) {

@@ -179,8 +179,6 @@ const updateBugHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace(`/projects/${projectId}`);
-    } else {
-      alert(response.statusText);
     }
   }
 };
@@ -227,8 +225,6 @@ const newProjectHandler = async (event) => {
 
     if (response.ok) {
       document.location.replace('/dashboard');
-    } else {
-      alert(response.statusText);
     }
   }
 };

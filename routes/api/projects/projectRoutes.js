@@ -2,30 +2,29 @@ const router = require('express').Router();
 const { Project, Contributor, Bug } = require('../../../models/models'); 
 const withAuth = require('../../../utils/auth');
 
-router.get('/', withAuth, async (req, res) => {
-  try {
-    const contributors = await Contributor.findAll({
-      where: {
-          userid: req.session.loggedIn
-      }
-    })
-    const creators = await Project.findAll({
-      where: {
-        creator: req.session.loggedIn
-      }
-    })
-    if (!contributors && !creators) throw 'No projects!';
-    let projects = creators;
-    for (const x of contributors) {
-        projects.push(await Project.getByPk(x.projectid));
-    }
-    if (projects.length === 0) throw 'Not a valid project!';
-
-    res.status(200).json(projects);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+// router.get('/', withAuth, async (req, res) => {
+//   try {
+//     const contributors = await Contributor.findAll({
+//       where: {
+//           userid: req.session.loggedIn
+//       }
+//     })
+//     const creators = await Project.findAll({
+//       where: {
+//         creator: req.session.loggedIn
+//       }
+//     })
+//     if (!contributors && !creators) throw 'No projects!';
+//     let projects = creators;
+//     for (const x of contributors) {
+//         projects.push(await Project.getByPk(x.projectid));
+//     }
+//     if (projects.length === 0) throw 'Not a valid project!';
+//     res.status(200).json(projects);
+//   } catch (err) {
+//     res.status(400).json(err);
+//   }
+// });
 router.post('/', withAuth, async (req, res) => {
   try {
     req.body.id = undefined

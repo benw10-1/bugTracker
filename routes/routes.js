@@ -40,7 +40,6 @@ router.get('/login', async (req, res) => {
 });
 router.get('/verifyEmail', async (req, res) => {
   if (!req.session.loggedIn) {
-    console.log('no login');
     res.redirect('/');
     return;
   }
@@ -49,17 +48,14 @@ router.get('/verifyEmail', async (req, res) => {
     res.redirect('/dashboard');
     return;
   }
-  res.render('verify');
+  let context = {
+    email: user.email
+  }
+  res.render('verify', context);
 });
 
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    // let projectCount = 1;
-    const finalProjects = [];
-    if (!req.session.loggedIn) {
-      res.redirect('/');
-      return;
-    }
     req.session.home = false;
     const projectData = await Project.findAll({
       include: [
@@ -80,38 +76,26 @@ router.get('/dashboard', withAuth, async (req, res) => {
         },
       ],
     });
-
-    const projects = projectData.map((project) => project.get({ plain: true }));
-    const contributorProjects = contributorProjectData.map((project) =>
-      project.get({ plain: true })
-    );
-    let result = projects.concat(contributorProjects)
-    result.sort((e, e1) => moment(e.createdAt).valueOf() > moment(e1.createdAt).valueOf())
-    for (let i=0; i < result.length; i++) result[i].number = i + 1
-    // for (let eachProject of projects) {
-    //   eachProject.number = projectCount;
-    //   projectCount++;
-    //   finalProjects.push(eachProject);
-    // }
-
-    // for (let eachProject of contributorProjects) {
-    //   eachProject.number = projectCount;
-    //   projectCount++;
-    //   finalProjects.push(eachProject);
-    // }
-    const userData = await User.findOne({
-      where: { id: req.session.loggedIn },
+    let created = new Set()
+    const projects = projectData.map((project) => {
+      let r = project.get({ plain: true })
+      created.add(r.id)
+      return r
     });
-    const user = userData.get({ plain: true });
+    const contributorProjects = contributorProjectData.map((project) => project.get({ plain: true })).filter(e => !created.has(e.id));
+    let result = projects.concat(contributorProjects)
+    result.sort((e, e1) => {
+      let t1 = moment(e.createdAt), t2 = moment(e1.createdAt)
+      if (t1 > t2) return -1
+      if (t1 < t2) return 1
+      return 0
+    })
+    for (let i=0; i < result.length; i++) result[i].number = i + 1
 
-    if (user.emailCode != null) {
-      res.render('home');
-      return;
-    }
     let context = {
       page: 'Dashboard',
       loggedIn: req.session.loggedIn,
-      user,
+      user: req.session.loggedIn,
       finalProjects: result,
     };
     res.render('dashboard', context);
@@ -123,9 +107,9 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
 router.get('/projects/:id', withAuth, async (req, res) => {
   try {
-    let isContributor = false;
     const projectData = await Project.findByPk(req.params.id);
-    if (!projectData) {
+    console.log(await projectData.hasAccess(req.session.loggedIn), req.session.loggedIn, projectData.get({plain: true}))
+    if (!projectData || !await projectData.hasAccess(req.session.loggedIn)) {
       res.redirect("/dashboard")
       return
     }
@@ -133,9 +117,13 @@ router.get('/projects/:id', withAuth, async (req, res) => {
     const contributorData = await Contributor.findAll({
       where: { projectid: project.id },
     });
-    const contributors = contributorData.map((contributor) =>
-      contributor.get({ plain: true })
-    );
+    let i = 0
+    const contributors = contributorData.map((contributor) => {
+      let obj = contributor.get({ plain: true })
+      obj.number = i + 1
+      i++
+      return obj
+    });
 
     const bugData = await Bug.findAll({
       include: [
@@ -146,82 +134,42 @@ router.get('/projects/:id', withAuth, async (req, res) => {
       ],
       where: {
         projectid: req.params.id,
-        isHistory: false,
       },
     });
-    const bugs = bugData.map((bug) => bug.get({ plain: true }));
-
+    i = 0
+    const bugs = bugData.map((bug) => {
+      let obj = bug.get({ plain: true })
+      obj.number = i + 1
+      i++
+      return obj
+    });
     const userData = await User.findOne({
       where: { id: req.session.loggedIn },
     });
     const user = userData.get({ plain: true });
 
-    for (let eachContributor of contributors) {
-      if (eachContributor.userid == user.id) isContributor = true;
-    }
-
-    if (user.id == project.creator) {
-      isContributor = true;
-    }
-
-    if (user.emailCode != null) {
-      res.render('home');
-      return;
-    }
-    let context = {
-      page: `${project.name} Bugs`,
+    const context = {
+      page: `${project.name}'s Bugs`,
       bugs,
       project,
       contributors,
       user,
-      isContributor,
     };
     res.render('project', context);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-router.get('/projects/:id/submitBug', withAuth, async (req, res) => {
-  try {
-    const projectData = await Project.findByPk(req.params.id);
-    if (projectData.endpoint) {
-      res.render('bugform');
-    } else throw 'Error';
-  } catch (err) {
-    res.redirect('/');
-  }
-});
 
 router.get('/bugs/history/:id', withAuth, async (req, res) => {
   try {
-    const bugList = [];
     const bugData = await Bug.findByPk(req.params.id);
     if (!bugData) throw 'Not a valid bug!';
     const bug = bugData.get({ plain: true });
-    let isContributor = false;
     const projectData = await Project.findByPk(bug.projectid);
-
+    if (!projectData || !await projectData.hasAccess(req.session.loggedIn)) throw "No access"
     const project = projectData.get({ plain: true });
 
-    const contributorData = await Contributor.findAll({
-      where: { projectid: project.id },
-    });
-    const contributors = contributorData.map((contributor) =>
-      contributor.get({ plain: true })
-    );
-
-    const userData = await User.findOne({
-      where: { id: req.session.loggedIn },
-    });
-    const user = userData.get({ plain: true });
-
-    for (let eachContributor of contributors) {
-      if (eachContributor.userid == user.id) isContributor = true;
-    }
-
-    if (user.id == project.creator) {
-      isContributor = true;
-    }
     const bugHistoryData = await History.findAll({
       include: [{ model: Bug }],
       where: { bugid: req.params.id },
@@ -229,19 +177,15 @@ router.get('/bugs/history/:id', withAuth, async (req, res) => {
 
     const bugHistory = bugHistoryData.map((bug) => bug.get({ plain: true }));
 
-    for (let eachBug of bugHistory) {
-      bugList.push(eachBug);
-    }
-
     let context = {
-      page: `${bug.title} History`,
-      bugList,
-      isContributor,
+      page: `${bug.title}'s History`,
+      bugList: bugHistory,
+      isContributor: true,
       project,
     };
     return res.render('history', context);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
 });
 

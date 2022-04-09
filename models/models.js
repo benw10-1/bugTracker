@@ -12,7 +12,7 @@ class User extends Model {
 class Contributor extends Model {}
 class Project extends Model {
   async hasAccess(user_id) {
-    if (this.owner === user_id) return true;
+    if (this.creator === user_id) return true;
     const contributors = await Contributor.findAll({
       where: {
         projectid: this.id,

@@ -31,7 +31,6 @@ router.post('/create', async (req, res) => {
 });
 router.post('/login', async (req, res) => {
   try {
-    // if (!req.session.home) throw "Incorrect origin!"
     if (!req.body || !req.body.password || !req.body.user)
       throw {
         error: 'Not present',
@@ -91,7 +90,7 @@ router.get('/resendVerification', async (req, res) => {
   } catch (err) {
     res.status(400).json({
       status: 'error',
-      data: 'err',
+      data: err,
     });
   }
 });

@@ -28,76 +28,10 @@
         <a href='/dashboard' id='login-back'> &#60; Back</a>
       </h1>
     </div>
-
-    {{#if isContributor}}
     <div class='project-name-container'>
       <h6>{{project.name}}</h6>
     </div>
     <main class='main-bug-container'>
-
-      {{! <div class='contributors-container'>
-        <div class='contributors-header'>
-          <h6>Contributors</h6>
-          <button
-            class='add-contributor-btn'
-            data-bs-toggle='modal'
-            data-bs-target='#staticBackdrop'
-          ><a href='/projects/create'></a>Add member</button>
-          <div
-            class='modal fade'
-            id='staticBackdrop'
-            data-bs-backdrop='static'
-            data-bs-keyboard='false'
-            tabindex='-1'
-            aria-labelledby='staticBackdropLabel'
-            aria-hidden='true'
-          >
-            <div class='modal-dialog'>
-              <div class='modal-content'>
-                <div class='modal-header'>
-                  <h5 class='modal-title' id='staticBackdropLabel'>Add Member</h5>
-                  <button
-                    type='button'
-                    class='btn-close'
-                    data-bs-dismiss='modal'
-                    aria-label='Close'
-                  ></button>
-                </div>
-                <div class='modal-body modal-questions'>
-                  <label>Member's Name</label>
-                  <input type='text' placeholder='Name' />
-                  <label>Member's Email</label>
-                  <input type='email' placeholder='Email' />
-                </div>
-                <div class='modal-footer'>
-                  <button
-                    type='button'
-                    class='btn btn-secondary'
-                    data-bs-dismiss='modal'
-                  >Close</button>
-                  <button type='button' class='btn btn-primary'>Add Member</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='table-contributors'>
-          <table class='table'>
-            <thead class='thead-dark'>
-              <tr>
-                <th scope='col'>NAME</th>
-                <th scope='col'>EMAIL</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>hello</td>
-                <td>hello</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div> }}
       <div class="top-row">
         <div class='bugs-container'>
         <div class='bugs-header'>
@@ -195,14 +129,14 @@
                     <td>
                       <button
                         data-bs-toggle='modal'
-                        data-bs-target='#updateModal'
+                        data-bs-target='#updateModal-{{bug.number}}'
                         class='update-bug-btn-container'
                       >
                         <i class='fa-solid fa-pen-to-square update-bug-btn'></i>
                       </button>
                       <div
                         class='modal fade'
-                        id='updateModal'
+                        id='updateModal-{{bug.number}}'
                         tabindex='-1'
                         aria-labelledby='updateModal'
                         aria-hidden='true'
@@ -211,7 +145,7 @@
                           <div class='modal-content'>
                             <div class='modal-header'>
                               <h5 class='modal-title' id='updateModal'>Update
-                                Bug</h5>
+                                "{{bug.title}}"</h5>
                               <button
                                 type='button'
                                 class='btn-close'
@@ -266,14 +200,14 @@
                     <td>
                       <button
                         data-bs-toggle='modal'
-                        data-bs-target='#deleteBug'
+                        data-bs-target='#deleteBug-{{bug.number}}'
                         class='delete-bug-btn'
                       >
                         <i class='fa-solid fa-xmark delete-btn'></i>
                       </button>
                       <div
                         class='modal fade'
-                        id='deleteBug'
+                        id='deleteBug-{{bug.number}}'
                         tabindex='-1'
                         aria-labelledby='updateModal'
                         aria-hidden='true'
@@ -282,7 +216,7 @@
                           <div class='modal-content'>
                             <div class='modal-header'>
                               <h5 class='modal-title' id='updateModal'>Delete
-                                Bug</h5>
+                                "{{bug.title}}"</h5>
                               <button
                                 type='button'
                                 class='btn-close'
@@ -390,18 +324,18 @@
                   <tr class='member-data'>
                     <td>{{contributor.name}}</td>
                     <td>{{contributor.email}}</td>
-                    {{#if (ifEqual ../user.id ../project.creator)}}
+                    {{#if (ifEqual user.id project.creator)}}
                       <td>
                         <button
                           data-bs-toggle='modal'
-                          data-bs-target='#deleteMember'
+                          data-bs-target='#deleteMember-{{contributor.number}}'
                           class='delete-bug-btn'
                         >
                           <i class='fa-solid fa-xmark delete-btn'></i>
                         </button>
                         <div
                           class='modal fade'
-                          id='deleteMember'
+                          id='deleteMember-{{contributor.number}}'
                           tabindex='-1'
                           aria-labelledby='updateModal'
                           aria-hidden='true'
@@ -410,7 +344,7 @@
                             <div class='modal-content'>
                               <div class='modal-header'>
                                 <h5 class='modal-title' id='updateModal'>Delete
-                                  Contributor</h5>
+                                  "{{contributor.name}}"</h5>
                                 <button
                                   type='button'
                                   class='btn-close'
@@ -420,7 +354,7 @@
                               </div>
                               <div class='modal-body'>
                                 <p id='warning-contributor'>WARNING! Are you
-                                  sure you want to delete this contributor?</p>
+                                  sure you want to remove this contributor?</p>
                               </div>
                               <div class='modal-footer'>
                                 <button
@@ -454,13 +388,6 @@
           <canvas id="graph" width="400" height="400"></canvas>
         </div>
     </div>
-    
-    {{else}}
-    <div class='project-name-container'>
-      <h6>You don't have access to this project</h6>
-    </div>
-    {{/if}}
-
   </body>
 </html>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

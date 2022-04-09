@@ -161,6 +161,8 @@ const updateBugHandler = async (event) => {
   const bugStatus = document
     .getElementById('updateDropdown')
     .textContent.trim();
+  const split = window.location.href.split('/');
+  const projectId = split[Math.max(0, split.length - 1)];
   if (bugTitle && bugDesc && bugStatus != 'Choose a priority level...') {
     const response = await fetch(`/api/bugs/${bugId}`, {
       method: 'PUT',
@@ -168,6 +170,7 @@ const updateBugHandler = async (event) => {
         title: bugTitle,
         description: bugDesc,
         status: bugStatus,
+        projectid: projectId,
       }),
       headers: { 'Content-Type': 'application/json' },
     })

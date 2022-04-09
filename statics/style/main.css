@@ -175,6 +175,14 @@ form {
   border-bottom: 2px solid var(--dark-font-color);
 }
 
+.password-requirement {
+  margin-bottom: 1rem;
+}
+
+.password-requirement ul li {
+  font-size: 0.6rem;
+}
+
 .form-btn {
   color: var(--white-font-color);
   font-size: 0.7rem;

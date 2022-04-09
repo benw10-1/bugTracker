@@ -1,10 +1,5 @@
 const router = require('express').Router();
-const {
-  Bug,
-  Project,
-  User,
-  History,
-} = require('../../../models/models');
+const { Bug, Project, User, History } = require('../../../models/models');
 const withAuth = require('../../../utils/auth');
 
 router.post('/', withAuth, async (req, res) => {
@@ -15,7 +10,8 @@ router.post('/', withAuth, async (req, res) => {
     const user = foundUser.get({ plain: true });
 
     const projectData = await Project.findByPk(req.body.projectid);
-    if (!await projectData.hasAccess(req.session.loggedIn)) throw "No access to this project"
+    if (!(await projectData.hasAccess(req.session.loggedIn)))
+      throw 'No access to this project';
 
     const newBug = await Bug.create({
       title: req.body.title,
@@ -36,8 +32,8 @@ router.post('/', withAuth, async (req, res) => {
     });
     res.status(200).json(newBug);
   } catch (err) {
-    if (err.sql) err = err.errors.map(e => e.message)
-    else err = [err]
+    if (err.sql) err = err.errors.map((e) => e.message);
+    else err = [err];
     res.status(400).json({
       status: 'error',
       data: err,
@@ -46,19 +42,20 @@ router.post('/', withAuth, async (req, res) => {
 });
 router.delete('/:id', withAuth, async (req, res) => {
   try {
-    const proj = await Project.findByPk(req.body.projectid)
-    if (!proj || !await proj.hasAccess(req.session.loggedIn)) throw "No access!"
+    const proj = await Project.findByPk(req.body.projectid);
+    if (!proj || !(await proj.hasAccess(req.session.loggedIn)))
+      throw 'No access!';
     const bugData = await Bug.destroy({
       where: {
         id: req.params.id,
         projectid: req.body.projectid,
       },
     });
-    if (!bugData) throw "No bug found with this id"
+    if (!bugData) throw 'No bug found with this id';
     res.status(200).json(bugData);
   } catch (err) {
-    if (err.sql) err = err.errors.map(e => e.message)
-    else err = [err]
+    if (err.sql) err = err.errors.map((e) => e.message);
+    else err = [err];
     res.status(400).json({
       status: 'error',
       data: err,
@@ -67,9 +64,16 @@ router.delete('/:id', withAuth, async (req, res) => {
 });
 router.put('/:id', withAuth, async (req, res) => {
   try {
-    const user = User.findByPk(req.session.loggedIn)
+    const userData = await User.findByPk(req.session.loggedIn);
     const projectData = await Project.findByPk(req.body.projectid);
-    if (!projectData || !await projectData.hasAccess(req.session.loggedIn) || !user) throw "No access!"
+
+    const user = userData.get({ plain: true });
+    if (
+      !projectData ||
+      !(await projectData.hasAccess(req.session.loggedIn)) ||
+      !user
+    )
+      throw 'No access!';
     const bugData = await Bug.update(
       {
         title: req.body.title,
@@ -93,11 +97,11 @@ router.put('/:id', withAuth, async (req, res) => {
       status: req.body.status,
       username: user.username,
     });
-    if (!bugData) throw "Incorrect bug ID"
+    if (!bugData) throw 'Incorrect bug ID';
     res.status(200).json(bugData);
   } catch (err) {
-    if (err.sql) err = err.errors.map(e => e.message)
-    else err = [err]
+    if (err.sql) err = err.errors.map((e) => e.message);
+    else err = [err];
     res.status(400).json({
       status: 'error',
       data: err,
@@ -109,13 +113,14 @@ router.post('/:id', withAuth, async (req, res) => {
   try {
     const project = await Project.findByPk(req.params.id);
     if (!project) throw 'Not a valid project!';
-    if (!project.endpoint && !await project.hasAccess(req.session.loggedIn)) throw 'Not a contributor for this project!';
+    if (!project.endpoint && !(await project.hasAccess(req.session.loggedIn)))
+      throw 'Not a contributor for this project!';
     if (!body.email) throw 'No email';
     const newBug = await Bug.create(...req.body);
     res.status(200).json(newBug);
   } catch (err) {
-    if (err.sql) err = err.errors.map(e => e.message)
-    else err = [err]
+    if (err.sql) err = err.errors.map((e) => e.message);
+    else err = [err];
     res.status(400).json({
       status: 'error',
       data: err,

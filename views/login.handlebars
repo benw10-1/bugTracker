@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='/style/login.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>login page</title>
+  </head>
+  <body>
+    <nav class='navbar'>
+      <div id='main-logo'><i class='fa-solid fa-bug-slash'></i>Bug Tracker</div>
+      <div id='nav-login-btn-container'>
+      </div>
+    </nav>
+    <div id="login-nav">
+      <h1>
+        <a href="./" id="login-back"> &#60; Back</a>
+      </h1>
+    </div>
+    <div class="main-signup login-form" id="signup-form">
+        <form>
+          <div class="form-header" id="form-top">
+            <span id="login-logo"><i class="fa-solid fa-bug-slash"></i> Bug Tracker</span>
+            <h2 id="login-header">Login</h2>
+          </div>
+          <div class="input">
+            <i class="fa-solid fa-user"></i>
+            <input
+              name="user"
+              type="email"
+              class="form-input"
+              id="login-email"
+              placeholder="Username"
+              autocomplete="off"
+            />
+          </div>
+          <div class="input">
+            <i class="fa-solid fa-lock"></i>            
+            <input
+              name='pass'
+              type="password"
+              class="form-input"
+              id="login-password"
+              placeholder="Password"
+            />
+          </div>
+        <div class="signup-btn">
+            <button type="submit" class="login-button" id="login-button">
+              Login
+            </button>
+        </div>
+        </form>
+      </div>
+    </div>
+
+
+
+  </body>
+</html>
+<script src='scripts/base.js'></script>
+<script src='scripts/main.js'></script>

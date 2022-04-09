@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;800&display=swap');
+
+:root {
+  --main-font: 'Montserrat', sans-serif;
+  --form-color: rgba(219, 213, 213, 0.4);
+  --dark-font-color: #1b1a1a;
+  --white-font-color: #f4f4f4;
+  --button-color: #3369ff;
+  --button-hover-color: #0037d0;
+  --button-active-color: #002da9;
+  --logout-btn-color: #c6011f;
+  --logout-btn-hover: #f40009;
+  --logout-btn-active: #fd5c63;
+  --create-bug-btn-color: #03c03c;
+  --create-bug-hover: #17b169;
+  --create-bug-active: #006241;
+}
+
+/* Navbar */
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-image: url('../images/blue.png');
+}
+
+.logout-btn {
+  background-color: var(--logout-btn-color);
+  color: var(--white-font-color);
+  height: 1.5rem;
+  width: 4rem;
+  font-size: 0.5rem;
+  border-style: none;
+  padding: 0.7em 1.7em;
+  border-radius: 0.2em;
+  font-weight: 400;
+  box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
+    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+}
+
+.logout-btn:hover {
+  background-color: var(--logout-btn-hover);
+  transition: 0.3s;
+}
+
+.logout-btn:active {
+  background-color: var(--logout-btn-active);
+}
+
+/* Main dashboard */
+.main-content {
+  height: 100vh;
+}
+
+.projects-table-container {
+  width: 18rem;
+  margin: 0 auto;
+  background-color: var(--form-color);
+}
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 18rem;
+  margin: 2rem auto 0;
+  background-color: var(--form-color);
+}
+
+.table-header h6 {
+  font-size: 0.8rem;
+}
+
+.add-bug-btn {
+  color: var(--white-font-color);
+  height: 1.5rem;
+  width: 5rem;
+  font-size: 0.5rem;
+  border-style: none;
+  padding: 0.7em 1.7em;
+  border-radius: 0.2em;
+  font-weight: 400;
+  background-color: var(--create-bug-btn-color);
+  box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
+    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+}
+
+.add-bug-btn:hover {
+  background-color: var(--create-bug-hover);
+  transition: 0.3s;
+}
+
+.add-bug-btn:active {
+  background-color: var(--create-bug-active);
+}
+
+.table thead {
+  background-image: url('../images/blue.png');
+  color: var(--white-font-color);
+  font-weight: 800;
+}
+
+.table thead tr th {
+  font-size: 0.5rem;
+}
+
+.table tbody tr td {
+  font-size: 0.6rem;
+  overflow-wrap: break-word;
+}
+
+.project-name-dashboard {
+  color: var(--dark-font-color);
+}
+
+.project-name-dashboard:hover {
+  color: var(--button-active-color);
+}
+
+.delete-btn {
+  color: var(--logout-btn-hover);
+}
+
+.delete-btn:hover {
+  color: var(--logout-btn-active);
+}
+
+.modal-questions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-questions label {
+  color: var(--dark-font-color);
+  text-align: left;
+  font-size: 0.7rem;
+}
+
+.modal-questions input {
+  border: 1px solid var(--button-hover-color);
+  width: 100%;
+  height: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.5rem;
+  padding: 0.2rem 0.4rem;
+}
+
+.modal-questions input:focus {
+  border: 2px solid var(--button-hover-color);
+}
+
+.modal-body p {
+  font-size: 0.7rem;
+}
+
+.delete-project-btn {
+  border-style: none;
+  color: var(--logout-btn-hover);
+}
+
+.delete-project:hover {
+  color: var(--logout-btn-active);
+}
+
+@media screen and (min-width: 320px) {
+  body {
+    max-width: 100vw;
+  }
+  .projects-table-container {
+    width: 13rem;
+  }
+  .table thead tr th {
+    max-width: 4rem;
+  }
+
+  .table tbody tr td {
+    max-width: 2rem;
+  }
+  .table-header {
+    width: 13rem;
+  }
+  .add-bug-btn {
+    width: 3rem;
+  }
+}
+
+@media screen and (min-width: 425px) {
+  .projects-table-container {
+    width: 18rem;
+  }
+  .table thead tr th {
+    max-width: 5rem;
+  }
+
+  .table tbody tr td {
+    max-width: 4rem;
+  }
+  .table-header {
+    width: 18rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .projects-table-container {
+    width: 25rem;
+  }
+
+  .table-header {
+    width: 25rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .projects-table-container {
+    width: 30rem;
+  }
+
+  .table-header {
+    width: 30rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .projects-table-container {
+    width: 45rem;
+  }
+
+  .table-header {
+    width: 45rem;
+  }
+}

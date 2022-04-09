@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;800&display=swap');
+
+:root {
+  --main-font: 'Montserrat', sans-serif;
+  --form-color: rgba(219, 213, 213, 0.4);
+  --dark-font-color: #1b1a1a;
+  --white-font-color: #f4f4f4;
+  --button-color: #3369ff;
+  --button-hover-color: #0037d0;
+  --button-active-color: #002da9;
+}
+
+body {
+  background-image: url('../images/blue.png');
+  font-family: var(--main-font);
+}
+
+.bug-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-bug-header {
+  margin-bottom: 1.5rem;
+  margin-top: 7rem;
+}
+
+.bug-form h1 {
+  color: var(--white-font-color);
+  font-weight: 800;
+}
+
+.input-title {
+  color: var(--white-font-color);
+  text-align: left;
+  font-weight: 400;
+  font-size: 0.7rem;
+  margin-top: 1rem;
+}
+
+.bug-input {
+  border-style: none;
+  background-color: var(--white-font-color);
+  color: rgb(109, 109, 109);
+  padding: 0.4rem 0.5rem;
+}
+
+.bug-input::placeholder {
+  color: rgb(109, 109, 109);
+}
+
+.submit-form-bug-btn {
+  color: var(--white-font-color);
+  height: 1.5rem;
+  width: 5rem;
+  font-size: 0.5rem;
+  border-style: none;
+  padding: 0.7em 1.7em;
+  border-radius: 0.2em;
+  font-weight: 400;
+  background-color: var(--button-color);
+  box-shadow: inset 0 -0.6em 1em -0.35em rgba(0, 0, 0, 0.17),
+    inset 0 0.6em 2em -0.3em rgba(255, 255, 255, 0.15),
+    inset 0 0 0em 0.05em rgba(255, 255, 255, 0.12);
+  margin: 1rem auto 0;
+}
+
+.submit-form-bug-btn:hover {
+  background-color: var(--button-hover-color);
+  transition: 0.3s;
+}
+
+.submit-form-bug-btn:active {
+  background-color: var(--button-active-color);
+}

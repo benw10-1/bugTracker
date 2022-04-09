@@ -22,10 +22,11 @@ router.post('/create', async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err);
+    if (err.sql) err = err.errors.map(e => e.message)
+    else err = [err]
     res.status(400).json({
       status: 'error',
-      data: 'Error',
+      data: err,
     });
   }
 });
@@ -63,7 +64,8 @@ router.post('/login', async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err);
+    if (err.sql) err = err.errors.map(e => e.message)
+    else err = [err]
     res.status(400).json({
       status: 'error',
       data: err,
@@ -89,9 +91,11 @@ router.get('/resendVerification', async (req, res) => {
       action: 'email verification sent',
     });
   } catch (err) {
+    if (err.sql) err = err.errors.map(e => e.message)
+    else err = [err]
     res.status(400).json({
       status: 'error',
-      data: 'err',
+      data: err,
     });
   }
 });

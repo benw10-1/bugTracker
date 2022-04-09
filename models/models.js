@@ -1,4 +1,4 @@
-const { Model, DataTypes, UUIDV4 } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const mailer = require('../email/mailer');
 const bcrypt = require('bcrypt');
@@ -37,11 +37,6 @@ User.init(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-    },
-    number: {
-      type: DataTypes.INTEGER,
-      defaultValue: null,
-      allowNull: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -124,6 +119,18 @@ Project.init(
   {
     sequelize,
     modelName: 'project',
+    hooks: {
+      async afterCreate(newProjData) {
+        const user = await User.findByPk(newProjData.creator)
+        const newContrib = await Contributor.create({
+          userid: newProjData.creator,
+          projectid: newProjData.id,
+          name: user.name ?? user.username
+        })
+        console.log(newContrib)
+        return newProjData;
+      },
+    },
   }
 );
 Contributor.init(
@@ -197,7 +204,6 @@ Bug.init(
     modelName: 'bug',
   }
 );
-
 User.hasMany(Project, {
   foreignKey: 'creator',
 });

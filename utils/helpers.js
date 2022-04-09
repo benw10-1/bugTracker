@@ -7,7 +7,7 @@ module.exports = {
   ifEqual: (valueOne, valueTwo) => {
     return valueOne == valueTwo;
   },
-
+  notEqual: (v1, v2) => v1 !== v2,
   log: (item) => {
     return console.log(item);
   },

@@ -352,7 +352,7 @@ function loadEls() {
   if (document.getElementById('updateDropdown'))
     document
       .querySelectorAll('.updateBug button.btn-secondary')
-      .forEach((e) => e.addEventListener('click', dropDownToggle));
+      .forEach((e) => e.addEventListener('click', updatePriority));
 
   if (document.getElementById('delete-project'))
     document

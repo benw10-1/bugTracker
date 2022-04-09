@@ -138,7 +138,6 @@ const newBugHandler = async (event) => {
       }),
       headers: { 'Content-Type': 'application/json' },
     }).then(data => data.json()).catch(err => console.log(err));
-
     if (response.status !== "error") document.location.reload()
     else formError(response.data, {left: event.pageX, top: event.pageY})
   }
@@ -152,7 +151,6 @@ const updateBugHandler = async (event) => {
   const bugStatus = document
     .getElementById('updateDropdown')
     .textContent.trim();
-
   const pathname = window.location.pathname;
   if (bugTitle && bugDesc && bugStatus != 'Choose a priority level...') {
     const response = await fetch(`/api/bugs/${bugId}`, {
@@ -161,6 +159,7 @@ const updateBugHandler = async (event) => {
         title: bugTitle,
         description: bugDesc,
         status: bugStatus,
+        projectid: projectId,
       }),
       headers: { 'Content-Type': 'application/json' },
     }).then(data => data.json()).catch(err => console.log(err));

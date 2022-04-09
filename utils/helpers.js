@@ -11,4 +11,8 @@ module.exports = {
   log: (item) => {
     return console.log(item);
   },
+
+  split: (string) => {
+    return string.split('-')[1];
+  },
 };

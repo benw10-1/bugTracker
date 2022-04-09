@@ -23,6 +23,8 @@ class Project extends Model {
   }
 }
 class Bug extends Model {}
+
+class History extends Model {}
 // requires at least one uppercase letter, one number, one special character, one lowercase letter, and a length of at least 8.
 const validate = {
   username: /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i,
@@ -164,6 +166,9 @@ Contributor.init(
 );
 Bug.init(
   {
+    username: {
+      type: DataTypes.STRING,
+    },
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -179,6 +184,10 @@ Bug.init(
     },
     contributorid: {
       type: DataTypes.UUID,
+    },
+    isHistory: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
     email: {
       type: DataTypes.STRING,
@@ -204,6 +213,59 @@ Bug.init(
     modelName: 'bug',
   }
 );
+
+History.init(
+  {
+    username: {
+      type: DataTypes.STRING,
+    },
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    contributorid: {
+      type: DataTypes.UUID,
+    },
+    bugid: {
+      type: DataTypes.UUID,
+    },
+    isHistory: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+      },
+    },
+    projectid: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING(5000),
+    },
+    date_created: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    sequelize,
+    modelName: 'history',
+  }
+);
 User.hasMany(Project, {
   foreignKey: 'creator',
 });
@@ -219,11 +281,20 @@ Project.belongsTo(User, {
 Bug.belongsTo(Project, {
   foreignKey: 'projectid',
 });
+User.hasMany(Bug, {
+  foreignKey: 'contributorid',
+});
 Bug.belongsTo(User, {
   foreignKey: 'contributorid',
 });
 Contributor.belongsTo(Project, {
   foreignKey: 'projectid',
 });
+Bug.hasMany(History, {
+  foreignKey: 'bugid',
+});
+History.belongsTo(Bug, {
+  foreignKey: 'bugid',
+});
 
-module.exports = { User, Project, Contributor, Bug };
+module.exports = { User, Project, Contributor, Bug, History };

@@ -12,6 +12,7 @@
 
 body {
   background-color: var(--white-font-color);
+  font-family: var(--main-font);
 }
 
 /* Nav / back button */
@@ -22,6 +23,7 @@ body {
 #login-back {
   color: var(--dark-font-color);
   text-decoration: none;
+  font-size: 1rem;
 }
 
 #login-back:hover {

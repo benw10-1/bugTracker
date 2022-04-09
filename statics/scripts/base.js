@@ -56,13 +56,13 @@ const logoutButtonHandler = async (event) => {
 
   if (response.ok) {
     document.location.replace(`/`);
-  } 
+  }
 };
 
 const deleteBugHandler = async (event) => {
   event.preventDefault();
-  const split = window.location.href.split("/")
-  const projectId = split[Math.max(0, split.length - 1)]
+  const split = window.location.href.split('/');
+  const projectId = split[Math.max(0, split.length - 1)];
   if (event.target.hasAttribute('bug-id')) {
     const bugId = event.target.getAttribute('bug-id');
     const response = await fetch(`/api/bugs/${bugId}`, {
@@ -73,17 +73,19 @@ const deleteBugHandler = async (event) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(data => data.json()).catch(err => console.log(err));
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
 
-    if (response.status !== "error") document.location.reload()
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    if (response.status !== 'error') document.location.reload();
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
 const deleteContributorHandler = async (event) => {
   event.preventDefault();
-  const split = window.location.href.split("/")
-  const projectId = split[Math.max(0, split.length - 1)]
+  const split = window.location.href.split('/');
+  const projectId = split[Math.max(0, split.length - 1)];
   if (event.target.hasAttribute('contributor-id')) {
     const contributorId = event.target.getAttribute('contributor-id');
     const response = await fetch(`/api/contributors/${contributorId}`, {
@@ -94,10 +96,12 @@ const deleteContributorHandler = async (event) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(data => data.json()).catch(err => console.log(err));
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
 
-    if (response.status !== "error") document.location.reload()
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    if (response.status !== 'error') document.location.reload();
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
@@ -111,10 +115,12 @@ const deleteProjectHandler = async (event) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    }).then(data => data.json()).catch(err => console.log(err));
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
 
-    if (response.status !== "error") document.location.reload()
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    if (response.status !== 'error') document.location.reload();
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
@@ -137,10 +143,13 @@ const newBugHandler = async (event) => {
         status: bugStatus,
       }),
       headers: { 'Content-Type': 'application/json' },
-    }).then(data => data.json()).catch(err => console.log(err));
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
 
-    if (response.status !== "error") document.location.reload()
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    if (response.status !== 'error')
+      document.location.replace(`/projects/${projectId}`);
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
@@ -152,6 +161,8 @@ const updateBugHandler = async (event) => {
   const bugStatus = document
     .getElementById('updateDropdown')
     .textContent.trim();
+  const split = window.location.href.split('/');
+  const projectId = split[Math.max(0, split.length - 1)];
   if (bugTitle && bugDesc && bugStatus != 'Choose a priority level...') {
     const response = await fetch(`/api/bugs/${bugId}`, {
       method: 'PUT',
@@ -159,12 +170,16 @@ const updateBugHandler = async (event) => {
         title: bugTitle,
         description: bugDesc,
         status: bugStatus,
+        projectid: projectId,
       }),
       headers: { 'Content-Type': 'application/json' },
-    }).then(data => data.json()).catch(err => console.log(err));
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
 
-    if (response.status !== "error") document.location.reload()
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    if (response.status !== 'error')
+      document.location.replace(`/projects/${projectId}`);
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
@@ -185,10 +200,13 @@ const newContributorHandler = async (event) => {
         projectid: projectId,
       }),
       headers: { 'Content-Type': 'application/json' },
-    }).then(data => data.json()).catch(err => console.log(err));
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
 
-    if (response.status !== "error") document.location.reload()
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    if (response.status !== 'error')
+      document.location.replace(`/projects/${projectId}`);
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
@@ -203,58 +221,62 @@ const newProjectHandler = async (event) => {
       method: 'POST',
       body: JSON.stringify({ name: projectName, description: projectDesc }),
       headers: { 'Content-Type': 'application/json' },
-    }).then(data => data.json()).catch(err => console.log(err));
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
 
-    if (response.status !== "error") document.location.reload()
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    if (response.status !== 'error') document.location.replace('/dashboard');
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
-function formError(err, location, delay=4000, fade=1500) {
-    console.log(err, location)
-    return
-    if (!err || !location) return
-    let errorCont = document.createElement("div")
-    errorCont.className = "errorCont"
-    console.log(err, location)
-    let errorBox = document.createElement("div")
-    errorBox.className = "errorBox"
-    errorCont.appendChild(errorBox)
+function formError(err, location, delay = 4000, fade = 1500) {
+  console.log(err, location);
+  return;
+  if (!err || !location) return;
+  let errorCont = document.createElement('div');
+  errorCont.className = 'errorCont';
+  console.log(err, location);
+  let errorBox = document.createElement('div');
+  errorBox.className = 'errorBox';
+  errorCont.appendChild(errorBox);
 
-    let header = document.createElement("h6")
-    header.innerHTML = "Oops..."
-    errorBox.appendChild(header)
+  let header = document.createElement('h6');
+  header.innerHTML = 'Oops...';
+  errorBox.appendChild(header);
 
-    let errorEl = document.createElement("div")
-    errorEl.innerHTML = err
-    errorBox.appendChild(errorEl)
+  let errorEl = document.createElement('div');
+  errorEl.innerHTML = err;
+  errorBox.appendChild(errorEl);
 
-    errorBox.style.left = location.left + 5 + "px"
-    errorBox.style.top = location.top + 5 + "px"
-    let appender = document.querySelector(".modal.fade.show") ? document.querySelector(".modal.fade.show") : document.querySelector("body")
-    appender.insertBefore(errorCont, appender.firstChild)
+  errorBox.style.left = location.left + 5 + 'px';
+  errorBox.style.top = location.top + 5 + 'px';
+  let appender = document.querySelector('.modal.fade.show')
+    ? document.querySelector('.modal.fade.show')
+    : document.querySelector('body');
+  appender.insertBefore(errorCont, appender.firstChild);
 
-    let inter
-    let tm = setTimeout(_ => {
-      let opacity = 1
-      let start = Date.now()
-      inter = setInterval(_ => {
-        if (opacity <= 0 || !errorCont) {
-          errorCont.remove()
-          clearInterval(inter)
-          return
-        }
-        errorBox.style.opacity = opacity
-        opacity = 1 - (Date.now() - start)/fade
-      }, 1000 * (1/61))
-    }, delay)
-    const clickhndle = event => {
-      if (errorCont) errorCont.remove()
-      clearInterval(inter)
-      clearTimeout(tm)
-      window.removeEventListener("click", clickhndle)
-    }
-    window.addEventListener("click", clickhndle)
+  let inter;
+  let tm = setTimeout((_) => {
+    let opacity = 1;
+    let start = Date.now();
+    inter = setInterval((_) => {
+      if (opacity <= 0 || !errorCont) {
+        errorCont.remove();
+        clearInterval(inter);
+        return;
+      }
+      errorBox.style.opacity = opacity;
+      opacity = 1 - (Date.now() - start) / fade;
+    }, 1000 * (1 / 61));
+  }, delay);
+  const clickhndle = (event) => {
+    if (errorCont) errorCont.remove();
+    clearInterval(inter);
+    clearTimeout(tm);
+    window.removeEventListener('click', clickhndle);
+  };
+  window.addEventListener('click', clickhndle);
 }
 
 const signupFormHandler = async (event) => {
@@ -272,9 +294,11 @@ const signupFormHandler = async (event) => {
         password: password.value.trim(),
       }),
       headers: { 'Content-Type': 'application/json' },
-    }).then(data => data.json()).catch(err => console.log(err));
-    if (response.status !== "error") document.location.replace("/verifyEmail")
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
+    if (response.status !== 'error') document.location.replace('/verifyEmail');
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
@@ -288,10 +312,12 @@ const loginFormHandler = async (event) => {
       method: 'POST',
       body: JSON.stringify({ user: username, password }),
       headers: { 'Content-Type': 'application/json' },
-    }).then(data => data.json()).catch(err => console.log(err));
+    })
+      .then((data) => data.json())
+      .catch((err) => console.log(err));
 
-    if (response.status !== "error") document.location.replace("/dashboard")
-    else formError(response.data, {left: event.pageX, top: event.pageY})
+    if (response.status !== 'error') document.location.replace('/dashboard');
+    else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };
 
@@ -339,10 +365,14 @@ function loadEls() {
       .addEventListener('click', dropDownToggle);
 
   if (document.getElementById('delete-project'))
-    document.querySelectorAll(".deleteProj button.btn-danger").forEach(e => e.addEventListener('click', deleteProjectHandler))
+    document
+      .querySelectorAll('.deleteProj button.btn-danger')
+      .forEach((e) => e.addEventListener('click', deleteProjectHandler));
 
   if (document.getElementById('update-bug'))
-    document.querySelectorAll(".updateBug button.btn-primary").forEach(e => e.addEventListener('click', updateBugHandler))
+    document
+      .querySelectorAll('.updateBug button.btn-primary')
+      .forEach((e) => e.addEventListener('click', updateBugHandler));
 
   if (document.getElementById('logout'))
     document
@@ -350,10 +380,14 @@ function loadEls() {
       .addEventListener('click', logoutButtonHandler);
 
   if (document.getElementById('bug-id'))
-    document.querySelectorAll(".deleteBug button.btn-danger").forEach(e => e.addEventListener('click', deleteBugHandler))
+    document
+      .querySelectorAll('.deleteBug button.btn-danger')
+      .forEach((e) => e.addEventListener('click', deleteBugHandler));
 
   if (document.getElementById('contributor-id'))
-    document.querySelectorAll(".contributor button.btn-danger").forEach(e => e.addEventListener('click', deleteContributorHandler))
+    document
+      .querySelectorAll('.contributor button.btn-danger')
+      .forEach((e) => e.addEventListener('click', deleteContributorHandler));
 
   if (document.getElementById('new-contributor'))
     document
@@ -378,17 +412,17 @@ function loadEls() {
     document
       .getElementById('login-button')
       .addEventListener('click', loginFormHandler);
-  if (document.getElementById("graph")) {
-    let data = {LOW: 0, MEDIUM: 0, HIGH: 0}
-    let bugs = document.querySelectorAll(".table-bug tbody")
+  if (document.getElementById('graph')) {
+    let data = { LOW: 0, MEDIUM: 0, HIGH: 0 };
+    let bugs = document.querySelectorAll('.table-bug tbody');
     if (bugs && bugs.length > 0) {
       for (const x of bugs) {
-        data[x.children[0].children[4].innerHTML] += 1
+        data[x.children[0].children[4].innerHTML] += 1;
       }
-      loadChart([data.LOW, data.MEDIUM, data.HIGH])
+      loadChart([data.LOW, data.MEDIUM, data.HIGH]);
     }
   }
-    
+
   window.addEventListener('click', (event) => {
     if (event.target !== login && event.path.indexOf(dropdown) < 0)
       toggleDropdown(false);
@@ -398,30 +432,30 @@ function loadEls() {
 }
 
 function loadChart(data) {
-  const ctx = document.getElementById('graph')
-    chart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-          labels: ["Low", "Medium", "High"],
-          datasets: [
-            {
-              label: '# of Bugs',
-              data: data ?? [0, 0, 0],
-              backgroundColor: [
-                  'rgba(54, 162, 235, 0.5)',
-                  'rgba(255, 215, 0, 0.5)',
-                  'rgba(212, 0, 0, 0.5)',
-              ],
-              borderColor: [
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 215, 0, 1)',
-                  'rgba(212, 0, 0, 1)',
-              ],
-              borderWidth: 2
-          },
-        ]
-      },
-  })
+  const ctx = document.getElementById('graph');
+  chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Low', 'Medium', 'High'],
+      datasets: [
+        {
+          label: '# of Bugs',
+          data: data ?? [0, 0, 0],
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 215, 0, 0.5)',
+            'rgba(212, 0, 0, 0.5)',
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 215, 0, 1)',
+            'rgba(212, 0, 0, 1)',
+          ],
+          borderWidth: 2,
+        },
+      ],
+    },
+  });
 }
 
 function loggedOut() {

@@ -72,7 +72,7 @@ User.init(
     },
     emailCode: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
+      defaultValue: null,
       allowNull: true,
     },
   },
@@ -84,11 +84,11 @@ User.init(
         newUserData.password = await bcrypt.hash(newUserData.password, salt);
         return newUserData;
       },
-      async afterCreate(newUserData) {
-        const id = newUserData.emailCode;
-        mailer.verificationEmail(id, newUserData.email);
-        return newUserData;
-      },
+      // async afterCreate(newUserData) {
+      //   const id = newUserData.emailCode;
+      //   mailer.verificationEmail(id, newUserData.email);
+      //   return newUserData;
+      // },
     },
   }
 );

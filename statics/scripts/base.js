@@ -339,20 +339,10 @@ function loadEls() {
   if (document.getElementById('set-high'))
     document.getElementById('set-high').addEventListener('click', setPriority);
 
-  if (document.getElementById('update-low'))
-    document
-      .getElementById('update-low')
-      .addEventListener('click', updatePriority);
-
-  if (document.getElementById('update-medium'))
-    document
-      .getElementById('update-medium')
-      .addEventListener('click', updatePriority);
-
   if (document.getElementById('update-high'))
     document
-      .getElementById('update-high')
-      .addEventListener('click', updatePriority);
+      .querySelectorAll('.updateBug li.dropdown-item')
+      .forEach((e) => e.addEventListener('click', updatePriority));
 
   if (document.getElementById('setDropdown'))
     document
@@ -361,8 +351,8 @@ function loadEls() {
 
   if (document.getElementById('updateDropdown'))
     document
-      .getElementById('updateDropdown')
-      .addEventListener('click', dropDownToggle);
+      .querySelectorAll('.updateBug button.btn-secondary')
+      .forEach((e) => e.addEventListener('click', dropDownToggle));
 
   if (document.getElementById('delete-project'))
     document

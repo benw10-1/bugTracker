@@ -5,8 +5,8 @@ const withAuth = async (req, res, next) => {
   if (!req.session.loggedIn) {
     res.redirect('/login');
   } else {
-    let user = await User.findByPk(req.session.loggedIn);
-    if (user.emailCode) res.redirect('/verifyEmail');
+    // let user = await User.findByPk(req.session.loggedIn);
+    // if (user.emailCode) res.redirect('/verifyEmail');
     next();
   }
 };

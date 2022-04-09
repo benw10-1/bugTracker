@@ -3,7 +3,7 @@ require("dotenv").config()
 const env = process.env
 
 function genVerificationEmail(id) {
-    const HOST = "http://localhost:3001"
+    const HOST = env.HOSTNAME
     const link = HOST + "/api/verify/" + id
     let text = "Verify email at this link!\n" + link 
     let html = text

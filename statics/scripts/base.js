@@ -40,8 +40,10 @@ const setPriority = async (event) => {
 const updatePriority = async (event) => {
   event.preventDefault();
 
-  event.target.parentNode.querySelector('.btn-secondary').textContent =
-    event.target.textContent;
+  document
+    .querySelector('.modal.show')
+    .querySelector('.btn-secondary').textContent =
+    event.target.textContent.trim();
 
   document.getElementById('second-drop').classList.toggle('show');
 };
@@ -158,7 +160,8 @@ const updateBugHandler = async (event) => {
   const bugId = event.target.getAttribute('update-bug-id');
   const bugTitle = document.getElementById('update-bug-title').value.trim();
   const bugDesc = document.getElementById('update-bug-desc').value.trim();
-  const bugStatus = event.target.parentNode
+  const bugStatus = document
+    .querySelector('.modal.show')
     .querySelector('.btn-secondary')
     .textContent.trim();
   const split = window.location.href.split('/');

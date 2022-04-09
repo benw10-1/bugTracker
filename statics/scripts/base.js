@@ -45,7 +45,10 @@ const updatePriority = async (event) => {
     .querySelector('.btn-secondary').textContent =
     event.target.textContent.trim();
 
-  document.getElementById('second-drop').classList.toggle('show');
+  document
+    .querySelector('.modal.show')
+    .querySelector('.dropdown-menu')
+    .classList.toggle('show');
 };
 
 const logoutButtonHandler = async (event) => {

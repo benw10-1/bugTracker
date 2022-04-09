@@ -162,11 +162,11 @@ const updateBugHandler = async (event) => {
   event.preventDefault();
   const bugId = event.target.getAttribute('update-bug-id');
   const bugTitle = document
-    .querySelector('.modal.show input')
-    .querySelectorAll[0].value.trim();
+    .querySelectorAll('.modal.show input')[0]
+    .value.trim();
   const bugDesc = document
-    .querySelector('.modal.show input')
-    .querySelectorAll[1].value.trim();
+    .querySelectorAll('.modal.show input')[1]
+    .value.trim();
   const bugStatus = document
     .querySelector('.modal.show')
     .querySelector('.btn-secondary')

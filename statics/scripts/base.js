@@ -40,7 +40,7 @@ const setPriority = async (event) => {
 const updatePriority = async (event) => {
   event.preventDefault();
 
-  document.getElementById('updateDropdown').textContent =
+  event.target.parentNode.querySelector('.btn-secondary').textContent =
     event.target.textContent;
 
   document.getElementById('second-drop').classList.toggle('show');
@@ -158,8 +158,8 @@ const updateBugHandler = async (event) => {
   const bugId = event.target.getAttribute('update-bug-id');
   const bugTitle = document.getElementById('update-bug-title').value.trim();
   const bugDesc = document.getElementById('update-bug-desc').value.trim();
-  const bugStatus = document
-    .getElementById('updateDropdown')
+  const bugStatus = event.target.parentNode
+    .querySelector('.btn-secondary')
     .textContent.trim();
   const split = window.location.href.split('/');
   const projectId = split[Math.max(0, split.length - 1)];
@@ -341,7 +341,7 @@ function loadEls() {
 
   if (document.getElementById('update-high'))
     document
-      .querySelectorAll('.updateBug dropdown-menu li')
+      .querySelectorAll('.updateBug li')
       .forEach((e) => e.addEventListener('click', updatePriority));
 
   if (document.getElementById('setDropdown'))

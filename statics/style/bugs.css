@@ -19,7 +19,7 @@
 .navbar {
   background-image: url('../images/blue.png');
   color: var(--white-font-color);
-  padding: 1rem;
+  padding: 1.5rem;
   font-size: 1.5rem;
   font-weight: 800;
 }
@@ -49,8 +49,9 @@
 .top-row {
   width: 100%;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: column;
   justify-content: space-around;
+  align-items: center;
 }
 .info-cont {
   width: 300px;
@@ -308,7 +309,7 @@ td {
   .bugs-container {
     width: 35rem;
   }
-  .main-bug-container {
+  .top-row {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-evenly;
@@ -342,7 +343,7 @@ td {
     width: 30rem;
   }
   .bugs-container {
-    width: 55rem;
+    width: 50rem;
   }
 }
 

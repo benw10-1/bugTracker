@@ -36,9 +36,9 @@ Once the application is installed, the user must make necessary changes to the .
 
 ## Contributors
 
-Benjamin Wirth
-Calvin Kim
-Marcus Lewis
+Benjamin Wirth  
+Calvin Kim  
+Marcus Lewis  
 Kyle Yang
 
 ## License

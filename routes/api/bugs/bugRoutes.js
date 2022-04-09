@@ -99,8 +99,6 @@ router.put('/:id', withAuth, async (req, res) => {
     const user = foundUser.get({ plain: true });
     console.log('>>>>>>PROJECTID', req.body.projectid);
     const projectData = await Project.findByPk(req.body.projectid);
-    console.log('>>>>>>PROJECT', projectData);
-    console.log('>>>>>>USER', user);
     const project = projectData.get({ plain: true });
 
     const contributorData = await Contributor.findAll({

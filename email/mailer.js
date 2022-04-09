@@ -17,7 +17,7 @@ class Mailer {
     this.#user = user;
     this.#pass = pass;
     this.transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: 'yahoo',
       auth: {
         user: user,
         pass: pass,

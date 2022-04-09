@@ -46,7 +46,7 @@ router.post('/', withAuth, async (req, res) => {
 });
 router.delete('/:id', withAuth, async (req, res) => {
   try {
-    const proj = Project.findByPk(req.body.projectid)
+    const proj = await Project.findByPk(req.body.projectid)
     if (!proj || !await proj.hasAccess(req.session.loggedIn)) throw "No access!"
     const bugData = await Bug.destroy({
       where: {

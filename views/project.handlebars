@@ -135,7 +135,7 @@
                         <i class='fa-solid fa-pen-to-square update-bug-btn'></i>
                       </button>
                       <div
-                        class='modal fade'
+                        class='modal fade updateBug'
                         id='updateModal-{{bug.number}}'
                         tabindex='-1'
                         aria-labelledby='updateModal'
@@ -206,7 +206,7 @@
                         <i class='fa-solid fa-xmark delete-btn'></i>
                       </button>
                       <div
-                        class='modal fade'
+                        class='modal fade deleteBug'
                         id='deleteBug-{{bug.number}}'
                         tabindex='-1'
                         aria-labelledby='updateModal'
@@ -324,7 +324,7 @@
                   <tr class='member-data'>
                     <td>{{contributor.name}}</td>
                     <td>{{contributor.email}}</td>
-                    {{#if (ifEqual user.id project.creator)}}
+                    {{#if (ifEqual ../user.id ../project.creator)}}
                       <td>
                         <button
                           data-bs-toggle='modal'
@@ -334,7 +334,7 @@
                           <i class='fa-solid fa-xmark delete-btn'></i>
                         </button>
                         <div
-                          class='modal fade'
+                          class='modal fade contributor'
                           id='deleteMember-{{contributor.number}}'
                           tabindex='-1'
                           aria-labelledby='updateModal'

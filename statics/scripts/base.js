@@ -307,7 +307,7 @@ const signupFormHandler = async (event) => {
     })
       .then((data) => data.json())
       .catch((err) => console.log(err));
-    if (response.status !== 'error') document.location.replace('/verifyEmail');
+    if (response.status !== 'error') document.location.replace('/dashboard');
     else formError(response.data, { left: event.pageX, top: event.pageY });
   }
 };

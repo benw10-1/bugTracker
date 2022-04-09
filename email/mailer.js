@@ -17,6 +17,9 @@ class Mailer {
     this.#user = user;
     this.#pass = pass;
     this.transporter = nodemailer.createTransport({
+      host: 'smtp.mail.yahoo.com',
+      port: 465,
+      secure: false,
       service: 'yahoo',
       auth: {
         user: user,

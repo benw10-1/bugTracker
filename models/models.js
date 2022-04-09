@@ -1,4 +1,4 @@
-const { Model, DataTypes, UUIDV4 } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 const mailer = require('../email/mailer');
 const bcrypt = require('bcrypt');
@@ -121,6 +121,18 @@ Project.init(
   {
     sequelize,
     modelName: 'project',
+    hooks: {
+      async afterCreate(newProjData) {
+        const user = await User.findByPk(newProjData.creator)
+        const newContrib = await Contributor.create({
+          userid: newProjData.creator,
+          projectid: newProjData.id,
+          name: user.name ?? user.username
+        })
+        console.log(newContrib)
+        return newProjData;
+      },
+    },
   }
 );
 Contributor.init(
@@ -254,7 +266,6 @@ History.init(
     modelName: 'history',
   }
 );
-
 User.hasMany(Project, {
   foreignKey: 'creator',
 });

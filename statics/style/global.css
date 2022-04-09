@@ -1,0 +1,12 @@
+.errorBox {
+    position: absolute;
+    z-index: 100;
+    background-color: white;
+    border-radius: 5px;
+    opacity: 1;
+    white-space: nowrap;
+    padding: .5em;
+}
+.errorCont {
+    position: absolute;
+}

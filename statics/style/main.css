@@ -15,8 +15,8 @@ html {
   color: var(--dark-font-color);
   font-family: var(--main-font);
   scroll-behavior: smooth;
+  overflow: hidden;
 }
-
 /* Navbar */
 .navbar {
   display: flex;

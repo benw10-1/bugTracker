@@ -112,7 +112,7 @@
                     <td>
                       <button
                         data-bs-toggle='modal'
-                        data-bs-target='#deleteProject'
+                        data-bs-target='#deleteProject-{{ project.number }}'
                         class='delete-project-btn'
                       >
                         <i class='fa-solid fa-xmark delete-project'></i>
@@ -120,7 +120,7 @@
                       </button>
                       <div
                         class='modal fade'
-                        id='deleteProject'
+                        id='deleteProject-{{ project.number }}'
                         tabindex='-1'
                         aria-labelledby='updateModal'
                         aria-hidden='true'
@@ -138,8 +138,7 @@
                               ></button>
                             </div>
                             <div class='modal-body'>
-                              <p>WARNING! Are you sure you want to delete this
-                                project?</p>
+                              <p>WARNING! Are you sure you want to delete project "{{ project.name }}"?</p>
                             </div>
                             <div class='modal-footer'>
                               <button

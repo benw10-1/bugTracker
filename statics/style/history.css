@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;800&display=swap');
+
+:root {
+  --main-font: 'Montserrat', sans-serif;
+  --form-color: rgba(219, 213, 213, 0.4);
+  --dark-font-color: #1b1a1a;
+  --white-font-color: #f4f4f4;
+  --button-color: #3369ff;
+  --button-hover-color: #0037d0;
+  --button-active-color: #002da9;
+  --create-contributor-btn-color: #03c03c;
+  --create-contributor-hover: #17b169;
+  --create-contributor-active: #006241;
+  --logout-btn-color: #c6011f;
+  --logout-btn-hover: #f40009;
+  --logout-btn-active: #fd5c63;
+}
+
+.dashboard-nav {
+  color: var(--white-font-color);
+  font-weight: 800;
+  font-size: 1.5rem;
+  padding: 1.5rem;
+}
+
+.table-header {
+  width: 17.5rem;
+}
+
+.projects-table-container {
+  width: 17.5rem;
+}
+
+@media screen and (min-width: 425px) {
+  .table-header {
+    width: 25rem;
+  }
+
+  .projects-table-container {
+    width: 25rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .table-header {
+    width: 35rem;
+  }
+
+  .table-header h6 {
+    font-size: 1.2rem;
+  }
+
+  .projects-table-container {
+    width: 35rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .table-header {
+    width: 50rem;
+  }
+
+  .projects-table-container {
+    width: 50rem;
+  }
+  .table thead tr th {
+    font-size: 0.7rem;
+  }
+
+  .table tbody tr td {
+    font-size: 0.7rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .table-header {
+    width: 60rem;
+  }
+
+  .projects-table-container {
+    width: 60rem;
+  }
+  .table thead tr th {
+    font-size: 0.8rem;
+  }
+
+  .table tbody tr td {
+    font-size: 0.8rem;
+  }
+}

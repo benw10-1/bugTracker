@@ -45,6 +45,6 @@ class Mailer {
   }
 }
 
-var mailer = new Mailer(env.MAIL, env.M_PASS);
+var mailer = new Mailer(process.env.MAIL, process.env.M_PASS);
 
 module.exports = mailer;

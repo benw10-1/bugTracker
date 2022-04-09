@@ -341,7 +341,7 @@ function loadEls() {
 
   if (document.getElementById('update-high'))
     document
-      .querySelectorAll('.updateBug li.dropdown-item')
+      .querySelectorAll('.updateBug dropdown-menu li')
       .forEach((e) => e.addEventListener('click', updatePriority));
 
   if (document.getElementById('setDropdown'))

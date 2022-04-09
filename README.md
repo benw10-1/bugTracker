@@ -31,8 +31,8 @@ Once the application is installed, the user must make necessary changes to the .
 
 | DEPLOYMENT     | URL              | STATUS    |
 | -------------- | ---------------- | --------- |
-| Repository     | [GitHub Repo](#) | ACTIVE 🟢 |
-| Published Page | [Bug Tracker](#) | ACTIVE 🟢 |
+| Repository     | [GitHub Repo](https://github.com/benw10-1/bugTracker) | ACTIVE 🟢 |
+| Published Page | [Bug Tracker](https://bug-zapper-app.herokuapp.com/) | ACTIVE 🟢 |
 
 ## Contributors
 

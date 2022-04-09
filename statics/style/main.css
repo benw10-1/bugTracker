@@ -128,7 +128,7 @@ button {
 form {
   background-color: var(--form-color);
   height: 20rem;
-  padding: 0 1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -177,6 +177,11 @@ form {
 
 .password-requirement {
   margin-bottom: 1rem;
+}
+
+.password-requirement ul {
+  line-height: 0.7rem;
+  list-style: none;
 }
 
 .password-requirement ul li {

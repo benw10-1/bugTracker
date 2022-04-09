@@ -76,23 +76,23 @@ router.post('/logout', async (req, res) => {
     });
   } else res.status(404).end();
 });
-router.get('/resendVerification', async (req, res) => {
-  try {
-    if (!req.session.loggedIn) throw 'Not logged in!';
-    let foundUser = await User.findByPk(req.session.loggedIn);
-    if (!foundUser) throw 'User not found!';
-    if (!foundUser.emailCode) throw 'User verified!';
-    mailer.verificationEmail(foundUser.emailCode, foundUser.email);
-    res.status(200).json({
-      status: 'ok',
-      action: 'email verification sent',
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'error',
-      data: err,
-    });
-  }
-});
+// router.get('/resendVerification', async (req, res) => {
+//   try {
+//     if (!req.session.loggedIn) throw 'Not logged in!';
+//     let foundUser = await User.findByPk(req.session.loggedIn);
+//     if (!foundUser) throw 'User not found!';
+//     if (!foundUser.emailCode) throw 'User verified!';
+//     mailer.verificationEmail(foundUser.emailCode, foundUser.email);
+//     res.status(200).json({
+//       status: 'ok',
+//       action: 'email verification sent',
+//     });
+//   } catch (err) {
+//     res.status(400).json({
+//       status: 'error',
+//       data: err,
+//     });
+//   }
+// });
 
 module.exports = router;
